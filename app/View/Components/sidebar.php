@@ -13,7 +13,7 @@ class sidebar extends Component
      */
     public $menuActive;
     public $menuOpen;
-    public function __construct($menuActive = null, $menuOpen=null)
+    public function __construct($menuActive = "dashboard", $menuOpen="dashboard")
     {
         $this->menuActive = $menuActive;
         $this->menuOpen = $menuOpen;
