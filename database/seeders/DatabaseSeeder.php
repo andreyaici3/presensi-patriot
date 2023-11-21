@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 HariSeeder::class,
                 MasterJamSeeder::class,
                 MasterJadwalSeeder::class,
-                JadwalSeeder::class,
+                // JadwalSeeder::class,
                 // AbsenSeeder::class,
                 UserSeeder::class,
             ]
