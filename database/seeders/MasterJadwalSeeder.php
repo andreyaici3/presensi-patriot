@@ -14,6 +14,7 @@ class MasterJadwalSeeder extends Seeder
      */
     public function run(): void
     {
+        
         //hari senin
         collect([
             [
@@ -290,7 +291,7 @@ class MasterJadwalSeeder extends Seeder
           
         ])->each(function($jadwal){
             MasterJadwal::create($jadwal);
-        });
+        }); 
     
     }
 }
