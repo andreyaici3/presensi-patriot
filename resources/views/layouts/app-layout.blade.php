@@ -23,7 +23,7 @@
         </nav>
         <!-- /.navbar -->
 
-        <x-sidebar></x-sidebar>
+        <x-sidebar menuActive="{{ $menuActive }}"></x-sidebar>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
