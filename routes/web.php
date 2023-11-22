@@ -14,7 +14,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\LoginRegisterController;
 use Illuminate\Support\Facades\Route;
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
