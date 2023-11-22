@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function __invoke()
     {      
         $kelas = Kelas::orderBy('id_jurusan', "ASC")->get();
-
+        date_default_timezone_set('Asia/Jakarta');
         foreach ($kelas as $value){
             $cek = $this->cekJamActive($value->id);
             $absensi = Absensi::where('id_kelas', $value->id)->whereDate("created_at", now()->format('Y-m-d'))->orderBy('created_at', 'DESC')->first();
@@ -36,7 +36,7 @@ class DashboardController extends Controller
     }
 
     private function cekJamActive($id_kelas = null){
-        
+        date_default_timezone_set('Asia/Jakarta');
         $dataHari = Hari::where('nama', Carbon::now()->isoFormat('dddd'))->first();
         $jadwal = Jadwal::where('id_kelas', '=', $id_kelas)->where('id_hari', "=" ,$dataHari->id)->get();
         $currentTime = now()->format('H:i:s');
