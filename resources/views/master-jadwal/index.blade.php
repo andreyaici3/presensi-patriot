@@ -1,4 +1,4 @@
-<x-app-layout menuActive="waktu" menuOpen="master">
+<x-app-layout menuActive="master-jadwal" menuOpen="master">
     @section('breadcrumb')
         <div class="col-sm-6">
             <h1 class="m-0">DATA MASTER JADWAL</h1>

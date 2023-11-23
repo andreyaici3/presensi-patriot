@@ -2,7 +2,8 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                style="opacity: .8">
             <span class="brand-text font-weight-light">Presesnsi SMK Patriot</span>
         </a>
 
@@ -20,7 +21,8 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                     <li class="nav-item">
@@ -65,7 +67,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/master-jadwal" class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
+                                <a href="/master-jadwal"
+                                    class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Data Master Jadwal</p>
                                 </a>
@@ -87,37 +90,41 @@
                             </p>
                         </a>
                     </li>
+                     <li class="nav-item">
+                            <a href="/android" class="nav-link {{ $menuActive == 'akunGuru' ? 'active' : '' }}">
+                                <i class="fas fa-server nav-icon"></i>
+
+                                <p>
+                                    Akun Guru
+                                </p>
+                            </a>
+                        </li>
+                    @if (Auth::user()->role == 'superuser')
+                       
+                        <li class="nav-item">
+                            <a href="/operator" class="nav-link">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>
+                                    Operator
+
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-code nav-icon"></i>
+                                <p>
+                                    Api
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+
 
                     <li class="nav-item">
-                        <a href="/android" class="nav-link {{ $menuActive == 'android' ? 'active' : '' }}">
-                            <i class="fas fa-server nav-icon"></i>
-
-                            <p>
-                                Login Android
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/operator" class="nav-link">
-                            <i class="fas fa-users nav-icon"></i>
-                            <p>
-                                Operator
-
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-code nav-icon"></i>
-                            <p>
-                                Api
-                                <span class="right badge badge-danger">New</span>
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+                        <a href="{{ route('logout') }}" class="nav-link"
+                            onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf

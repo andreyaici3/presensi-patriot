@@ -1,4 +1,4 @@
-<x-app-layout menuActive="jurusan" menuOpen="master">
+<x-app-layout menuActive="jadwal" menuOpen="master">
     @section('breadcrumb')
     <div class="col-sm-6">
         <h1 class="m-0">TAMBAH DATA JURUSAN</h1>

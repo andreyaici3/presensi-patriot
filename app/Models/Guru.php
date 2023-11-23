@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\NewAccessToken;
+
 
 class Guru extends Model
 {
@@ -13,13 +15,15 @@ class Guru extends Model
 
     protected $guarded = [];
 
-    public function jadwal(){
+    public function jadwal()
+    {
         return $this->hasMany(Jadwal::class, 'kode_guru', 'kode_guru');
     }
 
-    public function absen(){
+    public function absen()
+    {
         return $this->hasMany(Absensi::class, 'kode_guru', 'kode_guru');
     }
 
-    
+   
 }

@@ -22,8 +22,8 @@
             <x-navbar></x-navbar>
         </nav>
         <!-- /.navbar -->
-
-        <x-sidebar menuActive="dashboard" menuOpen="dashboard"></x-sidebar>
+        
+        <x-sidebar menuOpen="{{ $menuOpen }}" menuActive="{{ $menuActive }}"></x-sidebar>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">

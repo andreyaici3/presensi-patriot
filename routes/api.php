@@ -27,3 +27,6 @@ Route::controller(TestApiController::class)->group(function(){
     Route::post('/assign-present', 'absen');
 });
 
+Route::controller(AuthenticationController::class)->group(function(){
+    Route::post('/authentication', 'apiLogin');
+});

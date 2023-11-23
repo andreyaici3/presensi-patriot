@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\Component;
 
 class AppLayout extends Component
@@ -11,9 +12,12 @@ class AppLayout extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $menuActive;
+    public $menuOpen;
+    public function __construct($menuActive = "", $menuOpen = "")
     {
-        //
+        $this->menuActive = $menuActive;
+        $this->menuOpen = $menuOpen;
     }
 
     /**

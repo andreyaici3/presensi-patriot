@@ -27,7 +27,6 @@ class GuruController extends Controller
             'nik' => $request->nik,
             'nama_guru' => $request->nama,
             'email' => $request->email,
-            'password' => md5(sha1(rand(10000, 200000))),
             'blokir' => 0,
         ]);
 

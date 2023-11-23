@@ -1,12 +1,12 @@
-<x-app-layout menuActive="android">
+<x-app-layout menuActive="akunGuru">
     @section('breadcrumb')
     <div class="col-sm-6">
-        <h1 class="m-0">DATA LOGIN ANDROID</h1>
+        <h1 class="m-0">DATA AKUN GURU</h1>
     </div><!-- /.col -->
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Data Login Android</li>
+            <li class="breadcrumb-item active">Data Akun Guru</li>
         </ol>
     </div><!-- /.col -->
     @endsection
@@ -21,9 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>KODE GURU</th>
-                                    <th>MAC ADDRESS</th>
-                                    <th>USER AGENT</th>
+                                    <th>EMAIL</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -31,10 +29,8 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>63</td>
-                                    <td>00:1B:44:11:3A:B7</td>
-                                    <td>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36</td>
-                                    <td>LOCKED</td>
+                                    <td>ANDREY ANDRI90@GMAIL.COM</td>
+                                    <td>Aktif</td>
                                
                                     <td>
                                         <a href="" class="btn btn-xs btn-primary">
@@ -54,16 +50,7 @@
                                 </tr>
 
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>KODE GURU</th>
-                                    <th>MAC ADDRESS</th>
-                                    <th>USER AGENT</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </tfoot>
+                           
                         </table>
                     </div>
                 </div>
@@ -71,7 +58,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-3">
-                <a href="" class="btn btn-primary"><i class="fas fa-plus"></i> TAMBAH GURU</a>
+                <a href="" class="btn btn-primary"><i class="fas fa-plus"></i> TAMBAH AKUN GURU</a>
             </div>
         </div>
     </div>
