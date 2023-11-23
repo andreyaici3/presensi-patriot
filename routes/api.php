@@ -29,4 +29,5 @@ Route::controller(TestApiController::class)->group(function(){
 
 Route::controller(AuthenticationController::class)->group(function(){
     Route::post('/authentication', 'apiLogin');
+    Route::post('/authentication-test', 'testApiLoginSukses');
 });
