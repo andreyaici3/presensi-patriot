@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\BaseController;
 use App\Models\AkunGuru;
 use App\Models\Guru;
+use App\Models\SessionAndroid;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,14 +62,29 @@ class AuthenticationController extends BaseController
         $email = AkunGuru::whereEmail($request->email)->first();
         if ($email != null){
             if(Hash::check($request->password, $email->password)){
-                $result = DB::table('personal_access_tokens')->where('tokenable_id', $email->id);
+                $result = SessionAndroid::where('email', $email->email);
                 if ($result->count() > 0){
-                    //blokir user
-                    return $this->sendError('Anda Terdeteksi Login Pada Perangkat Baru', ['error'=>'failed']);
-                } else {
-                    // create token baru
-                    $success['token'] =  $email->createToken('AppLogin')->plainTextToken;
-                    return $this->sendResponse($success, 'User login successfully.');
+                    //ada session
+                    if ($result->first()->mac_address == $request->XMAC){
+                        $success['token'] =  $email->createTokens('AppLogin');
+                        $success["user"] = Guru::where('email', $email->email)->first();
+                        return $this->sendResponse($success, 'User login successfully.');
+                    }else {
+                        return $this->sendError('Anda Terdeteksi Login Pada Perangkat Baru', ['error'=>'failed']);
+                    }
+                }else {
+                    $insert = SessionAndroid::create([
+                        "email" => $request->email, 
+                        "user_agent" => $request->XUA, 
+                        "mac_address" => $request->XMAC,
+                        "device_name" => $request->XNAME
+                    ]);
+                    if ($insert){
+                        $success['token'] =  $email->createTokens('AppLogin');
+                        $success["user"] = Guru::where('email', $email->email)->first();
+                        return $this->sendResponse($success, 'User login successfully.');
+                    }
+                   
                 }
                 
             }else{

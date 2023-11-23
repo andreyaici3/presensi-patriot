@@ -14,21 +14,23 @@ class AkunGuru extends Model
 
     protected $table = "akun_guru";
 
-    protected $fillable = ["email", "password", "blokir"];
+    protected $fillable = ["email", "password", "blokir", "locked"];
 
-    public function createToken(string $name, array $abilities = ['*'], $userId = null)
+    protected $hidden = ["password"];
+
+    public function createTokens(string $name)
     {
-        $userId = $userId ?? $this->getKey();
+        $token = $this->createToken($name);
+ 
+         return $token->plainTextToken;
+    }
 
-        $token = $this->tokens()->create([
-            'name' => $name,
-            'token' => hash('sha256', $plainTextToken = Str::random(80)),
-            'abilities' => $abilities,
-            'tokenable_id' => $userId,
-            'tokenable_type' => get_class($this),
-        ]);
+    public function guru(){
+        return $this->belongsTo(Guru::class, 'email', 'email');
+    }
 
-        return new NewAccessToken($token, $token->id . '|' . $plainTextToken);
+    public function getToken(){
+        return $this->tokens();
     }
 
 

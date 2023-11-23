@@ -84,6 +84,14 @@ Route::middleware('auth')->group(function(){
         Route::delete("/jadwal/delete/{id}", "destroy");
     });
 
+    //Route Android
+    Route::controller(AndroidController::class)->group(function(){
+        Route::get('/android', 'index')->name('android.index');
+        Route::post('/android', 'store')->name('android.store');
+        Route::get('/android/create', 'create')->name('android.create');
+    });
+
+
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
     
 });
@@ -113,8 +121,7 @@ Route::controller(AbsenController::class)->group(function () {
 
 
 
-//Route Android
-Route::get('/android', [AndroidController::class, 'index']);
+
 
 //Route Operator
 Route::get('/operator', [OperatorController::class, 'index']);

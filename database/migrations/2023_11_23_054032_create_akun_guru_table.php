@@ -24,6 +24,7 @@ return new class extends Migration
             // $table->foreign('email')->references('email')->on('master_guru');
             $table->string('password');
             $table->boolean('blokir')->default(0);
+            $table->boolean('locked')->default(0);
             $table->timestamps();
         });
 

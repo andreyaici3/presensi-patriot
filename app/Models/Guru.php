@@ -25,5 +25,9 @@ class Guru extends Model
         return $this->hasMany(Absensi::class, 'kode_guru', 'kode_guru');
     }
 
+    public function akun_guru(){
+        return $this->hasOne(AkunGuru::class, 'email', 'email');
+    }
+
    
 }
