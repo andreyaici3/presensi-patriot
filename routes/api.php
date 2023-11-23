@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(TestApiController::class)->group(function(){
     Route::post('/assign-jadwal', 'assignJadwal');
     Route::get('/jadwal', 'getJadwal');
-    Route::post('/assign-present', 'absen');
+    Route::post('/assign-present/{id}', 'absen');
 });
 
 Route::controller(AuthenticationController::class)->group(function(){

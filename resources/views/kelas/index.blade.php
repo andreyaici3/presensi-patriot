@@ -30,7 +30,7 @@
                                     <tr>
                                         <td>{{ $no_urut++ }}</td>
                                         <td>{{ $key->nama_kelas . " - " . $key->jurusan->kode_jurusan . " - " . $key->rombel}}</td>
-                                        <td>{!! QrCode::size(100)->generate('http://presensi-smk-patriot.test/api/assign-present') !!}</td>
+                                        <td>{!! QrCode::size(600)->generate('/api/assign-present/' . $key->id) !!}</td>
                                         <td>
                                             <a href="/kelas/{{ $key->id }}/edit" class="btn btn-xs btn-primary">
                                                 <i class="fas fa-edit"></i>

@@ -46,10 +46,11 @@ class TestApiController extends Controller
         return response()->json($jadwal, 200);
     }
 
-    public function absen(Request $request)
+    public function absen(Request $request, $id)
     {
         $kode_guru = $request->input('kode_guru');
-        $id_kelas = $request->input('id_kelas');
+        // $id_kelas = $request->input('id_kelas');
+        $id_kelas = $id;
 
         $dataHari = Hari::where('nama', Carbon::now()->isoFormat('dddd'))->first();
 
