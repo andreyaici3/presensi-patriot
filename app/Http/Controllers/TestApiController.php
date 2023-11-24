@@ -152,7 +152,7 @@ class TestApiController extends BaseController
     }
 
     public function absenSudah(){
-        return $this->sendError("Anda Sudah Absen Hari Ini");
+        return $this->sendConflict("Anda Sudah Absen Hari Ini");
     }
 }
 
