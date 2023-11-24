@@ -1,7 +1,7 @@
 <x-app-layout menuActive="kelas" menuOpen="master">
     @section('breadcrumb')
         <div class="col-sm-6">
-            <h1 class="m-0">DATA KELAS</h1>
+            <h1 class="m-0">DATA KELAS </h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -30,11 +30,16 @@
                                     <tr>
                                         <td>{{ $no_urut++ }}</td>
                                         <td>{{ $key->nama_kelas . " - " . $key->jurusan->kode_jurusan . " - " . $key->rombel}}</td>
-                                        <td>{!! QrCode::size(600)->generate('/api/assign-present/' . $key->id) !!}</td>
+                                        <td>{!! QrCode::size(100)->generate('assign-present/' . $key->id) !!}</td>
                                         <td>
                                             <a href="/kelas/{{ $key->id }}/edit" class="btn btn-xs btn-primary">
                                                 <i class="fas fa-edit"></i>
                                                 Edit
+                                            </a>
+                                            |
+                                            <a href="/kelas/{{ $key->id }}/generate" class="btn btn-xs btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                                Generate QR
                                             </a>
                                             |
                                             <form action="/kelas/{{ $key->id }}" method="post"

@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/kelas', 'store');
         Route::get('/kelas/{id}/edit', 'edit');
         Route::put('/kelas/{id}', 'update');
+        Route::get('/kelas/{id}/generate', 'generate');
         Route::delete('/kelas/{id}', 'destroy');
     });
     

@@ -18,6 +18,12 @@ class KelasController extends Controller
         ]);
     }
 
+    public function generate($id){
+        return view('kelas.generate', [
+            'kelas' => Kelas::find($id)
+        ]);
+    }
+
     public function create()
     {
         return view('kelas.create', [
