@@ -100,13 +100,13 @@ class TestApiController extends BaseController
                     return $this->sendResponse($arr, "Absen Berhasil Terimakasih");
                     
                 }else{
-                    return $this->sendError("Tenang, Anda Belum Masuk Jam Pelajaran, Sabar Ya Pak / Buk!!!");
+                    return $this->sendError("Tenang, Anda Belum Masuk Jam Pelajaran, Sabar Ya Pak / Buk!!!", 406);
                 }                
             } else {
-                return $this->sendError("Absen Gagal, Anda Sudah Absen Hari Ini");
+                return $this->sendError("Absen Gagal, Anda Sudah Absen Hari Ini", 409);
             }
         } else {
-            return $this->sendError("Mohon Maaf Jadwal Bpk/Ibu Tidak Ditemukan Hari Ini");
+            return $this->sendError("Mohon Maaf Jadwal Bpk/Ibu Tidak Ditemukan Hari Ini", 400);
         }
     }
 
@@ -148,11 +148,11 @@ class TestApiController extends BaseController
     }
 
     public function absenGagal(){
-        return $this->sendError("Tenang Ya Pak / Bu Jadwal Anda Belum Saatnya");
+        return $this->sendError("Tenang Ya Pak / Bu Jadwal Anda Belum Saatnya", 406);
     }
 
     public function absenSudah(){
-        return $this->sendConflict("Anda Sudah Absen Hari Ini");
+        return $this->sendError("Anda Sudah Absen Hari Ini", 409);
     }
 }
 

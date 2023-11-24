@@ -19,7 +19,7 @@ class BaseController extends Controller
         return response()->json($response, 200);
     }
 
-    public function sendError($error, $errorMessages = [], $code = 404)
+    public function sendError($error, $code = 404,  $errorMessages = [])
     {
     	$response = [
             'success' => false,
@@ -35,19 +35,5 @@ class BaseController extends Controller
         return response()->json($response, $code);
     }
 
-    public function sendConflict($error, $errorMessages = [], $code = 409)
-    {
-    	$response = [
-            'success' => false,
-            'message' => $error,
-        ];
-
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
-
-        return response()->json($response, $code);
-    }
+   
 }
