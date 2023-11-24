@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('hari')->after('nama_guru')->nullable();
             $table->string('tanggal')->after('hari')->nullable();
             $table->string('waktu_absen')->after('tanggal')->nullable();
+            $table->string('kelas')->after('waktu_absen')->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropColumn('hari');
             $table->dropColumn('tanggal');
             $table->dropColumn('waktu_absen');
+            $table->dropColumn('kelas');
         });
     }
 };

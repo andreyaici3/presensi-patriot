@@ -78,17 +78,19 @@ class TestApiController extends BaseController
                                 "nama_guru" => $jadwal[$i - 1]->guru->nama_guru,
                                 "tanggal" => Carbon::now()->isoFormat('dddd, D MMM Y'),
                                 "waktu_absen" => now()->format('H:i:s') . " WIB",
+                                "kelas" => $jadwal[$i - 1]->kelas->nama_kelas . " - " . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . " - " . $jadwal[$i - 1]->kelas->rombel,
                             ];
                         } else {
                             $data = [
                                 "kode_guru" => $kode_guru,
-                                'keterangan' => "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Dikelas ".$jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Telat",
+                                'keterangan' => "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Dikelas ". $jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Telat",
                                 "status_hadir" => "0",
                                 "id_kelas" => $id_kelas,
                                 "hari" => $jadwal[$i - 1]->master_jadwal->hari->nama,
                                 "nama_guru" => $jadwal[$i - 1]->guru->nama_guru,
                                 "tanggal" => Carbon::now()->isoFormat('dddd, D MMM Y'),
                                 "waktu_absen" => now()->format('H:i:s') . " WIB",
+                                "kelas" => $jadwal[$i - 1]->kelas->nama_kelas . " - " . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . " - " . $jadwal[$i - 1]->kelas->rombel,
                             ];
                         }
                         $input = Absensi::create($data);
@@ -124,6 +126,7 @@ class TestApiController extends BaseController
                 "updated_at" => "2023-11-24T02:10:05.000000Z",
                 "created_at" => "2023-11-24T02:10:05.000000Z",
                 "id" => 30,
+                "kelas" => "XI-TJKT-2"
             ],
             [
                 "kode_guru" => "9",
@@ -137,6 +140,7 @@ class TestApiController extends BaseController
                 "updated_at" => "2023-11-24T02:10:05.000000Z",
                 "created_at" => "2023-11-24T02:10:05.000000Z",
                 "id" => 31,
+                "kelas" => "XI-TJKT-2"
             ],
         ];
 
