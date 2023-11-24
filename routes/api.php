@@ -25,9 +25,13 @@ Route::controller(TestApiController::class)->group(function(){
     Route::post('/assign-jadwal', 'assignJadwal');
     Route::get('/jadwal', 'getJadwal');
     Route::post('/assign-present/{id}', 'absen');
+    Route::get('/absen-sukses', 'absenSukses');
+    Route::get('/absen-gagal', 'absenGagal');
+    Route::get('/absen-sudah', 'absenSudah');
 });
 
 Route::controller(AuthenticationController::class)->group(function(){
     Route::post('/authentication', 'apiLogin');
     Route::post('/authentication-test', 'testApiLoginSukses');
+    
 });

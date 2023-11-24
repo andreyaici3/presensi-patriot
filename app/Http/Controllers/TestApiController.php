@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Absensi;
 use App\Models\Guru;
 use App\Models\Hari;
@@ -15,7 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use PDO;
 
-class TestApiController extends Controller
+class TestApiController extends BaseController
 {
     public function assignJadwal(Request $request)
     {
@@ -73,6 +74,10 @@ class TestApiController extends Controller
                                 'keterangan' => $string,
                                 "status_hadir" => "1",
                                 "id_kelas" => $id_kelas,
+                                "hari" => $jadwal[$i - 1]->master_jadwal->hari->nama,
+                                "nama_guru" => $jadwal[$i - 1]->guru->nama_guru,
+                                "tanggal" => Carbon::now()->isoFormat('dddd, D MMM Y'),
+                                "waktu_absen" => now()->format('H:i:s') . " WIB",
                             ];
                         } else {
                             $data = [
@@ -80,32 +85,70 @@ class TestApiController extends Controller
                                 'keterangan' => "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Dikelas ".$jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Telat",
                                 "status_hadir" => "0",
                                 "id_kelas" => $id_kelas,
+                                "hari" => $jadwal[$i - 1]->master_jadwal->hari->nama,
+                                "nama_guru" => $jadwal[$i - 1]->guru->nama_guru,
+                                "tanggal" => Carbon::now()->isoFormat('dddd, D MMM Y'),
+                                "waktu_absen" => now()->format('H:i:s') . " WIB",
                             ];
                         }
                         $input = Absensi::create($data);
                         $arr[] = $input;
                         
                     }
-
-                    $result = "Absen Berhasil Terimakasih";
+                    return $this->sendResponse($arr, "Absen Berhasil Terimakasih");
                     
                 }else{
-                    $result = "Tenang, Anda Belum Masuk Jam Pelajaran, Sabar Ya Pak / Buk!!!";
+                    return $this->sendError("Tenang, Anda Belum Masuk Jam Pelajaran, Sabar Ya Pak / Buk!!!");
                 }                
             } else {
-                $result = "Absen Gagal, Anda Sudah Absen Hari Ini";   
+                return $this->sendError("Absen Gagal, Anda Sudah Absen Hari Ini");
             }
         } else {
-            // tidak ada absen
-            $result = "Mohon Maaf Jadwal Bpk/Ibu Tidak Ditemukan Hari Ini";
+            return $this->sendError("Mohon Maaf Jadwal Bpk/Ibu Tidak Ditemukan Hari Ini");
         }
+    }
+
+    public function absenSukses(){
+     
 
         $data = [
-            "pesan" => $result,
-            "result" => $arr ?? []
+            [
+                "kode_guru" => "9",
+                "keterangan" => "Jam Ke - 2 Dikelas XI-TJKT-2 Telat",
+                "status_hadir" => "0",
+                "id_kelas" => "16",
+                "hari" => "Jumat",
+                "nama_guru" => "Endang Hernawan, S.Pd.",
+                "tanggal" => "Jumat, 24 Nov 2023",
+                "waktu_absen" => "09:10:05 WIB",
+                "updated_at" => "2023-11-24T02:10:05.000000Z",
+                "created_at" => "2023-11-24T02:10:05.000000Z",
+                "id" => 30,
+            ],
+            [
+                "kode_guru" => "9",
+                "keterangan" => "Jam Ke - 1 Dikelas XI-TJKT-2 Telat",
+                "status_hadir" => "0",
+                "id_kelas" => "16",
+                "hari" => "Jumat",
+                "nama_guru" => "Endang Hernawan, S.Pd.",
+                "tanggal" => "Jumat, 24 Nov 2023",
+                "waktu_absen" => "09:10:05 WIB",
+                "updated_at" => "2023-11-24T02:10:05.000000Z",
+                "created_at" => "2023-11-24T02:10:05.000000Z",
+                "id" => 31,
+            ],
         ];
 
-        return response()->json($data);
+        return $this->sendResponse($data, "Absen Berhasil");
+    }
+
+    public function absenGagal(){
+        return $this->sendError("Tenang Ya Pak / Bu Jadwal Anda Belum Saatnya");
+    }
+
+    public function absenSudah(){
+        return $this->sendError("Anda Sudah Absen Hari Ini");
     }
 }
 
