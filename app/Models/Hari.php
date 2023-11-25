@@ -15,4 +15,5 @@ class Hari extends Model
     public function master_jadwal(){
         return $this->hasMany(MasterJadwal::class, 'id_hari');
     }
+    
 }

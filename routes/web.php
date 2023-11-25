@@ -118,6 +118,8 @@ Route::controller(AbsenController::class)->group(function () {
 });
 
 
+Route::get('/sample/{id}', [JadwalController::class, 'getJadwalByGuru']);
+
 
 
 

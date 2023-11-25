@@ -154,5 +154,17 @@ class TestApiController extends BaseController
     public function absenSudah(){
         return $this->sendError("Anda Sudah Absen Hari Ini", 409);
     }
+
+    public function getJadwalByGuru($kode_guru){
+        $jadwal = Jadwal::where('kode_guru', $kode_guru)->get();
+
+        foreach ($jadwal as $jd){
+            $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i'). " - " .Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
+           
+        }
+        return $this->sendResponse($data, "Jadwal Berhasil Diambil");
+
+        
+    }
 }
 

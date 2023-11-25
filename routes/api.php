@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\GuruController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\TestApiController;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +31,10 @@ Route::controller(TestApiController::class)->group(function(){
     Route::get('/absen-sukses', 'absenSukses');
     Route::get('/absen-gagal', 'absenGagal');
     Route::get('/absen-sudah', 'absenSudah');
+    Route::get('/getJadwal/{id}', 'getJadwalByGuru');
 });
+
+
 
 Route::controller(AuthenticationController::class)->group(function(){
     Route::post('/authentication', 'apiLogin');

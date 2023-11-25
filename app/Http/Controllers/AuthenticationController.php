@@ -70,7 +70,7 @@ class AuthenticationController extends BaseController
                         $success["user"] = Guru::where('email', $email->email)->first();
                         return $this->sendResponse($success, 'User login successfully.');
                     }else {
-                        return $this->sendError('Anda Terdeteksi Login Pada Perangkat Baru', ['error'=>'failed']);
+                        return $this->sendError('Anda Terdeteksi Login Pada Perangkat Baru', 409);
                     }
                 }else {
                     $insert = SessionAndroid::create([
@@ -88,10 +88,10 @@ class AuthenticationController extends BaseController
                 }
                 
             }else{
-                return $this->sendError('Silahkan Cek Email / Password Anda.', ['error'=>'failed']);
+                return $this->sendError('Silahkan Cek Email / Password Anda.', 403);
             }
         }else{
-            return $this->sendError('Silahkan Cek Email / Password Anda.', ['error'=>'failed']);
+            return $this->sendError('Silahkan Cek Email / Password Anda.', 403);
         }
         
     }
