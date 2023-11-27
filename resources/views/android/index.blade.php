@@ -56,7 +56,8 @@
                                 @foreach ($akun as $value)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td><span class="badge badge-primary">{{ $value->guru->kode_guru }}</span> - {{ $value->guru->nama_guru }}</td>
+                                        <td><span class="badge badge-primary">{{ $value->guru->kode_guru }}</span> -
+                                            {{ $value->guru->nama_guru }}</td>
                                         <td>{{ $value->email }}</td>
                                         <td>
                                             @if ($value->blokir == 1)
@@ -65,7 +66,7 @@
                                                 <span class="badge badge-primary">AKTIF</span>
                                             @endif
 
-                                            @if ($value->locked == 1)
+                                            @if ($value->session_android->count() == 1)
                                                 <span class="badge badge-danger">LOCKED</span>
                                             @else
                                                 <span class="badge badge-primary">UNLOCKED</span>
@@ -74,11 +75,11 @@
                                         </td>
 
                                         <td>
-                                            
-                                            <a href="" class="btn btn-xs btn-danger">
-                                                
-                                                 RESET AKUN
-                                            </a>
+                                            @if ($value->session_android->count() == 1)
+                                                <a href="" class="btn btn-xs btn-danger">
+                                                    RESET AKUN
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

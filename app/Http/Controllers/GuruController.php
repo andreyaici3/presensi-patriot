@@ -27,7 +27,6 @@ class GuruController extends Controller
             'nik' => $request->nik,
             'nama_guru' => $request->nama,
             'email' => $request->email,
-            'blokir' => 0,
         ]);
 
         return redirect('/guru');

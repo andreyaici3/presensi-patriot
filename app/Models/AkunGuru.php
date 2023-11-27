@@ -33,5 +33,9 @@ class AkunGuru extends Model
         return $this->tokens();
     }
 
+    public function session_android(){
+        return $this->belongsTo(SessionAndroid::class, 'email', 'email');
+    }
+
 
 }

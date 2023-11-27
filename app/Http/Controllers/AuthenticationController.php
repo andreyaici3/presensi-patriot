@@ -76,7 +76,7 @@ class AuthenticationController extends BaseController
                     $insert = SessionAndroid::create([
                         "email" => $request->email, 
                         "user_agent" => $request->XUA, 
-                        "mac_address" => $request->XMAC,
+                        "mac_address" => "$request->XMAC",
                         "device_name" => $request->XNAME
                     ]);
                     if ($insert){
