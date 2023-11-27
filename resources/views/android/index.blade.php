@@ -66,13 +66,7 @@
                                                 <span class="badge badge-primary">AKTIF</span>
                                             @endif
 
-                                            @if ($value->session_android->count() == 1)
-                                                <span class="badge badge-danger">LOCKED</span>
-                                            @else
-                                                <span class="badge badge-primary">UNLOCKED</span>
-                                            @endif
-
-                                        </td>
+                                         
 
                                         <td>
                                             @if ($value->session_android->count() == 1)
