@@ -69,11 +69,9 @@
                                          
 
                                         <td>
-                                            @if ($value->session_android->count() == 1)
-                                                <a href="" class="btn btn-xs btn-danger">
+                                            <a href="" class="btn btn-xs btn-danger">
                                                     RESET AKUN
                                                 </a>
-                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
