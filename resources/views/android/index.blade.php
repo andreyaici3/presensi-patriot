@@ -66,12 +66,12 @@
                                                 <span class="badge badge-primary">AKTIF</span>
                                             @endif
 
-                                         
+
 
                                         <td>
                                             <a href="" class="btn btn-xs btn-danger">
-                                                    RESET AKUN
-                                                </a>
+                                                RESET AKUN
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -155,7 +155,6 @@
         <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
         <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-        <script src="/dist/js/adminlte.min.js?v=3.2.0"></script>
         <script src="/plugins/select2/js/select2.full.min.js"></script>
 
 

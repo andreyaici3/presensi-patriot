@@ -170,7 +170,6 @@
     @section('js')
         <script src="/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 
-        <script src="/dist/js/adminlte.min.js?v=3.2.0"></script>
 
         <script src="/plugins/filterizr/jquery.filterizr.min.js"></script>
 

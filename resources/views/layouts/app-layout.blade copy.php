@@ -22,7 +22,7 @@
             <x-navbar></x-navbar>
         </nav>
         <!-- /.navbar -->
-
+        
         <x-sidebar menuOpen="{{ $menuOpen }}" menuActive="{{ $menuActive }}"></x-sidebar>
 
         <!-- Content Wrapper. Contains page content -->
