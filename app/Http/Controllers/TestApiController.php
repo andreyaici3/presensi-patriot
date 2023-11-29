@@ -169,7 +169,7 @@ class TestApiController extends BaseController
 
     public function getJadwalByGuruV1($kode_guru){
        
-        $jadwal = Jadwal::where('kode_guru', $kode_guru)->get();
+        $jadwal = Jadwal::where('kode_guru', $kode_guru)->orderBy('id_hari', 'ASC')->get();
         $data = [];
         foreach ($jadwal as $jd){
             $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i'). " - " .Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
