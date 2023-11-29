@@ -95,11 +95,14 @@ Route::middleware('auth')->group(function(){
     Route::controller(OperatorController::class)->group(function(){
         Route::get('/operator','index')->name('operator.index');
         Route::get('/operator/create', 'create')->name('operator.create');
+        Route::post('/operator', 'store')->name('operator.store');
     });
 
     Route::controller(AbsenController::class)->group(function () {
         Route::get('/absen', 'index');
-        Route::get('/report/mingguan', 'reportMingguan');
+        Route::get('/report/mingguan', 'reportMingguan')->name('report.mingguan');
+        Route::get('/report/harian', 'reportHarian')->name('report.harian');
+        Route::get('/report/bulanan', 'reportBulanan')->name('report.bulanan');
     });
     
 

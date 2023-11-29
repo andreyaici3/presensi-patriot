@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Absensi;
 use App\Models\Guru;
+use App\Models\Hari;
 use App\Models\Jadwal;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -18,33 +20,62 @@ class AbsenController extends Controller
         ]);
     }
 
-    public function reportHarian()
+    public function reportBulanan()
     {
-        $tanggals = [];
-        $tahun = "2023";
-        $bulan = "11";
-        $tanggal = "27";
-        $format = $tahun . '-' . $bulan . '-' . $tanggal;
-        $seminggu = abs(6 * 86400);
-        $awal = strtotime($format);
-        $akhir = strtotime($format) + $seminggu;
+        $tanggalSekarang = date('Y-m-d');
+        // $tanggalSekarang = "2023-11-01";
+
+        $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
+
+        
+        $seminggu = abs(5 * 86400);
+        $awal = strtotime($dataAwalMinggu[0]);
+        $akhir = strtotime(end($dataAwalMinggu)) + $seminggu;
+        $guru = Guru::orderBy('kode_guru', 'ASC')->get();
+
         for ($i = $awal; $i <= $akhir; $i += 86400) {
-            $tanggals[][date('Y-m-d', $i)][] = [
-                "kode_guru" => "63",
-                "jumlah_jam_terpakai" => $this->getDataAbsen(date('Y-m-d', $i), 63)->count(),
-                "jumlah_jam_seharusnya" => ""
-            ];
+            $date[] = date('d-m-Y', $i);
         }
 
-        return $tanggals;
-        // return $this->getJumlahJam(63);    
+        foreach ($guru as $value) {
+            for ($i = $awal; $i <= $akhir; $i += 86400) {
+                $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru) * 4;
+                $value["jamTerpakai"] += $this->getDataAbsen(date('Y-m-d', $i), $value->kode_guru)->count();
+            }
+        }
+
+        return view('report.bulanan', [
+            'report' => $guru,
+            'tanggal' => [
+                'awal' => date('d-m-Y', $awal),
+                'akhir' => date('d-m-Y', $akhir),
+            ]
+        ]);
+    }
+
+    public function reportHarian()
+    {
+        $format = date('Y-m-d');
+        //getJumlahJamSkarang
+        $dataHari = Hari::where('nama', Carbon::now()->isoFormat('dddd'))->first();
+
+
+        $guru = Guru::orderBy('kode_guru', 'ASC')->get();
+        foreach ($guru as $value) {
+            $value["jamSeluruhnya"] = Jadwal::where("kode_guru", "=", $value->kode_guru)->where("id_hari", "=", $dataHari->id)->get()->count();
+            $value["jamTerpakai"] += $this->getDataAbsen($format, $value->kode_guru)->count();
+        }
+
+        return view('report.harian', [
+            'report' => $guru,
+        ]);
     }
 
     public function reportMingguan()
     {
         $tanggalSekarang = date('Y-m-d');
         // $tanggalSekarang = "2023-11-01";
-        
+
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
         $tanggalAwal = null;
         foreach ($dataAwalMinggu as $value) {
@@ -55,7 +86,7 @@ class AbsenController extends Controller
         if ($tanggalAwal == null) {
             $dateOneMonthAdded = strtotime(date("Y-m-d", strtotime($tanggalSekarang)) . "-1 month");
             $dataAwalMinggu = $this->getMingguKeBerapa(date('Y-m-d', $dateOneMonthAdded));
-            $format = end($dataAwalMinggu);           
+            $format = end($dataAwalMinggu);
         } else {
             $format = end($tanggalAwal);
         }
@@ -71,8 +102,6 @@ class AbsenController extends Controller
             for ($i = $awal; $i <= $akhir; $i += 86400) {
                 $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru);
                 $value["jamTerpakai"] += $this->getDataAbsen(date('Y-m-d', $i), $value->kode_guru)->count();
-                $tgl[] = date('Y-m-d', $i);
-                $value["tanggal"] = $tgl; 
             }
         }
 
@@ -102,12 +131,6 @@ class AbsenController extends Controller
 
         return $list;
     }
-
-
-
-
-
-
 
     private function getJumlahJam($kode_guru)
     {

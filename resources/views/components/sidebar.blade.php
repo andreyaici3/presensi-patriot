@@ -107,19 +107,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/guru" class="nav-link {{ $menuActive == 'guru' ? 'active' : '' }}">
+                                <a href="{{ route('report.harian') }}" class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Harian</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/mingguan" class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
+                                <a href="{{ route('report.mingguan') }}" class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Mingguan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/kelas" class="nav-link {{ $menuActive == 'kelas' ? 'active' : '' }}">
+                                <a href="{{ route('report.bulanan') }}" class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Bulanan</p>
                                 </a>

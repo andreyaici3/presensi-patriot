@@ -21,7 +21,7 @@
                     </div>
 
 
-                    <form class="form-horizontal" action="/guru" method="POST">
+                    <form class="form-horizontal" action="{{ route('operator.store') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="form-group row">
@@ -42,13 +42,23 @@
                                     <input type="password" class="form-control" id="password" placeholder="password" name="password">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-10">
+                                    <select name="role" id="role" class="form-control">
+                                        <option value="kepsek">Kepala Sekolah</option>
+                                        <option value="ict">Information Center</option>
+                                        <option value="user">Kurikulum</option>
+                                    </select>
+                                </div>
+                            </div>
                     
 
                         </div>
 
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info">Tambah Data</button>
-                            <a href="/guru" class="btn btn-default float-right">Cancel</a>
+                            <a href="{{ route('operator.index') }}" class="btn btn-default float-right">Cancel</a>
                         </div>
 
                     </form>
