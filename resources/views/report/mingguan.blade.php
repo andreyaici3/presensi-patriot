@@ -44,10 +44,10 @@
                                             <span class="badge badge-primary">
                                                 @php
                                                     
-                                                    $sepersen = $value->jamSeluruhnya / 100;
+                                                    $sepersen =  ($value->jamTerpakai / $value->jamSeluruhnya) * 100;
 
                                                 @endphp
-                                                {{ $sepersen * $value->jamTerpakai . " %"}}
+                                                {{ $sepersen . " %"}}
                                             </span>
                                         </a>
                                     </td>
