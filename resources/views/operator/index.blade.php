@@ -67,18 +67,19 @@
                                         @endif
 
                                         <td>
-                                            <a href="" class="btn btn-xs btn-primary">
+                                            <a href="{{ route('operator.edit', ['id' => $value->id]) }}"
+                                                class="btn btn-xs btn-primary">
                                                 <i class="fas fa-edit"></i>
                                                 Edit
                                             </a>
                                             |
-                                            <a href="" class="btn btn-xs btn-success">
-                                                <i class="fas fa-eye"></i>
-                                                Detail
-                                            </a> |
-                                            <a href="" class="btn btn-xs btn-danger">
-                                                <i class="fas fa-trash"></i>
-                                                Hapus
+                                            <a onClick="hapus({{ $value->id }})" class="btn btn-xs btn-danger">
+                                                <form action="{{ route('operator.delete', ['id' => $value->id]) }}" method="post" id="form{{ $value->id }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </form>
                                             </a>
                                         </td>
                                     </tr>
@@ -124,7 +125,29 @@
                     "ordering": false,
                     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+
+
             });
+        </script>
+
+        <script>
+            function hapus(id) {
+                Swal.fire({
+                    title: "Yakin Ingin Menghapus Data?",
+                    showDenyButton: true,
+                    confirmButtonText: "Oke!",
+                    denyButtonText: `Batal`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        var form = $("#form" + id).submit();
+                    } else if (result.isDenied) {
+                        Swal.fire("Data Gagal Dihapus", "", "info");
+                    }
+                });
+            }
         </script>
     @endsection
 

@@ -96,6 +96,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/operator','index')->name('operator.index');
         Route::get('/operator/create', 'create')->name('operator.create');
         Route::post('/operator', 'store')->name('operator.store');
+        Route::get('/operator/{id}/edit', 'edit')->name('operator.edit');
+        Route::PUT('/operator/{id}', 'update')->name('operator.update');
+        Route::DELETE('/operator/{id}', 'destroy')->name('operator.delete');
     });
 
     Route::controller(AbsenController::class)->group(function () {
