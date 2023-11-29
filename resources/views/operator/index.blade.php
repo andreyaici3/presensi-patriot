@@ -1,4 +1,4 @@
-<x-app-layout menuActive="guru" menuOpen="master">
+<x-app-layout menuActive="operator">
     @section('breadcrumb')
     <div class="col-sm-6">
         <h1 class="m-0">DATA OPERATOR</h1>
@@ -55,17 +55,7 @@
                                 </tr>
 
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Kode Guru</th>
-                                    <th>Nama Guru</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
-                                    <th>Role</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </tfoot>
+                           
                         </table>
                     </div>
                 </div>
@@ -73,7 +63,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-3">
-                <a href="" class="btn btn-primary"><i class="fas fa-plus"></i> TAMBAH GURU</a>
+                <a href="{{ route('operator.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> TAMBAH OPERATOR</a>
             </div>
         </div>
     </div>

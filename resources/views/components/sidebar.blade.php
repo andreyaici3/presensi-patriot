@@ -4,7 +4,7 @@
         <a href="{{ route('dashboard') }}" class="brand-link">
             <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
-            <span class="brand-text font-weight-light">Presesnsi SMK Patriot</span>
+            <span class="brand-text font-weight-light">Presensi SMK Patriot</span>
         </a>
 
         <!-- Sidebar -->
@@ -23,8 +23,6 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="/" class="nav-link {{ $menuActive == null ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -90,23 +88,50 @@
                             </p>
                         </a>
                     </li>
-                     <li class="nav-item">
-                            <a href="/android" class="nav-link {{ $menuActive == 'akunGuru' ? 'active' : '' }}">
-                                <i class="fas fa-server nav-icon"></i>
+                    <li class="nav-item">
+                        <a href="/android" class="nav-link {{ $menuActive == 'akunGuru' ? 'active' : '' }}">
+                            <i class="fas fa-server nav-icon"></i>
+                            <p>
+                                Akun Guru
+                            </p>
+                        </a>
+                    </li>
 
-                                <p>
-                                    Akun Guru
-                                </p>
-                            </a>
-                        </li>
+                    <li class="nav-item {{ $menuOpen == 'report' ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ $menuOpen == 'report' ? 'active' : '' }}">
+                            <i class="fas fa-server nav-icon"></i>
+                            <p>
+                                Report
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/guru" class="nav-link {{ $menuActive == 'guru' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Harian</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/report/mingguan" class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Mingguan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/kelas" class="nav-link {{ $menuActive == 'kelas' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Bulanan</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     @if (Auth::user()->role == 'superuser')
-                       
                         <li class="nav-item">
-                            <a href="/operator" class="nav-link">
+                            <a href="/operator" class="nav-link {{ $menuActive == 'operator' ? 'active' : '' }}">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p>
                                     Operator
-
                                 </p>
                             </a>
                         </li>
@@ -120,6 +145,7 @@
                             </a>
                         </li>
                     @endif
+                    
 
 
                     <li class="nav-item">

@@ -92,6 +92,18 @@ Route::middleware('auth')->group(function(){
         Route::get('/android/create', 'create')->name('android.create');
     });
 
+    Route::controller(OperatorController::class)->group(function(){
+        Route::get('/operator','index')->name('operator.index');
+        Route::get('/operator/create', 'create')->name('operator.create');
+    });
+
+    Route::controller(AbsenController::class)->group(function () {
+        Route::get('/absen', 'index');
+        Route::get('/report/mingguan', 'reportMingguan');
+    });
+    
+
+    
 
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
     
@@ -113,24 +125,9 @@ Route::middleware('guest')->group(function(){
 
 
 
-Route::controller(AbsenController::class)->group(function () {
-    Route::get('/absen', 'index');
-});
 
 
 Route::get('/sample/{id}', [JadwalController::class, 'getJadwalByGuru']);
-
-
-
-
-
-
-
-//Route Operator
-Route::get('/operator', [OperatorController::class, 'index']);
-
-//Route Jurusan
-
 
 //Route 
 Route::get('/test', [WaktuController::class, "test"]);

@@ -10,4 +10,9 @@ class OperatorController extends Controller
     {
         return view('operator.index');
     }
+
+    public function create()
+    {
+        return view('operator.create');
+    }
 }
