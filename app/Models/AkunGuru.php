@@ -34,7 +34,7 @@ class AkunGuru extends Model
     }
 
     public function session_android(){
-        return $this->belongsTo(SessionAndroid::class, 'email', 'email');
+        return $this->hasOne(SessionAndroid::class, 'email', 'email');
     }
 
 

@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/android', 'index')->name('android.index');
         Route::post('/android', 'store')->name('android.store');
         Route::get('/android/create', 'create')->name('android.create');
+        Route::delete('/android/reset/{id}', 'reset')->name('akun.reset');
     });
 
     Route::controller(OperatorController::class)->group(function(){

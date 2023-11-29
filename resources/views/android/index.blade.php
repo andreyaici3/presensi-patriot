@@ -60,19 +60,25 @@
                                             {{ $value->guru->nama_guru }}</td>
                                         <td>{{ $value->email }}</td>
                                         <td>
-                                            @if ($value->blokir == 1)
-                                                <span class="badge badge-danger">BLOKIR</span>
+                                            @if ($value->session_android != null)
+                                                <span class="badge badge-danger">LOCKED</span>
                                             @else
-                                                <span class="badge badge-primary">AKTIF</span>
+                                                <span class="badge badge-primary">UNLOCKED</span>
                                             @endif
-
-
-
                                         <td>
-                                            <a href="" class="btn btn-xs btn-danger">
-                                                RESET AKUN
-                                            </a>
+                                            @if ($value->session_android)
+                                                <a onClick="hapus({{ $value->id }})" class="btn btn-xs btn-danger">
+                                                    <form action="{{ route('akun.reset', ['id' => $value->id]) }}"
+                                                        method="post" id="form{{ $value->id }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                        RESET AKUN
+                                                    </form>
+                                                </a>
+                                            @endif
                                         </td>
+
+
                                     </tr>
                                 @endforeach
 
@@ -177,6 +183,24 @@
                 });
                 $('.select2').select2();
             });
+        </script>
+
+        <script>
+            function hapus(id) {
+                Swal.fire({
+                    title: "Yakin Ingin Reset Data?",
+                    showDenyButton: true,
+                    confirmButtonText: "Oke!",
+                    denyButtonText: `Batal`
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        var form = $("#form" + id).submit();
+                    } else if (result.isDenied) {
+                        Swal.fire("Data Gagal Dihapus", "", "info");
+                    }
+                });
+            }
         </script>
     @endsection
 
