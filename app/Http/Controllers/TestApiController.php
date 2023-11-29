@@ -179,7 +179,7 @@ class TestApiController extends BaseController
             $d[][$key] = $value;
         }
 
-        return $this->sendResponse($d, "Jadwal Berhasil Diambil");
+        return $this->sendResponse($d ?? [], "Jadwal Berhasil Diambil");
     }
 }
 
