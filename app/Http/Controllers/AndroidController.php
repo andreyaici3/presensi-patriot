@@ -41,7 +41,7 @@ class AndroidController extends Controller
 
     public function reset($id)
     {
-        $email = User::find($id)->email;
+        $email = AkunGuru::find($id)->email;
 
         try {
             SessionAndroid::where('email', $email)->delete();
