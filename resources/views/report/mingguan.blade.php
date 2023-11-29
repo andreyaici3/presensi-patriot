@@ -43,8 +43,12 @@
                                             </span> - 
                                             <span class="badge badge-primary">
                                                 @php
+                                                    if ($value->jamTerpakai > 0){
+                                                        $sepersen =  ($value->jamTerpakai / $value->jamSeluruhnya) * 100;
+                                                    } else {
+                                                        $sepersen = "0";
+                                                    }
                                                     
-                                                    $sepersen =  ($value->jamTerpakai / $value->jamSeluruhnya) * 100;
 
                                                 @endphp
                                                 {{ $sepersen . " %"}}
