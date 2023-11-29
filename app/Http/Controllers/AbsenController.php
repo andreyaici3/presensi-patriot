@@ -42,8 +42,8 @@ class AbsenController extends Controller
 
     public function reportMingguan()
     {
-        $tanggalSekarang = date('Y-m-d');
-        // $tanggalSekarang = "2023-11-01";
+        // $tanggalSekarang = date('Y-m-d');
+        $tanggalSekarang = "2023-11-01";
         
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
         $tanggalAwal = null;
