@@ -25,6 +25,11 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_kelas');
     }
+    
+
+    public function MJ(){
+        return $this->belongsTo(MasterJadwal::class, 'id_jadwal');
+    }
 
     
 }
