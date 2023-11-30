@@ -169,16 +169,18 @@ class TestApiController extends BaseController
 
     public function getJadwalByGuruV1($kode_guru){
        
-        $jadwal = Jadwal::where('kode_guru', $kode_guru)->orderBy('id_hari', 'ASC')->get()->sortBy('master_jadwal.jam_ke');;
+        $jadwal = Jadwal::where('kode_guru', $kode_guru)->orderBy('id_hari', 'ASC')->get()->sortBy('master_jadwal.jam_ke');
         $data = [];
         foreach ($jadwal as $jd){
             $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i'). " - " .Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
         }
 
+        ksort($data, SORT_STRING);
+
         foreach ($data as $key => $value) {
             $d[][$key] = $value;
         }
-
+                
         return $this->sendResponse($d ?? [], "Jadwal Berhasil Diambil");
 
     }
