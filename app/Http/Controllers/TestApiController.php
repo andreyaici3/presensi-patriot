@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use PDO;
 
 class TestApiController extends BaseController
@@ -57,14 +58,14 @@ class TestApiController extends BaseController
 
         $jadwal = Jadwal::where('id_kelas', "=", $id_kelas)->where("kode_guru", "=", $kode_guru)->where("id_hari", "=", $dataHari->id)->get();
         $counter = $jadwal->count();
-        if ( $counter > 0) {
+        if ($counter > 0) {
             $dataAbsen = Absensi::where('kode_guru', $kode_guru)->where('id_kelas', $id_kelas)->whereDate('created_at', "=", Carbon::today()->toDateString())->get();
-            
-            if ( $dataAbsen->count() < 1) {
+
+            if ($dataAbsen->count() < 1) {
 
                 if (Carbon::now()->format('H:i:s') > $jadwal[0]->master_jadwal->jam->mulai) {
-                    
-                    for ($i=$counter; $i>0; $i--){
+
+                    for ($i = $counter; $i > 0; $i--) {
 
                         if (Carbon::now()->format('H:i:s') <  $jadwal[$i - 1]->master_jadwal->jam->selesai) {
                             $string = "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Masuk Dikelas " . $jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Pada " . Carbon::now()->isoFormat('dddd, D MMM Y') . " Pukul " . now()->format('H:i:s') . " WIB";
@@ -83,7 +84,7 @@ class TestApiController extends BaseController
                         } else {
                             $data = [
                                 "kode_guru" => $kode_guru,
-                                'keterangan' => "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Dikelas ". $jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Telat",
+                                'keterangan' => "Jam Ke - " . $jadwal[$i - 1]->master_jadwal->jam_ke . " Dikelas " . $jadwal[$i - 1]->kelas->nama_kelas . "-" . $jadwal[$i - 1]->kelas->jurusan->kode_jurusan . "-" . $jadwal[$i - 1]->kelas->rombel . " Telat",
                                 "status_hadir" => "0",
                                 "id_kelas" => $id_kelas,
                                 "hari" => $jadwal[$i - 1]->master_jadwal->hari->nama,
@@ -95,13 +96,11 @@ class TestApiController extends BaseController
                         }
                         $input = Absensi::create($data);
                         $arr[] = $input;
-                        
                     }
                     return $this->sendResponse($arr, "Absen Berhasil Terimakasih");
-                    
-                }else{
+                } else {
                     return $this->sendError("Tenang, Anda Belum Masuk Jam Pelajaran, Sabar Ya Pak / Buk!!!", 406);
-                }                
+                }
             } else {
                 return $this->sendError("Absen Gagal, Anda Sudah Absen Hari Ini", 409);
             }
@@ -110,8 +109,9 @@ class TestApiController extends BaseController
         }
     }
 
-    public function absenSukses(){
-     
+    public function absenSukses()
+    {
+
 
         $data = [
             [
@@ -147,32 +147,33 @@ class TestApiController extends BaseController
         return $this->sendResponse($data, "Absen Berhasil");
     }
 
-    public function absenGagal(){
+    public function absenGagal()
+    {
         return $this->sendError("Tenang Ya Pak / Bu Jadwal Anda Belum Saatnya", 406);
     }
 
-    public function absenSudah(){
+    public function absenSudah()
+    {
         return $this->sendError("Anda Sudah Absen Hari Ini", 409);
     }
 
-    public function getJadwalByGuru($kode_guru){
+    public function getJadwalByGuru($kode_guru)
+    {
         $jadwal = Jadwal::where('kode_guru', $kode_guru)->get();
 
-        foreach ($jadwal as $jd){
-            $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i'). " - " .Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
-           
+        foreach ($jadwal as $jd) {
+            $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i') . " - " . Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
         }
         return $this->sendResponse($data, "Jadwal Berhasil Diambil");
-
-        
     }
 
-    public function getJadwalByGuruV1($kode_guru){
-       
+    public function getJadwalByGuruV1($kode_guru)
+    {
+
         $jadwal = Jadwal::where('kode_guru', $kode_guru)->orderBy('id_hari', 'ASC')->get()->sortBy('master_jadwal.jam_ke');
         $data = [];
-        foreach ($jadwal as $jd){
-            $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i'). " - " .Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
+        foreach ($jadwal as $jd) {
+            $data[$jd->id_hari][] = Carbon::parse($jd->master_jadwal->jam->mulai)->format('H.i') . " - " . Carbon::parse($jd->master_jadwal->jam->selesai)->format('H.i') . ": " . $jd->kelas->nama_kelas . "-" . $jd->kelas->jurusan->kode_jurusan . "-" . $jd->kelas->rombel;
         }
 
         ksort($data, SORT_STRING);
@@ -180,9 +181,52 @@ class TestApiController extends BaseController
         foreach ($data as $key => $value) {
             $d[][$key] = $value;
         }
-                
-        return $this->sendResponse($d ?? [], "Jadwal Berhasil Diambil");
 
+        return $this->sendResponse($d ?? [], "Jadwal Berhasil Diambil");
+    }
+
+    public function checkAbsen($kode_guru)
+    {
+
+        $dataHari = Hari::where('nama', Carbon::now()->isoFormat('dddd'))->first();
+        $jadwal = Jadwal::with('master_jadwal')->where("kode_guru", "=", $kode_guru)->where("id_hari", "=", $dataHari->id)->get();
+
+        $currentTime = now()->format('H:i:s');
+        $data = [];
+        foreach ($jadwal as $jd){
+            
+            $mj = MasterJadwal::where('id', $jd->id_jadwal)->first();
+            $res = Jam::where('id', "=", $mj->id_jam)->whereBetweenColumns(DB::raw("'$currentTime'"), ['mulai', 'selesai'])->first();
+
+            if ($res != null){
+                $data = $mj;
+            }
+        }
+
+        if ($data == []){
+            $response = [
+                "jamKe" => "Tidak Ada Jam Mengajar",
+                "statusAbsen" => "Tidak Perlu Absen"
+            ];
+            return $this->sendResponse($response, "Berhasil Ambil Data");
+        } else {
+            
+            $absensi = Absensi::where([
+                ['kode_guru',"=", $kode_guru],
+                ["hari", "=", $dataHari->nama]
+            ])->get();
+
+            if (count($absensi) > 0){
+                $waktuAbsenTerakhir = str_replace(" WIB", "", $absensi[count($absensi)-1]->waktu_absen);
+            } else {
+                $waktuAbsenTerakhir = "00:00:00";
+            }
+            
+            $response = [
+                "jamKe" => "Jam Ke: $data->jam_ke",
+                "statusAbsen" => ($waktuAbsenTerakhir>= $data->jam->mulai && $waktuAbsenTerakhir<=$data->jam->selesai) ? "Anda Sudah Absen" : "Anda Belum Absen",
+            ];
+            return $this->sendResponse($response, "Berhasil Ambil Data");
+        }
     }
 }
-

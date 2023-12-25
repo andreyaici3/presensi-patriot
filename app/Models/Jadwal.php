@@ -31,5 +31,9 @@ class Jadwal extends Model
         return $this->belongsTo(MasterJadwal::class, 'id_jadwal');
     }
 
+    public function mjs(){
+        return $this->hasMany(MasterJadwal::class, 'id_jadwal');
+    }
+
     
 }

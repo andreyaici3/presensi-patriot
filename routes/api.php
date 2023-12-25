@@ -33,6 +33,7 @@ Route::controller(TestApiController::class)->group(function(){
     Route::get('/absen-sudah', 'absenSudah');
     Route::get('/getJadwal/{id}', 'getJadwalByGuru');
     Route::get('/getJadwalV1/{id}', 'getJadwalByGuruV1');
+    Route::get('/checkAbsen/{kode_guru}', 'checkAbsen');
 });
 
 
