@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\ApiControllers\ApiRequestTest;
+use App\Http\Controllers\ApiControllers\ScrapController;
 use App\Http\Controllers\TestApiController;
 use App\Models\Guru;
 use Illuminate\Http\Request;
@@ -52,4 +53,8 @@ Route::controller(ApiRequestTest::class)->group(function(){
 
 Route::controller(ReportPerformaController::class)->group(function(){
     Route::post('/performa', 'mainFunction');
+});
+
+Route::controller(ScrapController::class)->group(function(){
+    Route::get('/scrapWeb', 'index');
 });

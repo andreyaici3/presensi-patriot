@@ -170,6 +170,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        // Some more providers
+        Weidner\Goutte\GoutteServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -187,6 +189,8 @@ return [
         // 'Example' => App\Facades\Example::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'MyHelp' => App\Helpers\MyHelper::class,
+        // 'Goutte' => Weidner\Goutte\GoutteFacade::class,
+        'Goutte' => \Weidner\Goutte\GoutteFacade::class,
     ])->toArray(),
 
 ];
