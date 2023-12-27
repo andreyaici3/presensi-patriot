@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ApiControllers\ReportPerformaController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\ApiControllers\ApiRequestTest;
 use App\Http\Controllers\TestApiController;
 use App\Models\Guru;
 use Illuminate\Http\Request;
@@ -42,4 +44,12 @@ Route::controller(AuthenticationController::class)->group(function(){
     Route::post('/authentication', 'apiLogin');
     Route::post('/authentication-test', 'testApiLoginSukses');
     
+});
+
+Route::controller(ApiRequestTest::class)->group(function(){
+    Route::post('/post', 'post');
+});
+
+Route::controller(ReportPerformaController::class)->group(function(){
+    Route::post('/performa', 'mainFunction');
 });
