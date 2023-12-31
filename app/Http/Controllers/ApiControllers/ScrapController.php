@@ -3,12 +3,7 @@
 namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Api\BaseController;
-use Illuminate\Support\Facades\Http;
-use App\Http\Controllers\Controller;
-use Goutte\Client;
-use Illuminate\Http\Request;
 use Symfony\Component\DomCrawler\Crawler;
-use Weidner\Goutte\GoutteFacade;
 
 class ScrapController extends BaseController
 {
