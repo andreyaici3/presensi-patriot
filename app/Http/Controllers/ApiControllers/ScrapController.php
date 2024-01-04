@@ -29,7 +29,6 @@ class ScrapController extends BaseController
                 ];
             });
 
-
             return $this->sendResponse($companies, "Postingan Berhasil Diambil");
         } catch (\Throwable $th) {
             return $this->sendError("Periksa Kembali URL Anda", 404);

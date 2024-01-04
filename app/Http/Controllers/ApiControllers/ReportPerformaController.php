@@ -36,7 +36,7 @@ class ReportPerformaController extends BaseController
             "hari" => $dataHari->nama,
             "jamSeluruhnya" => $totalAbsen,
             "jamTerpakai" => $kehadiran,
-            "prosentaseHadir" => $kehadiran / $totalAbsen,
+            "prosentaseHadir" => ($kehadiran == 0) ? 0 : $kehadiran / $totalAbsen,
         ];
         return $data;
     }
