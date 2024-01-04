@@ -12,7 +12,7 @@ class ScrapController extends BaseController
 
         $client = new \GuzzleHttp\Client();
         try {
-            $response = $client->get('https://smkpatriot-kngsss.sch.id/');
+            $response = $client->get('https://smkpatriot-kng.sch.id/');
             $html = (string) $response->getBody();
             $website = new Crawler($html);
             $companies = $website->filter("div.rounded-0 > div.row ")->each(function ($node) {
@@ -28,6 +28,7 @@ class ScrapController extends BaseController
                     "viewPost" => trim($exp[2])
                 ];
             });
+
 
             return $this->sendResponse($companies, "Postingan Berhasil Diambil");
         } catch (\Throwable $th) {
