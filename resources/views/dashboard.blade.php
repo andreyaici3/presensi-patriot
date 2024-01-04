@@ -1,4 +1,4 @@
-<x-app-layout menuActive="dashboard">
+<x-app-layout menuActive="monitor">
     @section('breadcrumb')
         <div class="col-sm-6">
             <h1 class="m-0">Dashboard</h1>

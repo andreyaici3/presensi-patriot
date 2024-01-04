@@ -15,7 +15,14 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function __invoke()
+
+    public function index()
+    {
+        return view('index.depan');
+
+    }
+
+    public function monitor()
     {
         $kelas = Kelas::orderBy('id_jurusan', "ASC")->get();
         $currentTime = now()->format('H:i:s');
@@ -26,37 +33,13 @@ class DashboardController extends Controller
             $value["status"] = $cek != null ? ($currentTime >= $cek[0]->mulai && $currentTime <= $cek[count($cek)-1]->selesai) : false;
           
         }
-
-        // return $kelas;
-
-
+        
         return view('dashboard', [
             'jurusan' => Jurusan::get(),
             'kelas' => $kelas,
 
         ]);
 
-    }
-
-    private function cekJamActive1($id_kelas = null)
-    {
-
-        $dataHari = Hari::where('nama', Carbon::now()->isoFormat('dddd'))->first();
-        $jadwal = Jadwal::where('id_kelas', '=', $id_kelas)->where('id_hari', "=", $dataHari->id)->get();
-        $currentTime = now()->format('H:i:s');
-
-        foreach ($jadwal as $jd) {
-            $masterJadwal = MasterJadwal::where('id_hari', '=', $dataHari->id)->where('id', "=", $jd->id_jadwal)->get();
-
-            foreach ($masterJadwal as $row) {
-                $data = Jam::where("id", "=", $row->id_jam)->whereBetweenColumns(DB::raw("'$currentTime'"), ['mulai', 'selesai'])->first();
-                if ($data) {
-                    $jam = $data;
-                }
-            }
-        }
-
-        return $jam ?? null;
     }
 
     private function cekJamActive($id_kelas = null)
@@ -89,10 +72,6 @@ class DashboardController extends Controller
                     }
                 }
             }
-
-            // foreach (($jam ?? []) as $j){
-            //     if($j->se)
-            // }
         }
 
         return $jam ?? null;

@@ -6,10 +6,8 @@ use App\Models\Guru;
 use App\Models\Hari;
 use App\Models\Jadwal;
 use App\Models\Jam;
-use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\MasterJadwal;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller

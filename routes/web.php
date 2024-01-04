@@ -13,12 +13,14 @@ use App\Http\Controllers\MasterJadwalController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\LoginRegisterController;
+use App\Http\Controllers\SiswaController\AuthSiswaController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
-        Route::get('/', DashboardController::class)->name('dashboard');
+        Route::get('/monitor', 'monitor')->name('dashboard.monitor');
+        Route::get('/', 'index')->name('dashboard');
     });
     
     Route::controller(GuruController::class)->group(function () {
@@ -120,7 +122,11 @@ Route::middleware('guest')->group(function(){
     Route::controller(AuthenticationController::class)->group(function() {
         Route::get('/login', 'login')->name('login');
         Route::post('/authenticate', 'authenticate')->name('auth.authenticate');    
-       
+    });
+
+    Route::controller(AuthSiswaController::class)->group(function(){
+        Route::get('/registration', 'register')->name('siswa.register');
+        Route::post('/registration', 'store')->name('siswa.register.store');
     });
     
 });

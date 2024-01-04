@@ -27,15 +27,16 @@
                         <a href="/" class="nav-link {{ $menuActive == null ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                Dashboard {{ $menuActive }}
                             </p>
                         </a>
                     </li>
+                    <li class="nav-header">Menu Guru</li>
                     <li class="nav-item {{ $menuOpen == 'master' ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ $menuOpen == 'master' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
-                                Data Master
+                                Data Master Guru
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -107,26 +108,60 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('report.harian') }}" class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
+                                <a href="{{ route('report.harian') }}"
+                                    class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Harian</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.mingguan') }}" class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
+                                <a href="{{ route('report.mingguan') }}"
+                                    class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Mingguan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.bulanan') }}" class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
+                                <a href="{{ route('report.bulanan') }}"
+                                    class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Bulanan</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.monitor') }}" class="nav-link {{ $menuActive == 'monitor' ? 'active' : '' }}">
+                            <i class="fas fa-plus-square nav-icon"></i>
+                            <p>
+                                Monitor Kelas
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">Menu Siswa</li>
+                    <li class="nav-item {{ $menuOpen == 'masterSiswa' ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ $menuOpen == 'masterSiswa' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Data Master Siswa
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/siswa" class="nav-link {{ $menuActive == 'siswa' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Data Siswa</p>
+                                </a>
+                            </li>
+                           
+
+                        </ul>
+                    </li>
                     @if (Auth::user()->role == 'superuser')
+                        <li class="nav-header">Menu Superuser</li>
                         <li class="nav-item">
                             <a href="/operator" class="nav-link {{ $menuActive == 'operator' ? 'active' : '' }}">
                                 <i class="fas fa-users nav-icon"></i>
@@ -145,7 +180,7 @@
                             </a>
                         </li>
                     @endif
-                    
+
 
 
                     <li class="nav-item">
