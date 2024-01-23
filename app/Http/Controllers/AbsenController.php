@@ -20,9 +20,14 @@ class AbsenController extends Controller
         ]);
     }
 
-    public function reportBulanan()
+    public function reportBulanan(Request $request)
     {
-        $tanggalSekarang = date('Y-m-d');
+        if (isset($request->date)){
+            $tanggalSekarang = $request->date;
+        } else {
+            $tanggalSekarang = date('Y-m-d');
+        }
+        
         // $tanggalSekarang = "2023-11-01";
 
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
@@ -71,9 +76,16 @@ class AbsenController extends Controller
         ]);
     }
 
-    public function reportMingguan()
+    public function reportMingguan(Request $request)
     {
-        $tanggalSekarang = date('Y-m-d');
+        if (isset($request->date)){
+            
+            $tanggalSekarang = $request->date;
+        } else {
+            $tanggalSekarang = date('Y-m-d');
+        }
+
+        
         // $tanggalSekarang = "2023-11-01";
 
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);

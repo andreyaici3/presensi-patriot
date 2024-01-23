@@ -27,7 +27,7 @@
                         <a href="/" class="nav-link {{ $menuActive == null ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard {{ $menuActive }}
+                                Dashboard
                             </p>
                         </a>
                     </li>

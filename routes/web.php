@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function(){
     Route::controller(AbsenController::class)->group(function () {
         Route::get('/absen', 'index');
         Route::get('/report/mingguan', 'reportMingguan')->name('report.mingguan');
+        Route::post('/report/mingguan', 'reportMingguan');
         Route::get('/report/harian', 'reportHarian')->name('report.harian');
         Route::get('/report/bulanan', 'reportBulanan')->name('report.bulanan');
     });

@@ -42,7 +42,12 @@
                                                 <span class="badge badge-primary">
                                                     @php
                                                         if ($value->jamTerpakai > 0) {
-                                                            $sepersen = number_format(($value->jamTerpakai / $value->jamSeluruhnya) * 100, 2);
+                                                            if ($value->jamSeluruhnya > 0){
+                                                                $sepersen = number_format(($value->jamTerpakai / $value->jamSeluruhnya) * 100, 2);
+                                                            } else {
+                                                                $sepersen = number_format($value->jamTerpakai, 2);
+                                                            }
+                                                            
                                                         } else {
                                                             $sepersen = '0';
                                                         }
