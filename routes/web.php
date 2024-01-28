@@ -110,6 +110,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/report/mingguan', 'reportMingguan');
         Route::get('/report/harian', 'reportHarian')->name('report.harian');
         Route::get('/report/bulanan', 'reportBulanan')->name('report.bulanan');
+        Route::get('/report/mingguan/export', 'exportPdfMingguan')->name('report.mingguan.export');
+        Route::post('/report/mingguan/export', 'exportPdfMingguan');
     });
     
 

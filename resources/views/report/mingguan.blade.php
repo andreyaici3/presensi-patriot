@@ -17,7 +17,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="" method="POST" name="filter">
                             @csrf
                             <div class="form-group">
                                 <label for="tanggal">Pilih Tanggal</label>
@@ -26,7 +26,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Data
                             </button>
-                            <button type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i> Export Pdf</button>
+                            <button type="button" class="btn btn-danger" name="expdf"><i class="fas fa-file-pdf"></i> Export Pdf</button>
                         </form>
                     </div>
                 </div>
@@ -115,7 +115,11 @@
                     "autoWidth": false,
                     "ordering": false,
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
+                $("button[name=expdf]").click(function(){
+                    var component = $("form[name='filter']");
+                    component.attr("action", "{{ route('report.mingguan.export') }}");
+                    component.submit();
+                })
             });
         </script>
     @endsection

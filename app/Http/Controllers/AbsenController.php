@@ -86,42 +86,13 @@ class AbsenController extends Controller
         }
 
         
-        // $tanggalSekarang = "2023-11-01";
-
-        $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
-        $tanggalAwal = null;
-        foreach ($dataAwalMinggu as $value) {
-            if ($tanggalSekarang >= $value)
-                $tanggalAwal[] = $value;
-        }
-
-        if ($tanggalAwal == null) {
-            $dateOneMonthAdded = strtotime(date("Y-m-d", strtotime($tanggalSekarang)) . "-1 month");
-            $dataAwalMinggu = $this->getMingguKeBerapa(date('Y-m-d', $dateOneMonthAdded));
-            $format = end($dataAwalMinggu);
-        } else {
-            $format = end($tanggalAwal);
-        }
-
-
-
-        $seminggu = abs(5 * 86400);
-        $awal = strtotime($format);
-        $akhir = strtotime($format) + $seminggu;
-        $guru = Guru::orderBy('kode_guru', 'ASC')->get();
-
-        foreach ($guru as $value) {
-            for ($i = $awal; $i <= $akhir; $i += 86400) {
-                $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru);
-                $value["jamTerpakai"] += $this->getDataAbsen(date('Y-m-d', $i), $value->kode_guru)->count();
-            }
-        }
-
+        $guru = $this->getDataMingguan($tanggalSekarang);
+       
         return view('report.mingguan', [
-            'report' => $guru,
+            'report' => $guru["guru"],
             'tanggal' => [
-                'awal' => date('d-m-Y', $awal),
-                'akhir' => date('d-m-Y', $akhir),
+                'awal' => $guru["awal"],
+                'akhir' => $guru["akhir"],
             ]
         ]);
     }
@@ -157,5 +128,56 @@ class AbsenController extends Controller
             ['kode_guru', '=', $kode_guru],
             ["status_hadir", "=", 1]
         ])->get();
+    }
+
+    public function exportPdfMingguan(Request $request){
+     
+        $guru = $this->getDataMingguan($request->date);
+
+
+        return view('absen.report', [
+            'report' => $guru["guru"],
+            'tanggal' => [
+                'awal' => $guru["awal"],
+                'akhir' => $guru["akhir"],
+            ]
+        ]);
+    }
+
+    private function getDataMingguan($tanggalSekarang){
+        $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
+        $tanggalAwal = null;
+        foreach ($dataAwalMinggu as $value) {
+            if ($tanggalSekarang >= $value)
+                $tanggalAwal[] = $value;
+        }
+
+        if ($tanggalAwal == null) {
+            $dateOneMonthAdded = strtotime(date("Y-m-d", strtotime($tanggalSekarang)) . "-1 month");
+            $dataAwalMinggu = $this->getMingguKeBerapa(date('Y-m-d', $dateOneMonthAdded));
+            $format = end($dataAwalMinggu);
+        } else {
+            $format = end($tanggalAwal);
+        }
+
+
+
+        $seminggu = abs(5 * 86400);
+        $awal = strtotime($format);
+        $akhir = strtotime($format) + $seminggu;
+        $guru = Guru::orderBy('kode_guru', 'ASC')->get();
+
+        foreach ($guru as $value) {
+            for ($i = $awal; $i <= $akhir; $i += 86400) {
+                $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru);
+                $value["jamTerpakai"] += $this->getDataAbsen(date('Y-m-d', $i), $value->kode_guru)->count();
+            }
+        }
+
+        return [
+            "guru" =>  $guru,
+            "awal" => date('d-m-Y', $awal),
+            "akhir" => date('d-m-Y', $akhir),
+        ];
     }
 }
