@@ -140,6 +140,27 @@
                         </a>
                     </li>
 
+                    <li class="nav-header">Menu Staff</li>
+                    <li class="nav-item {{ $menuOpen == 'masterStaff' ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ $menuActive == 'masterStaff' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Data Master Staff
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('wakasek.staff') }}" class="nav-link {{ $menuActive == 'masterStaff' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Data Staff</p>
+                                </a>
+                            </li>
+                           
+
+                        </ul>
+                    </li>
+
                     <li class="nav-header">Menu Siswa</li>
                     <li class="nav-item {{ $menuOpen == 'masterSiswa' ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ $menuOpen == 'masterSiswa' ? 'active' : '' }}">
@@ -179,6 +200,18 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('superuser.database') }}" class="nav-link {{ $menuActive == "database" ? 'active' : '' }}">
+                                <i class="fas fa-database nav-icon"></i>
+                                <p>
+                                    Database
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+
+                        
                     @endif
 
 

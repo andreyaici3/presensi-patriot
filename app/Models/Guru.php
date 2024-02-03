@@ -13,7 +13,7 @@ class Guru extends Model
 
     protected $table = 'master_guru';
 
-    protected $guarded = [];
+    protected $fillable = ["kode_guru", "nik", "nama_guru", "email", "jabatan"];
 
     public function jadwal()
     {

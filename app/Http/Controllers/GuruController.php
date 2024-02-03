@@ -10,7 +10,7 @@ class GuruController extends Controller
     public function index(Request $request)
     {
         return view('guru.index',[
-            'gurus' => Guru::get(),
+            'gurus' => Guru::where("jabatan", "guru")->get(),
             'urut' => 1,
         ]);
     }

@@ -14,6 +14,8 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\SiswaController\AuthSiswaController;
+use App\Http\Controllers\Superuser\DatabasesController;
+use App\Http\Controllers\Wakasek\StaffController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -147,3 +149,22 @@ Route::get('/sample/{id}', [JadwalController::class, 'getJadwalByGuru']);
 
 //Route 
 Route::get('/test', [WaktuController::class, "test"]);
+
+
+//Mulai Mengalihkan Routing ke Middleware
+Route::middleware(["auth", "user-role:superuser"])->group(function(){
+    Route::controller(DatabasesController::class)->group(function(){
+        Route::get("/database", "index")->name("superuser.database");
+    });
+});
+
+Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
+    Route::controller(StaffController::class)->group(function(){
+        Route::get("/staff", "index")->name("wakasek.staff");
+        Route::get("/staff/create", "create")->name("wakasek.staff.create");
+        Route::post("/staff", "store");
+        Route::get("/staff/{id_staff}/edit", "edit")->name("wakasek.staff.edit");
+        Route::put("/staff/{id_staff}", "update")->name("wakasek.staff.update");
+        Route::delete("/staff/{id_staff}", "destroy");
+    });
+});
