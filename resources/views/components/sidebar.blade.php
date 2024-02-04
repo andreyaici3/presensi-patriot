@@ -32,6 +32,19 @@
                         </a>
                     </li>
 
+                    @if (Auth::user()->role == 'kepsek')
+                        <li class="nav-header">Menu Kepala Sekolah</li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.monitor') }}"
+                                class="nav-link {{ $menuActive == 'monitor' ? 'active' : '' }}">
+                                <i class="fas fa-plus-square nav-icon"></i>
+                                <p>
+                                    Monitor Kelas
+                                </p>
+                            </a>
+                        </li>
+                    @endif
+
                     @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'user')
                         <li class="nav-header">Menu Guru</li>
                         <li class="nav-item {{ $menuOpen == 'master' ? 'menu-open' : '' }}">
