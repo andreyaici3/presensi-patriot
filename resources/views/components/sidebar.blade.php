@@ -43,7 +43,7 @@
                                 </p>
                             </a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a href="/absen" class="nav-link {{ $menuActive == 'absen' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-person-booth"></i>
                                 <p>
@@ -213,28 +213,30 @@
                         </li>
                     @endif
 
+                    @if (Auth::user()->role == 'superuser')
+                        <li class="nav-header">Menu Siswa</li>
+                        <li class="nav-item {{ $menuOpen == 'masterSiswa' ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ $menuOpen == 'masterSiswa' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Data Master Siswa
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/siswa" class="nav-link {{ $menuActive == 'siswa' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Siswa</p>
+                                    </a>
+                                </li>
 
 
-                    <li class="nav-header">Menu Siswa</li>
-                    <li class="nav-item {{ $menuOpen == 'masterSiswa' ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ $menuOpen == 'masterSiswa' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Data Master Siswa
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/siswa" class="nav-link {{ $menuActive == 'siswa' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Siswa</p>
-                                </a>
-                            </li>
+                            </ul>
+                        </li>
+                    @endif
 
 
-                        </ul>
-                    </li>
                     @if (Auth::user()->role == 'superuser')
                         <li class="nav-header">Menu Superuser</li>
                         <li class="nav-item">
