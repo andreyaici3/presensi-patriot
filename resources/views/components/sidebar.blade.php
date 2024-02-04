@@ -31,115 +31,118 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header">Menu Guru</li>
-                    <li class="nav-item {{ $menuOpen == 'master' ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ $menuOpen == 'master' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-th"></i>
-                            <p>
-                                Data Master Guru
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="/guru" class="nav-link {{ $menuActive == 'guru' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Guru</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/kelas" class="nav-link {{ $menuActive == 'kelas' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Kelas</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/jurusan" class="nav-link {{ $menuActive == 'jurusan' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Jurusan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/waktu" class="nav-link {{ $menuActive == 'waktu' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Master Jam</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/master-jadwal"
-                                    class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Master Jadwal</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/jadwal" class="nav-link {{ $menuActive == 'jadwal' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Data Jadwal Guru</p>
-                                </a>
-                            </li>
 
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/absen" class="nav-link {{ $menuActive == 'absen' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-person-booth"></i>
-                            <p>
-                                Catatan Absen
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/android" class="nav-link {{ $menuActive == 'akunGuru' ? 'active' : '' }}">
-                            <i class="fas fa-server nav-icon"></i>
-                            <p>
-                                Akun Guru
-                            </p>
-                        </a>
-                    </li>
+                    @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'user')
+                        <li class="nav-header">Menu Guru</li>
+                        <li class="nav-item {{ $menuOpen == 'master' ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ $menuOpen == 'master' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Data Master Guru
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/guru" class="nav-link {{ $menuActive == 'guru' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Guru</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kelas" class="nav-link {{ $menuActive == 'kelas' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Kelas</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/jurusan" class="nav-link {{ $menuActive == 'jurusan' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Jurusan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/waktu" class="nav-link {{ $menuActive == 'waktu' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Master Jam</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/master-jadwal"
+                                        class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Master Jadwal</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/jadwal" class="nav-link {{ $menuActive == 'jadwal' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Jadwal Guru</p>
+                                    </a>
+                                </li>
 
-                    <li class="nav-item {{ $menuOpen == 'report' ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ $menuOpen == 'report' ? 'active' : '' }}">
-                            <i class="fas fa-server nav-icon"></i>
-                            <p>
-                                Report
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('report.harian') }}"
-                                    class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Harian</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('report.mingguan') }}"
-                                    class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Mingguan</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('report.bulanan') }}"
-                                    class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Bulanan</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/absen" class="nav-link {{ $menuActive == 'absen' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-person-booth"></i>
+                                <p>
+                                    Catatan Absen
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/android" class="nav-link {{ $menuActive == 'akunGuru' ? 'active' : '' }}">
+                                <i class="fas fa-server nav-icon"></i>
+                                <p>
+                                    Akun Guru
+                                </p>
+                            </a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard.monitor') }}"
-                            class="nav-link {{ $menuActive == 'monitor' ? 'active' : '' }}">
-                            <i class="fas fa-plus-square nav-icon"></i>
-                            <p>
-                                Monitor Kelas
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item {{ $menuOpen == 'report' ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ $menuOpen == 'report' ? 'active' : '' }}">
+                                <i class="fas fa-server nav-icon"></i>
+                                <p>
+                                    Report
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('report.harian') }}"
+                                        class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Harian</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('report.mingguan') }}"
+                                        class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Mingguan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('report.bulanan') }}"
+                                        class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bulanan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.monitor') }}"
+                                class="nav-link {{ $menuActive == 'monitor' ? 'active' : '' }}">
+                                <i class="fas fa-plus-square nav-icon"></i>
+                                <p>
+                                    Monitor Kelas
+                                </p>
+                            </a>
+                        </li>
+                    @endif
 
                     @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'wakasek' || Auth::user()->role == 'kepsek')
                         <li class="nav-header">Menu Staff</li>
