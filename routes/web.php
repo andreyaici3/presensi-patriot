@@ -15,6 +15,7 @@ use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\SiswaController\AuthSiswaController;
 use App\Http\Controllers\Superuser\DatabasesController;
+use App\Http\Controllers\Wakasek\LogStaffController;
 use App\Http\Controllers\Wakasek\StaffController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -166,5 +167,16 @@ Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
         Route::get("/staff/{id_staff}/edit", "edit")->name("wakasek.staff.edit");
         Route::put("/staff/{id_staff}", "update")->name("wakasek.staff.update");
         Route::delete("/staff/{id_staff}", "destroy");
+
+        Route::get("/staff/akun", "akun")->name("wakasek.staff.akun");
+        Route::delete("/staff/{id_akun}/delete", "destroyAkun")->name("wakasek.staff.akun.delete");
+        Route::post("/staff/akun/create", "createAkun")->name("wakasek.staff.akun.create");        
     });
+
+    Route::controller(LogStaffController::class)->group(function(){
+        Route::get("/staff/log", "index")->name("wakasek.staff.log");
+    });
+    
 });
+
+

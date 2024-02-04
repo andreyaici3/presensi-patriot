@@ -41,7 +41,6 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
@@ -70,5 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\Role::class,
         'user-role' => \App\Http\Middleware\MultiRole::class,
+        "abilities" => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+        "ability" => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
     ];
 }

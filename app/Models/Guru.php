@@ -29,5 +29,9 @@ class Guru extends Model
         return $this->hasOne(AkunGuru::class, 'email', 'email');
     }
 
+    public function session_android(){
+        return $this->hasOne(SessionAndroid::class, 'email', 'email');
+    }
+
    
 }

@@ -17,12 +17,13 @@ class AndroidController extends Controller
 {
     public function index()
     {
-        $user = Guru::doesntHave('akun_guru')->orderBy('nama_guru', 'ASC')->get();
-
+        $user = Guru::doesntHave('akun_guru')->where("jabatan", "=", "guru")->orderBy('nama_guru', 'ASC')->get();
 
         return view('android.index', [
             'user' => $user,
-            'akun' => AkunGuru::with('session_android')->get(),
+            'akun' => AkunGuru::with('session_android')->whereHas("guru", function($query){
+                return $query->where("jabatan", "guru");
+            })->get(),
         ]);
     }
 

@@ -2,8 +2,7 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ route('dashboard') }}" class="brand-link">
-            <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8">
+            <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Presensi SMK Patriot</span>
         </a>
 
@@ -21,8 +20,7 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
                         <a href="/" class="nav-link {{ $menuActive == null ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -66,8 +64,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/master-jadwal"
-                                    class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
+                                <a href="/master-jadwal" class="nav-link {{ $menuActive == 'master-jadwal' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Data Master Jadwal</p>
                                 </a>
@@ -108,22 +105,19 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('report.harian') }}"
-                                    class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
+                                <a href="{{ route('report.harian') }}" class="nav-link {{ $menuActive == 'harian' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Harian</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.mingguan') }}"
-                                    class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
+                                <a href="{{ route('report.mingguan') }}" class="nav-link {{ $menuActive == 'mingguan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Mingguan</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('report.bulanan') }}"
-                                    class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
+                                <a href="{{ route('report.bulanan') }}" class="nav-link {{ $menuActive == 'bulanan' ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Bulanan</p>
                                 </a>
@@ -156,9 +150,22 @@
                                     <p>Data Staff</p>
                                 </a>
                             </li>
-                           
-
+                            <li class="nav-item">
+                                <a href="{{ route('wakasek.staff.akun') }}" class="nav-link {{ $menuActive == 'akunStaff' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Akun Staff</p>
+                                </a>
+                            </li>
                         </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route("wakasek.staff.log") }}" class="nav-link {{ $menuActive == 'logStaff' ? 'active' : ''  }}">
+                            <i class="nav-icon fas fa-person-booth"></i>
+                            <p>
+                                Log Absen Staff
+                            </p>
+                        </a>
                     </li>
 
                     <li class="nav-header">Menu Siswa</li>
@@ -177,48 +184,47 @@
                                     <p>Data Siswa</p>
                                 </a>
                             </li>
-                           
+
 
                         </ul>
                     </li>
                     @if (Auth::user()->role == 'superuser')
-                        <li class="nav-header">Menu Superuser</li>
-                        <li class="nav-item">
-                            <a href="/operator" class="nav-link {{ $menuActive == 'operator' ? 'active' : '' }}">
-                                <i class="fas fa-users nav-icon"></i>
-                                <p>
-                                    Operator
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-code nav-icon"></i>
-                                <p>
-                                    Api
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+                    <li class="nav-header">Menu Superuser</li>
+                    <li class="nav-item">
+                        <a href="/operator" class="nav-link {{ $menuActive == 'operator' ? 'active' : '' }}">
+                            <i class="fas fa-users nav-icon"></i>
+                            <p>
+                                Operator
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-code nav-icon"></i>
+                            <p>
+                                Api
+                                <span class="right badge badge-danger">New</span>
+                            </p>
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('superuser.database') }}" class="nav-link {{ $menuActive == "database" ? 'active' : '' }}">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>
-                                    Database
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="{{ route('superuser.database') }}" class="nav-link {{ $menuActive == "database" ? 'active' : '' }}">
+                            <i class="fas fa-database nav-icon"></i>
+                            <p>
+                                Database
+                                <span class="right badge badge-danger">New</span>
+                            </p>
+                        </a>
+                    </li>
 
-                        
+
                     @endif
 
 
 
                     <li class="nav-item">
-                        <a href="{{ route('logout') }}" class="nav-link"
-                            onclick="event.preventDefault();
+                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf

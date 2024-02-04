@@ -6,6 +6,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\ApiControllers\ApiRequestTest;
 use App\Http\Controllers\ApiControllers\ScrapController;
+use App\Http\Controllers\ApiControllers\v1\staff\ApiStaffController;
 use App\Http\Controllers\TestApiController;
 use App\Models\Guru;
 use Illuminate\Http\Request;
@@ -57,4 +58,18 @@ Route::controller(ReportPerformaController::class)->group(function(){
 
 Route::controller(ScrapController::class)->group(function(){
     Route::get('/scrapWeb', 'index');
+});
+
+
+//V1
+//staff
+Route::group(['prefix'=>'v1'],function(){
+    Route::post('/staff/login', [ApiStaffController::class, "login"]);
+    
+    Route::middleware(['auth:sanctum', 'abilities:absen'])->group(function(){
+       Route::controller(ApiStaffController::class)->group(function(){
+        Route::post("/staff/absen/{type}", "absen");
+       });
+    });
+
 });
