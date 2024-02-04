@@ -43,6 +43,23 @@
                                 </p>
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a href="/absen" class="nav-link {{ $menuActive == 'absen' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-person-booth"></i>
+                                <p>
+                                    Log Absen Guru
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('wakasek.staff.log') }}"
+                                class="nav-link {{ $menuActive == 'logStaff' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-person-booth"></i>
+                                <p>
+                                    Log Absen Staff
+                                </p>
+                            </a>
+                        </li>
                     @endif
 
                     @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'user')
@@ -157,7 +174,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'wakasek' || Auth::user()->role == 'kepsek')
+                    @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'wakasek')
                         <li class="nav-header">Menu Staff</li>
                         <li class="nav-item {{ $menuOpen == 'masterStaff' ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ $menuActive == 'masterStaff' ? 'active' : '' }}">
