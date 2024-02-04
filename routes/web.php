@@ -10,15 +10,13 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MasterJadwalController;
-use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\Superuser\OperatorController;
 use App\Http\Controllers\WaktuController;
-use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\SiswaController\AuthSiswaController;
 use App\Http\Controllers\Superuser\DatabasesController;
 use App\Http\Controllers\Wakasek\LogStaffController;
 use App\Http\Controllers\Wakasek\StaffController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
@@ -98,14 +96,7 @@ Route::middleware('auth')->group(function(){
         Route::delete('/android/reset/{id}', 'reset')->name('akun.reset');
     });
 
-    Route::controller(OperatorController::class)->group(function(){
-        Route::get('/operator','index')->name('operator.index');
-        Route::get('/operator/create', 'create')->name('operator.create');
-        Route::post('/operator', 'store')->name('operator.store');
-        Route::get('/operator/{id}/edit', 'edit')->name('operator.edit');
-        Route::PUT('/operator/{id}', 'update')->name('operator.update');
-        Route::DELETE('/operator/{id}', 'destroy')->name('operator.delete');
-    });
+    
 
     Route::controller(AbsenController::class)->group(function () {
         Route::get('/absen', 'index');
@@ -157,6 +148,15 @@ Route::middleware(["auth", "user-role:superuser"])->group(function(){
     Route::controller(DatabasesController::class)->group(function(){
         Route::get("/database", "index")->name("superuser.database");
     });
+
+    Route::controller(OperatorController::class)->group(function(){
+        Route::get('/operator','index')->name('superuser.operator.index');
+        Route::get('/operator/create', 'create')->name('superuser.operator.create');
+        Route::post('/operator', 'store')->name('superuser.operator.store');
+        Route::get('/operator/{id}/edit', 'edit')->name('superuser.operator.edit');
+        Route::PUT('/operator/{id}', 'update')->name('superuser.operator.update');
+        Route::delete('/operator/{id}', 'destroy')->name('superuser.operator.delete');
+    });
 });
 
 Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
@@ -175,8 +175,7 @@ Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
 
     Route::controller(LogStaffController::class)->group(function(){
         Route::get("/staff/log", "index")->name("wakasek.staff.log");
-    });
-    
+    });    
 });
 
 

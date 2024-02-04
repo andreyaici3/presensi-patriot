@@ -11,19 +11,18 @@
         </div><!-- /.col -->
     @endsection
 
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                @if (session('success'))
+                @if (Session::has('sukses'))
                     <div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h5><i class="icon fas fa-check"></i> Berhail!</h5>
-                        {{ session('success') }}
+                        <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
+                        {{ session('sukses') }}
                     </div>
                 @endif
 
-                @if (session('gagal'))
+                @if (Session::has('gagal'))
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h5><i class="icon fas fa-ban"></i> Gagal!</h5>
@@ -58,23 +57,45 @@
                                         <td>{{ $value->email }}</td>
                                         <td>{{ $value->name }}</td>
 
-                                        @if ($value->role == 'user')
-                                            <td>Bid. Kurikulum</td>
-                                        @elseif($value->role == 'kepsek')
-                                            <td>Kepala Sekolah</td>
-                                        @else
-                                            <td>Superuser</td>
-                                        @endif
+                                        <td>
+                                            @php
+                                                switch ($value->role) {
+                                                    case 'kepsek':
+                                                        $role = 'Kepala Sekolah';
+                                                        break;
+                                                    case 'ict':
+                                                        $role = 'Information Center';
+                                                        break;
+                                                    case 'user':
+                                                        $role = 'Bid. Kurikulum';
+                                                        break;
+                                                    case 'wakasek':
+                                                        $role = 'Wakasek';
+                                                        break;
+                                                    case 'bidSiswa':
+                                                        $role = 'Bid. Kesiswaan';
+                                                        break;
+                                                    default:
+                                                        $role = 'Tidak Ditemukan';
+                                                        break;
+                                                }
+                                            @endphp
+
+                                            {{ $role }}
+                                        </td>
 
                                         <td>
-                                            <a href="{{ route('operator.edit', ['id' => $value->id]) }}"
+                                            <a href="{{ route('superuser.operator.edit', ['id' => $value->id]) }}"
                                                 class="btn btn-xs btn-primary">
                                                 <i class="fas fa-edit"></i>
                                                 Edit
                                             </a>
                                             |
-                                            <a onClick="hapus({{ $value->id }})" class="btn btn-xs btn-danger">
-                                                <form action="{{ route('operator.delete', ['id' => $value->id]) }}" method="post" id="form{{ $value->id }}">
+                                            <a onClick="hapus(this.dataset.id)" class="btn btn-xs btn-danger"
+                                                data-id="{{ $value->id }}">
+                                                <form
+                                                    action="{{ route('superuser.operator.delete', ['id' => $value->id]) }}"
+                                                    method="post" id="operatorDelete{{ $value->id }}">
                                                     @csrf
                                                     @method('delete')
                                                     <i class="fas fa-trash"></i>
@@ -94,7 +115,8 @@
         </div>
         <div class="row mt-3">
             <div class="col-3">
-                <a href="{{ route('operator.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> TAMBAH
+                <a href="{{ route('superuser.operator.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                    TAMBAH
                     OPERATOR</a>
             </div>
         </div>
@@ -127,24 +149,24 @@
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
 
-
-
             });
         </script>
 
         <script>
             function hapus(id) {
+
+
                 Swal.fire({
-                    title: "Yakin Ingin Menghapus Data?",
+                    title: "Yakin Ingin Menghapus Operator?",
                     showDenyButton: true,
                     confirmButtonText: "Oke!",
                     denyButtonText: `Batal`
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        var form = $("#form" + id).submit();
+                        var form = $("#operatorDelete" + id).submit();
                     } else if (result.isDenied) {
-                        Swal.fire("Data Gagal Dihapus", "", "info");
+                        Swal.fire("Aksi Dibatalkan", "", "info");
                     }
                 });
             }
@@ -156,4 +178,5 @@
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     @endsection
+
 </x-app-layout>
