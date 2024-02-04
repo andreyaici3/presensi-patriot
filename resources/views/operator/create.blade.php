@@ -49,6 +49,7 @@
                                         <option value="kepsek">Kepala Sekolah</option>
                                         <option value="ict">Information Center</option>
                                         <option value="user">Kurikulum</option>
+                                        <option value="wakasek">Wakasek</option>
                                     </select>
                                 </div>
                             </div>
