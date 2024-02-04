@@ -6,8 +6,10 @@ use App\Models\Absensi;
 use App\Models\Guru;
 use App\Models\Hari;
 use App\Models\Jadwal;
+use PDF;
 use Carbon\Carbon;
 use DateTime;
+
 use Illuminate\Http\Request;
 
 class AbsenController extends Controller
@@ -22,17 +24,17 @@ class AbsenController extends Controller
 
     public function reportBulanan(Request $request)
     {
-        if (isset($request->date)){
+        if (isset($request->date)) {
             $tanggalSekarang = $request->date;
         } else {
             $tanggalSekarang = date('Y-m-d');
         }
-        
+
         // $tanggalSekarang = "2023-11-01";
 
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
 
-        
+
         $seminggu = abs(5 * 86400);
         $awal = strtotime($dataAwalMinggu[0]);
         $akhir = strtotime(end($dataAwalMinggu)) + $seminggu;
@@ -78,16 +80,16 @@ class AbsenController extends Controller
 
     public function reportMingguan(Request $request)
     {
-        if (isset($request->date)){
-            
+        if (isset($request->date)) {
+
             $tanggalSekarang = $request->date;
         } else {
             $tanggalSekarang = date('Y-m-d');
         }
 
-        
+
         $guru = $this->getDataMingguan($tanggalSekarang);
-       
+
         return view('report.mingguan', [
             'report' => $guru["guru"],
             'tanggal' => [
@@ -130,12 +132,12 @@ class AbsenController extends Controller
         ])->get();
     }
 
-    public function exportPdfMingguan(Request $request){
-     
+    public function exportPdfMingguan(Request $request)
+    {
+
         $guru = $this->getDataMingguan($request->date);
 
-
-        return view('absen.report', [
+        return view("absen.report", [
             'report' => $guru["guru"],
             'tanggal' => [
                 'awal' => $guru["awal"],
@@ -144,7 +146,8 @@ class AbsenController extends Controller
         ]);
     }
 
-    private function getDataMingguan($tanggalSekarang){
+    private function getDataMingguan($tanggalSekarang)
+    {
         $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
         $tanggalAwal = null;
         foreach ($dataAwalMinggu as $value) {

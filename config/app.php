@@ -172,6 +172,7 @@ return [
         App\Providers\HelperServiceProvider::class,
         // Some more providers
         Weidner\Goutte\GoutteServiceProvider::class,
+        \Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -191,6 +192,7 @@ return [
         'MyHelp' => App\Helpers\MyHelper::class,
         // 'Goutte' => Weidner\Goutte\GoutteFacade::class,
         'Goutte' => \Weidner\Goutte\GoutteFacade::class,
+        'PDF' => \Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];
