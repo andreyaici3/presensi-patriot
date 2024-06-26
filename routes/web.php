@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/monitor', 'monitor')->name('dashboard.monitor');
         Route::get('/', 'index')->name('dashboard');
     });
-    
+
     Route::controller(GuruController::class)->group(function () {
         Route::get('/guru', 'index');
         Route::get('/guru/create', 'create');
@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function(){
         Route::put('/guru/{id}', 'update');
         Route::delete('/guru/{id}', 'destroy');
     });
-    
+
     Route::controller(KelasController::class)->group(function () {
         Route::get('/kelas', 'index');
         Route::get('/kelas/create', 'create');
@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/kelas/{id}/generate', 'generate');
         Route::delete('/kelas/{id}', 'destroy');
     });
-    
+
     Route::controller(WaktuController::class)->group(function () {
         Route::get('/waktu', 'index');
         Route::get('/waktu/create', 'create');
@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function(){
         Route::put('/waktu/{id}', 'update');
         Route::delete('/waktu/{id}', 'destroy');
     });
-    
+
     Route::controller(JurusanController::class)->group(function () {
         Route::get('/jurusan', 'index');
         Route::get('/jurusan/create', 'create');
@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function(){
         Route::put('/jurusan/{id}', 'update');
         Route::delete('/jurusan/{id}', 'destroy');
     });
-    
+
     Route::controller(JadwalController::class)->group(function () {
         Route::get('/jadwal', 'index');
         Route::get('/jadwal/{kode_guru}/filter', 'filter');
@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function(){
         Route::post("/process-store", "processStore");
         Route::delete("/jadwal/delete/{id}", "destroy");
     });
-    
+
     Route::controller(HariController::class)->group(function () {
         Route::get('/master-jadwal', 'index');
         // Route::get('/hari', 'index');
@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function(){
         Route::put('/hari/{id}', 'update');
         Route::delete('/hari/{id}', 'destroy');
     });
-    
+
     Route::controller(MasterJadwalController::class)->group(function () {
         Route::get('/hari/{id}/kelola', 'kelola_jam');
         Route::get('/master-jadwal/{id}/create', 'create');
@@ -96,7 +96,7 @@ Route::middleware('auth')->group(function(){
         Route::delete('/android/reset/{id}', 'reset')->name('akun.reset');
     });
 
-    
+
 
     Route::controller(AbsenController::class)->group(function () {
         Route::get('/absen', 'index');
@@ -104,28 +104,29 @@ Route::middleware('auth')->group(function(){
         Route::post('/report/mingguan', 'reportMingguan');
         Route::get('/report/harian', 'reportHarian')->name('report.harian');
         Route::get('/report/bulanan', 'reportBulanan')->name('report.bulanan');
+        Route::post('/report/bulanan', 'reportBulanan');
         Route::get('/report/mingguan/export', 'exportPdfMingguan')->name('report.mingguan.export');
         Route::post('/report/mingguan/export', 'exportPdfMingguan');
     });
-    
 
-    
+
+
 
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
-    
+
 });
 
 Route::middleware('guest')->group(function(){
     Route::controller(AuthenticationController::class)->group(function() {
         Route::get('/login', 'login')->name('login');
-        Route::post('/authenticate', 'authenticate')->name('auth.authenticate');    
+        Route::post('/authenticate', 'authenticate')->name('auth.authenticate');
     });
 
     Route::controller(AuthSiswaController::class)->group(function(){
         Route::get('/registration', 'register')->name('siswa.register');
         Route::post('/registration', 'store')->name('siswa.register.store');
     });
-    
+
 });
 
 
@@ -139,7 +140,7 @@ Route::middleware('guest')->group(function(){
 
 Route::get('/sample/{id}', [JadwalController::class, 'getJadwalByGuru']);
 
-//Route 
+//Route
 Route::get('/test', [WaktuController::class, "test"]);
 
 
@@ -170,12 +171,12 @@ Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
 
         Route::get("/staff/akun", "akun")->name("wakasek.staff.akun");
         Route::delete("/staff/{id_akun}/delete", "destroyAkun")->name("wakasek.staff.akun.delete");
-        Route::post("/staff/akun/create", "createAkun")->name("wakasek.staff.akun.create");        
+        Route::post("/staff/akun/create", "createAkun")->name("wakasek.staff.akun.create");
     });
 
     Route::controller(LogStaffController::class)->group(function(){
         Route::get("/staff/log", "index")->name("wakasek.staff.log");
-    });    
+    });
 });
 
 

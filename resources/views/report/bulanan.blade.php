@@ -17,7 +17,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="get">
+                        <form action="" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-1 col-md-12">
                                     <div class="form-group">
