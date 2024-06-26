@@ -24,16 +24,13 @@ class AbsenController extends Controller
 
     public function reportBulanan(Request $request)
     {
-        if (isset($request->date)) {
-            $tanggalSekarang = $request->date;
+
+        if (isset($request->start_month) != null && isset($request->end_month) != null && isset($request->start_year) != null && isset($request->end_year) != null) {
+            $dataAwalMinggu = $this->getMondays($request->start_month, $request->start_year, $request->end_month, $request->end_year);
         } else {
             $tanggalSekarang = date('Y-m-d');
+            $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
         }
-
-        // $tanggalSekarang = "2023-11-01";
-
-        $dataAwalMinggu = $this->getMingguKeBerapa($tanggalSekarang);
-
 
         $seminggu = abs(5 * 86400);
         $awal = strtotime($dataAwalMinggu[0]);
@@ -46,10 +43,21 @@ class AbsenController extends Controller
 
         foreach ($guru as $value) {
             for ($i = $awal; $i <= $akhir; $i += 86400) {
-                $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru) * 4;
+                $value["jamSeluruhnya"] = $this->getJumlahJam($value->kode_guru) * count($dataAwalMinggu);
                 $value["jamTerpakai"] += $this->getDataAbsen(date('Y-m-d', $i), $value->kode_guru)->count();
             }
         }
+
+        if (isset($request->export) == "on"){
+            return view("absen.report", [
+                'report' => $guru,
+                'tanggal' => [
+                    'awal' => date('d-m-Y', $awal),
+                    'akhir' => date('d-m-Y', $akhir),
+                ]
+            ]);
+        }
+
 
         return view('report.bulanan', [
             'report' => $guru,
@@ -132,6 +140,8 @@ class AbsenController extends Controller
         ])->get();
     }
 
+
+
     public function exportPdfMingguan(Request $request)
     {
 
@@ -182,5 +192,22 @@ class AbsenController extends Controller
             "awal" => date('d-m-Y', $awal),
             "akhir" => date('d-m-Y', $akhir),
         ];
+    }
+
+    public function getMondays($startMonth, $startYear, $endMonth, $endYear)
+    {
+        $start = Carbon::createFromDate($startYear, $startMonth, 1);
+        $end = Carbon::createFromDate($endYear, $endMonth, 1)->endOfMonth();
+
+        $mondays = [];
+
+        while ($start->lte($end)) {
+            if ($start->isMonday()) {
+                $mondays[] = $start->toDateString();
+            }
+            $start->addDay();
+        }
+
+        return $mondays;
     }
 }

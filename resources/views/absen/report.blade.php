@@ -216,8 +216,8 @@
                                         $bg = 'bg-danger';
                                     }
                                 } else {
-                                    $predikat = 'Pertahankan';
-                                    $bg = 'bg-success';
+                                    $predikat = 'Tidak Ada Jam Mengajar';
+                                    $bg = 'bg-warning';
                                 }
                             @endphp
                             <span class="badge {{ $bg }}">
