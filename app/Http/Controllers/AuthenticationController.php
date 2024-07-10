@@ -19,7 +19,7 @@ class AuthenticationController extends BaseController
     public function __construct()
     {
         $this->middleware('guest')->except([
-            'logout', 'dashboard'
+            'logout', 'dashboard',
         ]);
     }
 
@@ -54,7 +54,7 @@ class AuthenticationController extends BaseController
         $request->session()->regenerateToken();
         return redirect()->route('login')
             ->withSuccess('You have logged out successfully!');;
-    }    
+    }
 
     public function apiLogin(Request $request)
     {
@@ -74,8 +74,8 @@ class AuthenticationController extends BaseController
                     }
                 }else {
                     $insert = SessionAndroid::create([
-                        "email" => $request->email, 
-                        "user_agent" => $request->XUA, 
+                        "email" => $request->email,
+                        "user_agent" => $request->XUA,
                         "mac_address" => "$request->XMAC",
                         "device_name" => $request->XNAME
                     ]);
@@ -84,35 +84,35 @@ class AuthenticationController extends BaseController
                         $success["user"] = Guru::where('email', $email->email)->first();
                         return $this->sendResponse($success, 'User login successfully.');
                     }
-                   
+
                 }
-                
+
             }else{
                 return $this->sendError('Silahkan Cek Email / Password Anda.', 403);
             }
         }else{
             return $this->sendError('Silahkan Cek Email / Password Anda.', 403);
         }
-        
+
     }
 
     public function testApiLoginSukses(){
         $jayParsedAry = [
-            "success" => true, 
+            "success" => true,
             "data" => [
-                  "token" => "1|Kk1QodJOXDumelKibomV6SEHbFoGr2zkQoVYOvbA45fba2d1", 
+                  "token" => "1|Kk1QodJOXDumelKibomV6SEHbFoGr2zkQoVYOvbA45fba2d1",
                   "user" => [
-                     "id" => 1, 
-                     "kode_guru" => 63, 
-                     "nik" => 3208102403010006, 
-                     "nama_guru" => "Andrey Andriansyah, S.Kom", 
-                     "email" => "andreyandri90@gmail.com", 
-                     "created_at" => "2023-11-21T11:42:30.000000Z", 
-                     "updated_at" => "2023-11-21T11:42:30.000000Z" 
-                  ] 
-               ], 
-            "message" => "User login successfully." 
-         ]; 
+                     "id" => 1,
+                     "kode_guru" => 63,
+                     "nik" => 3208102403010006,
+                     "nama_guru" => "Andrey Andriansyah, S.Kom",
+                     "email" => "andreyandri90@gmail.com",
+                     "created_at" => "2023-11-21T11:42:30.000000Z",
+                     "updated_at" => "2023-11-21T11:42:30.000000Z"
+                  ]
+               ],
+            "message" => "User login successfully."
+         ];
 
          return $jayParsedAry;
     }
