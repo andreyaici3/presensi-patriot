@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('1sampai8*'),
                 'remember_token' => Str::random(10),
+                'role' => 'admin',
             ],
 
         ])->each(function($user){
