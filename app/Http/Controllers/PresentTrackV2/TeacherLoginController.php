@@ -59,6 +59,7 @@ class TeacherLoginController extends BaseController
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
+            'XMAC' => 'required',
         ]);
 
         if ($validator->fails())
@@ -76,8 +77,8 @@ class TeacherLoginController extends BaseController
         if (!$teacherLogin || !Hash::check($request->password, $teacherLogin->password))
             return $this->sendError("Username / Password Salah!!", 401);
 
-        // if ($teacherLogin->device_token != null)
-        //     return $this->sendError("Akun Terkunci Hubungi Administrator", 401);
+        if ($teacherLogin->device_token != null)
+            return $this->sendError("Akun Terkunci Hubungi Administrator", 401);
 
         Carbon::setLocale('id');
         $currentDateTime = Carbon::now();
