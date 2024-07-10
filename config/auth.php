@@ -43,7 +43,12 @@ return [
         'gurus' => [
             'driver' => 'session',
             'provider' => 'gurus',
-        ]
+        ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'teacher_login', // Sesuaikan dengan nama provider Anda
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -71,7 +76,12 @@ return [
         'gurus' => [
             'driver' => 'eloquent',
             'models' => App\Models\Guru::class,
-        ]
+        ],
+
+        'teacher_login' => [
+            'driver' => 'eloquent',
+            'models' => App\Models\TeacherLogin::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

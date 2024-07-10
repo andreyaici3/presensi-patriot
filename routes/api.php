@@ -7,7 +7,13 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\ApiControllers\ApiRequestTest;
 use App\Http\Controllers\ApiControllers\ScrapController;
 use App\Http\Controllers\ApiControllers\v1\staff\ApiStaffController;
+use App\Http\Controllers\PresentTrackV2\AttendancesController;
+use App\Http\Controllers\PresentTrackV2\PermissionController;
+use App\Http\Controllers\PresentTrackV2\ReportAbsensiTeacherController;
+use App\Http\Controllers\PresentTrackV2\SchedulesController;
+use App\Http\Controllers\PresentTrackV2\TeacherLoginController;
 use App\Http\Controllers\TestApiController;
+use App\Models\Attendance;
 use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +51,7 @@ Route::controller(TestApiController::class)->group(function(){
 Route::controller(AuthenticationController::class)->group(function(){
     Route::post('/authentication', 'apiLogin');
     Route::post('/authentication-test', 'testApiLoginSukses');
-    
+
 });
 
 Route::controller(ApiRequestTest::class)->group(function(){
@@ -65,7 +71,7 @@ Route::controller(ScrapController::class)->group(function(){
 //staff
 Route::group(['prefix'=>'v1'],function(){
     Route::post('/staff/login', [ApiStaffController::class, "login"]);
-    
+
     Route::middleware(['auth:sanctum', 'abilities:absen'])->group(function(){
        Route::controller(ApiStaffController::class)->group(function(){
         Route::post("/staff/absen/{type}", "absen");
@@ -73,3 +79,38 @@ Route::group(['prefix'=>'v1'],function(){
     });
 
 });
+
+
+//V2 untuk Guru
+Route::prefix('v2')->group(function () {
+    // Route::post('login', [TeacherLoginController::class, 'login']);
+
+    Route::controller(TeacherLoginController::class)->group(function(){
+        Route::post("/login", "login");
+
+    });
+
+    Route::middleware('sanctum.auth')->group(function(){
+        Route::controller(AttendancesController::class)->group(function(){
+            Route::get("/checkAbsen", "checkAbsen");
+            Route::post("/attendance", 'attendaceOnDevice');
+        });
+
+        Route::controller(SchedulesController::class)->group(function(){
+            Route::post("/getAllJadwal", 'getAllJadwal');
+            Route::get("/getKelasByJadwal", "getKelasByJadwal");
+        });
+
+        Route::controller(ReportAbsensiTeacherController::class)->group(function(){
+            Route::get("/performa", "performa");
+        });
+
+        Route::controller(PermissionController::class)->group(function(){
+            Route::post("/attendance/manual", 'create');
+        });
+    });
+
+
+
+});
+

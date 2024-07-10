@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
-        
+
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'user-role' => \App\Http\Middleware\MultiRole::class,
         "abilities" => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         "ability" => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
+        'sanctum.auth' => \App\Http\Middleware\CheckSanctumToken::class,
     ];
 }
