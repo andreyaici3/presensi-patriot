@@ -17,7 +17,7 @@ class WebhookController extends Controller
         $update = $request->all();
 
         // Log the incoming update for debugging
-
+        Log::info($update);
         if (isset($update["message"])){
             $message = $update['message'];
             $chatId = $message['chat']['id'];
