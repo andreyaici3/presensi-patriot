@@ -7,6 +7,7 @@ use App\Http\Requests\PresentTrackV2\ClassesFormRequest;
 use App\Models\Classes;
 use App\Models\Major;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ClassController extends Controller
@@ -62,9 +63,8 @@ class ClassController extends Controller
     public function generate($id){
 
         $class = Classes::findOrFail($id);
-        QrCode::size(600)
-                ->format('png')
-                ->generate($class->id, public_path('pt-v2/assets/images/products/qrcode.png'));
+        $qrCode = QrCode::size(600)->format('png')->generate($class->id);
+        Storage::disk('public')->put('qrcodes/qrcode.png', $qrCode);
 
         return view('present-track-v2.modul.class.generate', [
             'data' => $class,

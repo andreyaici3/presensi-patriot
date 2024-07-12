@@ -29,7 +29,7 @@
                 <img src="{{ asset('pt-v2/assets/images/backgrounds/qr_template.png') }}" alt="Main Image">
 
                 <!-- Gambar watermark -->
-                <img class="watermark" src="{{ asset('pt-v2/assets/images/products/qrcode.png') }}" alt="Watermark">
+                <img class="watermark" src="{{ asset('storage/qrcodes/qrcode.png') }}" alt="Watermark">
                 <h1 class="title-wm">({{ $data->grade . "-" . $data->major->code . "-" .$data->rombel_number }})</h1>
             </div>
 
