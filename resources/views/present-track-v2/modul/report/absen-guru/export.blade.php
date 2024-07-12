@@ -199,20 +199,29 @@
                         <td class="text-center">{{ $value["summary"]["sick"] }}</td>
                         <td class="text-center">{{ $value["summary"]["permission"] }}</td>
                         <td class="text-center">{{ $value["summary"]["late"] }}</td>
-                        <td class="text-center">{{ $value->schedules->count() }} Jam</td>
+                        <td class="text-center">{{ $value->schedules->count() * $jml_minggu ?? 1 }} Jam</td>
                         <td class="text-center">
                             @php
-                                $jumlah = $value["summary"]["present"] + $value["summary"]["sick"];
-                                $percent = 0;
-                                if ($value->schedules->count() > 0)
-                                    $percent = $jumlah / $value->schedules->count() * 100;
+                            $jumlah_minggu = $jml_minggu ?? 1;
+                                $totalJam = $value->schedules->count();
+                                if ($totalJam > 0){
+                                    $jumlah = $value["summary"]["present"] + $value["summary"]["sick"];
+                                    $percent = 0;
+                                    $percent = $jumlah / ($value->schedules->count()*$jumlah_minggu) * 100;
+                                    $ket = 1;
+                                } else {
+                                    $ket = 0;
+                                }
                             @endphp
-                            @if ($percent == 0)
-                                <span class="badge bg-primary">TIdak Ada Jam</span>
-                            @elseif($percent > 0&& $percent < 70)
-                                <span class="badge bg-danger">{{ number_format($percent, '2') }} %</span>
+
+                            @if($ket == 1)
+                                @if ($percent >= 0 && $percent <= 70)
+                                    <span class="badge bg-danger">{{ number_format($percent, '2') }} %</span>
+                                @else
+                                    <span class="badge bg-success">{{ number_format($percent, '2') }} %</span>
+                                @endif
                             @else
-                                <span class="badge bg-success">{{ number_format($percent, '2') }} %</span>
+                                <span class="badge bg-warning">Tidak Ada Jam</span>
                             @endif
 
                         </td>

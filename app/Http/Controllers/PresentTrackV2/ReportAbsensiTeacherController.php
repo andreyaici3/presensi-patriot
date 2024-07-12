@@ -208,7 +208,8 @@ class ReportAbsensiTeacherController extends BaseController
         if ($export){
             return view('present-track-v2.modul.report.absen-guru.export', [
                 'absen' => $attendanceAndSchedulesData,
-                'periode' => "{$formattedRange}"
+                'periode' => "{$formattedRange}",
+                'jml_minggu' => ceil($numOfWeeks),
             ]);
         }
 

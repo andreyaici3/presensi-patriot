@@ -111,19 +111,30 @@
                                     {{ $value->schedules->count() * $jumlah_minggu}} Jam
                                  </td>
                                  <td>
+
                                     @php
-                                        $jumlah = $value["summary"]["present"] + $value["summary"]["sick"];
-                                        $percent = 0;
-                                        if ($value->schedules->count() > 0)
+                                        $totalJam = $value->schedules->count();
+                                        if ($totalJam > 0){
+                                            $jumlah = $value["summary"]["present"] + $value["summary"]["sick"];
+                                            $percent = 0;
                                             $percent = $jumlah / ($value->schedules->count()*$jumlah_minggu) * 100;
+                                            $ket = 1;
+                                        } else {
+                                            $ket = 0;
+                                        }
                                     @endphp
-                                    @if ($percent == 0)
-                                        <span class="badge badge-primary">TIdak Ada Jam</span>
-                                    @elseif($percent > 0&& $percent < 70)
-                                        <span class="badge badge-danger">{{ number_format($percent, '2') }} %</span>
+
+                                    @if($ket == 1)
+                                        @if ($percent >= 0 && $percent <= 70)
+                                            <span class="badge badge-danger">{{ number_format($percent, '2') }} %</span>
+                                        @else
+                                            <span class="badge badge-success">{{ number_format($percent, '2') }} %</span>
+                                        @endif
                                     @else
-                                        <span class="badge badge-success">{{ number_format($percent, '2') }} %</span>
+                                        <span class="badge badge-warning">Tidak Ada Jam</span>
                                     @endif
+
+
                                  </td>
 
                              </tr>
