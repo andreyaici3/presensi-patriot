@@ -43,7 +43,35 @@
              </div>
          </div>
 
+         <div class="card-box pd-20 mb-30">
+            <div class="pd-20">
+                <form action="" method="GET">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input class="form-control date-picker" placeholder="Pilih Tanggal" name="tanggal" type="text" value="{{ request()->tanggal ?? now()->format('d M Y') }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="text-white">Action</label>
+                                <br>
+                                <button type="submit" name="export" class="btn btn-success" value="true">Export PDF</button>
+                                <button type="submit" name="filter" class="btn btn-primary" value="true" >Filter</button>
+                                <a href="{{ route('manage.report.harian') }}" name="reset" class="btn btn-danger">Reset</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+         </div>
+
          <div class="card-box mb-30 pd-20">
+            <div class="pd-20">
+                <h4>Laporan {{ $rentang }}</h4>
+            </div>
              <div class="pb-20">
                  <table class="data-table table stripe hover nowrap">
                      <thead>

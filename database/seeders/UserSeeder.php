@@ -32,6 +32,14 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'role' => 'admin',
             ],
+            [
+                'name' => "Staff 1",
+                'email' => "staff1@gmail.com",
+                'email_verified_at' => now(),
+                'password' => Hash::make('staff1*ok*'),
+                'remember_token' => Str::random(10),
+                'role' => 'staff',
+            ],
 
         ])->each(function($user){
             User::create($user);

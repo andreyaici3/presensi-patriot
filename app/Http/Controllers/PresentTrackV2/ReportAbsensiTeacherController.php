@@ -18,9 +18,27 @@ class ReportAbsensiTeacherController extends BaseController
         ]);
     }
 
-    public function reportHarian(){
-        $dateToday = Carbon::today()->toDateString();
-        $dayOfWeek = Carbon::now()->dayOfWeekIso;
+    public function reportHarian(Request $request){
+
+        if ($request->export == true){
+            $date = Carbon::parse($request->tanggal);
+            $dateToday = $date->toDateString();
+            $dayOfWeek = $date->dayOfWeekIso;
+            $tanggal = Carbon::parse($dateToday)->translatedFormat('l, d F Y');
+            $periode = $tanggal;
+            $export = true;
+        } else if ($request->filter == true){
+            $date = Carbon::parse($request->tanggal);
+            $dateToday = $date->toDateString();
+            $dayOfWeek = $date->dayOfWeekIso;
+            $tanggal = Carbon::parse($dateToday)->translatedFormat('l, d F Y');
+            $export = false;
+        } else {
+            $dateToday = Carbon::today()->toDateString();
+            $dayOfWeek = Carbon::now()->dayOfWeekIso;
+            $tanggal = Carbon::parse($dateToday)->translatedFormat('l, d F Y');
+            $export = false;
+        }
 
         $attendanceData = Teacher::with([
             'attendances' => function($query) use ($dateToday) {
@@ -32,8 +50,6 @@ class ReportAbsensiTeacherController extends BaseController
                 });
             }
         ])->orderBy('kode_guru', 'ASC')->get();
-
-
 
         foreach ($attendanceData as $key => $value) {
             $summary = [
@@ -56,17 +72,37 @@ class ReportAbsensiTeacherController extends BaseController
             $value["summary"] = $summary;
         }
 
+        if ($export){
+            return view('present-track-v2.modul.report.absen-guru.export', [
+                'absen' => $attendanceData,
+                'rentang' => $tanggal,
+                'periode' => $periode
+            ]);
+        }
+
+
         return view('present-track-v2.modul.report.absen-guru.harian', [
-            'absen' => $attendanceData
+            'absen' => $attendanceData,
+            'rentang' => $tanggal,
+            'result' => json_encode($request->all()),
         ]);
     }
 
     public function reportMinggan(Request $request){
-        $targetDate = $request->date ?? date('Y-m-d');
+        if ($request->export == true){
+            $date = Carbon::parse($request->tanggal);
+            $export = true;
+        } else if ($request->filter == true){
+            $date = Carbon::parse($request->tanggal);
+            $export = false;
+        } else {
+            $date = date('Y-m-d');
+            $export = false;
+        }
+        $targetDate = $date;
         $startOfWeek = Carbon::parse($targetDate)->startOfWeek(Carbon::MONDAY);
         $endOfWeek = Carbon::parse($targetDate)->endOfWeek(Carbon::FRIDAY);
         $dayOfWeek = Carbon::parse($targetDate)->dayOfWeekIso;
-
 
         $formattedStartOfWeek = $startOfWeek->translatedFormat('j F Y');
         $formattedEndOfWeek = $endOfWeek->translatedFormat('j F Y');
@@ -103,6 +139,12 @@ class ReportAbsensiTeacherController extends BaseController
             $value["summary"] = $summary;
         }
 
+        if ($export){
+            return view('present-track-v2.modul.report.absen-guru.export', [
+                'absen' => $attendanceAndSchedulesData,
+                'periode' => " {$formattedStartOfWeek} Sampai {$formattedEndOfWeek}"
+            ]);
+        }
 
         return view('present-track-v2.modul.report.absen-guru.mingguan', [
             'absen' => $attendanceAndSchedulesData,
@@ -111,7 +153,17 @@ class ReportAbsensiTeacherController extends BaseController
     }
 
     public function reportBulanan(Request $request){
-        $targetMonth = $request->date ?? now();
+        if ($request->export == true){
+            $date = Carbon::parse($request->tanggal);
+            $export = true;
+        } else if ($request->filter == true){
+            $date = Carbon::parse($request->tanggal);
+            $export = false;
+        } else {
+            $date = now();
+            $export = false;
+        }
+        $targetMonth = $date;
         $startOfMonth = Carbon::parse($targetMonth)->startOfMonth();
         $endOfMonth = Carbon::parse($targetMonth)->endOfMonth();
         $numOfWeeks = $startOfMonth->diffInDays($endOfMonth) / 7;
@@ -151,6 +203,13 @@ class ReportAbsensiTeacherController extends BaseController
                 }
             }
             $value["summary"] = $summary;
+        }
+
+        if ($export){
+            return view('present-track-v2.modul.report.absen-guru.export', [
+                'absen' => $attendanceAndSchedulesData,
+                'periode' => "{$formattedRange}"
+            ]);
         }
 
         return view('present-track-v2.modul.report.absen-guru.bulanan', [
