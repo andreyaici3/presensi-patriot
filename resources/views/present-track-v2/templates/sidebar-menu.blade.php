@@ -150,9 +150,33 @@
             </li>
         @endif
 
-        @if (Auth::user()->role == 'superuser' || Auth::user()->role == 'staff')
+        @if (Auth::user()->role == 'staff')
             <li class="mt-4">
                 <div class="sidebar-small-cap">Staff</div>
+            </li>
+
+            <li class="dropdown {{ $menuOpen == 'Master Data' ? 'show' : '' }}">
+                <a href="javascript:;" class="dropdown-toggle">
+                    <span class="micon bi bi-hdd-stack"></span
+                    ><span class="mtext">Master Data</span>
+                </a>
+                <ul class="submenu" style="{{ $menuOpen == 'Master Data' ? 'display:block;' : 'display:none;' }}">
+                    <li><a href="{{ route('manage.guru') }}" class="{{ $menuActive == 'Data Guru'  ? 'active' : ''}}" >Data Guru</a></li>
+                    <li><a href="" class="{{ $menuActive == 'Data Staff'  ? 'active' : ''}}">Data Staff</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown {{ $menuOpen == 'Report Data' ? 'show' : '' }}">
+                <a href="javascript:;" class="dropdown-toggle">
+                    <span class="micon bi bi-files"></span
+                    ><span class="mtext">Laporan</span>
+                </a>
+                <ul class="submenu" style="{{ $menuOpen == 'Report Data' ? 'display:block;' : 'display:none;' }}">
+                    <li><a href="{{ route('manage.report.absenGuru') }}" class="{{ $menuActive == 'Laporan Absen'  ? 'active' : ''}}">LOG Absen</a></li>
+                    <li><a href="{{ route('manage.report.harian') }}" class="{{ $menuActive == 'Laporan Harian'  ? 'active' : ''}}">Laporan Harian</a></li>
+                    <li><a href="{{ route('manage.report.mingguan') }}" class="{{ $menuActive == 'Laporan Mingguan'  ? 'active' : ''}}">Laporan Mingguan</a></li>
+                    <li><a href="{{ route('manage.report.bulanan') }}" class="{{ $menuActive == 'Laporan Bulanan'  ? 'active' : ''}}">Laporan Bulanan</a></li>
+                </ul>
             </li>
 
             <li>
@@ -161,6 +185,8 @@
                     <span class="micon fa fa-shield"></span><span class="mtext">Setujui Izin</span>
                 </a>
             </li>
+
+
         @endif
         <li>
             <a onclick="event.preventDefault(); document.getElementById('logoutForm').submit();"

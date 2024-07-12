@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PresentTrackV2;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\TelegramController;
 use App\Models\AcademicYear;
 use App\Models\Attendance;
 use App\Models\Day;
@@ -10,6 +11,7 @@ use App\Models\Schedulles;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AttendancesController extends BaseController
@@ -137,6 +139,14 @@ class AttendancesController extends BaseController
                 $jam++;
             }
         }
+
+        $tg = new TelegramController();
+        $tgData = [
+            'nama' => Auth::user()->name,
+            'jam' => $jam,
+            'waktu' => now()->format('d-m-Y H:i:s'),
+        ];
+        $tg->info_hari_llibur($tgData);
 
         return redirect()->to(route('manage.report.absenGuru'))->with("sukses", "$jam Jam Mengajar Berhasil Di Bypass");
 

@@ -47,8 +47,12 @@
             <div class="pd-20">
                 <div class="row">
                     <div class="col-md-12">
-
                         <a href="{{ route('attendance.free') }}" class="btn btn-primary" onclick="return confirm('Jika Dilanjutkan maka semua guru akan dianggap hadir pada hari ini')">Hari Libur</a>
+                        <br><br>
+                        <p class="text-danger">
+                            *) Gunakan Sebagai Mana  Fungsinya <br>
+                            *) Aktivitas Terecord dan Masuk ke Telegram
+                        </p>
                     </div>
                 </div>
             </div>
