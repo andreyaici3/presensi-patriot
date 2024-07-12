@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function(){
         Route::get("/manage/class/create", "create")->name("manage.class.create");
         Route::post("/manage/class", "store");
         Route::get("/manage/class/{id}", "edit")->name("manage.class.edit");
+        Route::get("/manage/class/{id}/generate", "generate")->name("manage.class.generate");
         Route::put("/manage/class/{id}", "update");
         Route::DELETE("/manage/class/{id}/delete", "destroy")->name('manage.class.delete');
     });

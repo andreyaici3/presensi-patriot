@@ -7,6 +7,7 @@ use App\Http\Requests\PresentTrackV2\ClassesFormRequest;
 use App\Models\Classes;
 use App\Models\Major;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ClassController extends Controller
 {
@@ -56,5 +57,17 @@ class ClassController extends Controller
         } catch (\Illuminate\Database\QueryException $th) {
             return redirect()->to(route('manage.class'))->with("gagal", "Data Kelas Gagal Dihapus");
         }
+    }
+
+    public function generate($id){
+
+        $class = Classes::findOrFail($id);
+        QrCode::size(600)
+                ->format('png')
+                ->generate($class->id, public_path('pt-v2/assets/images/products/qrcode.png'));
+
+        return view('present-track-v2.modul.class.generate', [
+            'data' => $class,
+        ]);
     }
 }
