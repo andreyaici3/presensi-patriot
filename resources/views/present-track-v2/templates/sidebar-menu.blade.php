@@ -19,6 +19,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{ route('manage.tg') }}"
+                    class="dropdown-toggle no-arrow {{ @$menuActive == 'Telegram User' ? 'active' : '' }}">
+                    <span class="micon bi bi-telegram"></span><span class="mtext">Telegram User</span>
+                </a>
+            </li>
+
             <li class="mt-4">
                 <div class="sidebar-small-cap">Modul</div>
             </li>
@@ -101,6 +108,8 @@
                     <li><a href="{{ route('manage.class') }}" class="{{ $menuActive == 'Data Kelas'  ? 'active' : ''}}">Data Kelas</a></li>
                 </ul>
             </li>
+
+
 
             <li class="dropdown {{ $menuOpen == 'Report Data' ? 'show' : '' }}">
                 <a href="javascript:;" class="dropdown-toggle">

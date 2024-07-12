@@ -31,7 +31,6 @@ class AcademicYearController extends Controller
         } catch (\Illuminate\Database\QueryException $th) {
             return redirect()->to(route('manage.academic.year.create'))->withInput()->with('gagal', "Data Gagal Ditambahkan");
         }
-
     }
 
     public function update(AcademicYearFormRequest $request, $id){

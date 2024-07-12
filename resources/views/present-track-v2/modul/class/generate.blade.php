@@ -31,6 +31,7 @@
                 <!-- Gambar watermark -->
                 <img class="watermark" src="{{ asset('storage/qrcodes/qrcode.png') }}" alt="Watermark">
                 <h1 class="title-wm">({{ $data->grade . "-" . $data->major->code . "-" .$data->rombel_number }})</h1>
+                <h2 class="code-wm">For Iphone User Please Input: {{ base64_encode($data->id) }}</h2>
             </div>
 
 
@@ -54,9 +55,18 @@
             .title-wm {
                 color: #C43430;
                 position: absolute;
-                top: 20%;
+                top: 19.5%;
                 left: 34%;
                 font-size: 2.5vw;
+            }
+
+            .code-wm {
+                color: #C43430;
+                position: absolute;
+                top: 25.5%;
+                font-style: italic;
+                left: 30%;
+                font-size: 1vw;
             }
     </style>
    @endsection

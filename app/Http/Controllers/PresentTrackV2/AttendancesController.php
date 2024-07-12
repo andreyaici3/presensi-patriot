@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\TelegramController;
 use App\Models\AcademicYear;
 use App\Models\Attendance;
+use App\Models\Classes;
 use App\Models\Day;
 use App\Models\Schedulles;
 use App\Models\Teacher;
@@ -211,7 +212,18 @@ class AttendancesController extends BaseController
         ], "Berhasil Ambil Data");
     }
 
-    public function test(){
+    public function attendanceOnTelegram($data, $kodeGuru){
 
+        if ($data['status'] == 'present'){
+            return $this->attendance($data['class_id'], $kodeGuru);
+        } else if ($data['status'] == 'permission' || $data['status'] == 'sick'){
+            $permission = new PermissionController();
+            $data = [
+                'kode_guru' => $kodeGuru,
+                'class_id' => $data['class_id'],
+                "status" => $data['status']
+            ];
+            return $permission->create(new Request($data));
+        }
     }
 }
