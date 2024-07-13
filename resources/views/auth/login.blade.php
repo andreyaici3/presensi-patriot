@@ -1,140 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in</title>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
-    <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css?v=3.2.0') }}">
-    <script nonce="f49b2437-51d3-4a57-b095-ddccddfb61e1">
-        (function(w, d) {
-            ! function(bb, bc, bd, be) {
-                bb[bd] = bb[bd] || {};
-                bb[bd].executed = [];
-                bb.zaraz = {
-                    deferred: [],
-                    listeners: []
-                };
-                bb.zaraz.q = [];
-                bb.zaraz._f = function(bf) {
-                    return async function() {
-                        var bg = Array.prototype.slice.call(arguments);
-                        bb.zaraz.q.push({
-                            m: bf,
-                            a: bg
-                        })
-                    }
-                };
-                for (const bh of ["track", "set", "debug"]) bb.zaraz[bh] = bb.zaraz._f(bh);
-                bb.zaraz.init = () => {
-                    var bi = bc.getElementsByTagName(be)[0],
-                        bj = bc.createElement(be),
-                        bk = bc.getElementsByTagName("title")[0];
-                    bk && (bb[bd].t = bc.getElementsByTagName("title")[0].text);
-                    bb[bd].x = Math.random();
-                    bb[bd].w = bb.screen.width;
-                    bb[bd].h = bb.screen.height;
-                    bb[bd].j = bb.innerHeight;
-                    bb[bd].e = bb.innerWidth;
-                    bb[bd].l = bb.location.href;
-                    bb[bd].r = bc.referrer;
-                    bb[bd].k = bb.screen.colorDepth;
-                    bb[bd].n = bc.characterSet;
-                    bb[bd].o = (new Date).getTimezoneOffset();
-                    if (bb.dataLayer)
-                        for (const bo of Object.entries(Object.entries(dataLayer).reduce(((bp, bq) => ({
-                                ...bp[1],
-                                ...bq[1]
-                            })), {}))) zaraz.set(bo[0], bo[1], {
-                            scope: "page"
-                        });
-                    bb[bd].q = [];
-                    for (; bb.zaraz.q.length;) {
-                        const br = bb.zaraz.q.shift();
-                        bb[bd].q.push(br)
-                    }
-                    bj.defer = !0;
-                    for (const bs of [localStorage, sessionStorage]) Object.keys(bs || {}).filter((bu => bu.startsWith("_zaraz_"))).forEach((bt => {
-                        try {
-                            bb[bd]["z_" + bt.slice(7)] = JSON.parse(bs.getItem(bt))
-                        } catch {
-                            bb[bd]["z_" + bt.slice(7)] = bs.getItem(bt)
-                        }
-                    }));
-                    bj.referrerPolicy = "origin";
-                    bj.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(bb[bd])));
-                    bi.parentNode.insertBefore(bj, bi)
-                };
-                ["complete", "interactive"].includes(bc.readyState) ? zaraz.init() : bb.addEventListener("DOMContentLoaded", zaraz.init)
-            }(w, d, "zarazData", "script");
-        })(window, document);
-    </script>
+    <title>Login | PTC Kampung</title>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('pt-v2/assets/images/logos/favicon.png') }}" />
+    <link rel="stylesheet" href="{{ asset('pt-v2/assets/css/styles.min.css') }}" />
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="/login">Presensi Guru <b>Patriot</b></a>
-        </div>
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3">
+                        @if (Session::has('sukses'))
+                        <div class="alert alert-success" role="alert">
+                            <b>Berhasil!!</b> {{ session('sukses') }}
+                        </div>
+                        @endif
 
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ route('auth.authenticate') }}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email" name="email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                        @if (Session::has('gagal'))
+                        <div class="alert alert-danger" role="alert">
+                            <b>Gagal!!</b> {{ session('gagal') }}
+                        </div>
+                        @endif
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="{{ route('home') }}" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                    <img src="{{ asset('pt-v2/assets/images/logos/pt-v2-logo.png') }}" width="80%" alt="">
+                                </a>
+                                <p class="text-center">Masuk Untuk Melanjutkan</p>
+                                <form method="post" action="{{ route('auth.authenticate') }}">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="inputEmail" class="form-label">Alamat Email</label>
+                                        <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="inputEmail" aria-describedby="emailHelp" name="email" value="{{ old('email') }}" placeholder="masukan email disini">
+                                        <span id="inputEmail-error" class="error invalid-feedback">
+                                            {{ $errors->has('email') ? '*) ' . $errors->first('email') : '' }}</span>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="inputPassword" class="form-label">Kata Sandi</label>
+                                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="inputPassword" name="password" placeholder="masukan password disini">
+                                        <span id="inputPassword-error" class="error invalid-feedback">
+                                            {{ $errors->has('password') ? '*) ' . $errors->first('password') : '' }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input primary" type="checkbox" name="remember" id="flexCheckChecked">
+                                            <label class="form-check-label text-dark" for="flexCheckChecked">
+                                                Biarkan Saya Tetap Masuk
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Masuk</button>
+
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" name="password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-
-                    </div>
-                </form>
-             
-            
-              
+                </div>
             </div>
-
         </div>
     </div>
-
-
-    <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
-
-    <script src="{{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <script src="{{ asset('/dist/js/adminlte.min.js?v=3.2.0') }}"></script>
+    <script src="{{ asset('pt-v2/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('pt-v2/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>

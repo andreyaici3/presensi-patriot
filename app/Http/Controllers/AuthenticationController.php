@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthenticationController extends BaseController
 {
@@ -24,20 +25,24 @@ class AuthenticationController extends BaseController
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect(RouteServiceProvider::HOME)
-                ->withSuccess('You have successfully logged in!');
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        return back()->withErrors([
-            'email' => 'Your provided credentials do not match in our records.',
-        ])->onlyInput('email');
+        $credentials = $request->only('email', 'password');
+        $remember = $request->has('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            return redirect()->to(route("dashboard"));
+        } else {
+            return redirect()->to(route('login'))->with("gagal", "Silahkan Periksa Kembali Email / Password");
+        }
     }
 
     public function logout(Request $request)
@@ -45,8 +50,7 @@ class AuthenticationController extends BaseController
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')
-            ->withSuccess('You have logged out successfully!');;
+        return redirect()->to(route('login'))->with('sukses', "Logout Berhasil!!!");
     }
 
 }
