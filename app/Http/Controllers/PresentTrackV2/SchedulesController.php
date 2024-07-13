@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\PresentTrackV2;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
-use App\Models\Attendance;
 use App\Models\Classes;
 use App\Models\Day;
 use App\Models\Major;
@@ -13,7 +11,6 @@ use App\Models\Schedulles;
 use App\Models\Teacher;
 use App\Models\TimesSlot;
 use Carbon\Carbon;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,7 +83,7 @@ class SchedulesController extends BaseController
     }
 
     public function getAllJadwal(Request $request){
-        $guru = Teacher::where('kode_guru', $request->kode_guru)->firstOrFail();
+        $guru = Teacher::where('kode_guru', $request->kode_guru)->first();
 
         if (!$guru)
             return $this->sendError("Guru Tidak Terdaftar", 404);
@@ -102,14 +99,19 @@ class SchedulesController extends BaseController
         $daysOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 
         foreach ($schedules as $key => $value) {
-            // Urutkan jadwal berdasarkan waktu mulai
             $sortedSchedules = $value->sortBy(function($schedule) {
                 return Carbon::parse($schedule->timeSlot->start_time)->format('H:i');
             });
 
             $a = [];
             foreach ($sortedSchedules as $schedule) {
-                $a[] = "Jam Ke: " . $schedule->timeSlot->jam_ke . " : " . Carbon::parse($schedule->timeSlot->start_time)->format('H.i') . " - " . Carbon::parse($schedule->timeSlot->end_time)->format('H.i') . ": " . $schedule->classes->grade . "-" . $schedule->classes->major->code . "-" . $schedule->classes->rombel_number;
+                if ($schedule->classes->grade == 'X'){
+                    $ks = $schedule->classes->grade . "-" . $schedule->classes->major->program_keahlian_acronym . "-" . $schedule->classes->rombel_number;
+                } else {
+                    $ks = $schedule->classes->grade . "-" . $schedule->classes->major->konsentrasi_keahlian_acronym . "-" . $schedule->classes->rombel_number;
+                }
+
+                $a[] = "Jam Ke: " . $schedule->timeSlot->jam_ke . " : " . Carbon::parse($schedule->timeSlot->start_time)->format('H.i') . " - " . Carbon::parse($schedule->timeSlot->end_time)->format('H.i') . ": " . $ks;
             }
 
             $data[Day::where('id', $key)->first()->name] = $a;
@@ -156,7 +158,11 @@ class SchedulesController extends BaseController
 
         foreach ($schedules as $schedule) {
             $classId = $schedule->classes->id;
-            $className = $schedule->classes->grade . '-' . $schedule->classes->major->code . '-' . $schedule->classes->rombel_number;
+            if ($schedule->classes->grade == 'X'){
+                $className = $schedule->classes->grade . "-" . $schedule->classes->major->program_keahlian_acronym . "-" . $schedule->classes->rombel_number;
+            } else {
+                $className = $schedule->classes->grade . "-" . $schedule->classes->major->konsentrasi_keahlian_acronym . "-" . $schedule->classes->rombel_number;
+            }
 
             if (!isset($result[$classId])) {
                 $result[$classId] = [
@@ -174,8 +180,6 @@ class SchedulesController extends BaseController
                 'day_id' => $schedule->timeSlot->day_id
             ];
         }
-
-        // Mengonversi hasil ke array numerik
         $result = array_values($result);
 
         return $this->sendResponse($result, "Ambil Jadwal Hari Ini Selesai");

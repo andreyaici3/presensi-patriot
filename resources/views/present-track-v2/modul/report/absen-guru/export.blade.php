@@ -194,12 +194,12 @@
                 @foreach ($absen as $value)
                     <tr>
                         <td class="text-center">{{ $value->kode_guru }}</td>
-                        <td class="text-center">{{ $value->first_name . " " . $value->last_name }}</td>
+                        <td class="text-left">{{ $value->first_name . " " . $value->last_name }}</td>
                         <td class="text-center">{{ $value["summary"]["present"] }}</td>
                         <td class="text-center">{{ $value["summary"]["sick"] }}</td>
                         <td class="text-center">{{ $value["summary"]["permission"] }}</td>
                         <td class="text-center">{{ $value["summary"]["late"] }}</td>
-                        <td class="text-center">{{ $value->schedules->count() * $jml_minggu ?? 1 }} Jam</td>
+                        <td class="text-center">{{ $value->schedules->count() * ($jml_minggu ?? 1) }} Jam</td>
                         <td class="text-center">
                             @php
                             $jumlah_minggu = $jml_minggu ?? 1;

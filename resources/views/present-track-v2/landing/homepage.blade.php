@@ -88,10 +88,7 @@
                                     @endphp
                                 @endforeach
 
-
-
-                                @switch(@$status->get()[$status->get()->count() -1]->status)
-                                {{-- @switch($hasil[$hasil->get()->count() -1]->attendance->status) --}}
+                                @switch(@$status->get()[$status->get()->count()-1]->status)
                                     @case('present')
                                         <img src="{{ asset('pt-v2/assets/images/logos/present.jpg') }}" alt="" class="img-fluid card-img-top">
                                         @break
@@ -106,12 +103,19 @@
                                         @break
                                 @endswitch
 
-
                                 <div class="p-4">
                                 <h4>
                                     <a href="#" class="text-dark"><b>{{ $guru }}</b></a>
                                 </h4>
-                                <h6  class="mb-4"><i>{{ $class->grade . "-" . $class->major->code . "-" . $class->rombel_number }}</i></h6>
+                                    @if ($class->grade == 'X')
+                                        <h6 class="mb-4">
+                                            <i>{{ $class->grade . " " . $class->major->program_keahlian_acronym . " " . $class->rombel_number }}</i>
+                                        </h6>
+                                    @else
+                                        <h6 class="mb-4">
+                                            <i>{{ $class->grade . " " . $class->major->konsentrasi_keahlian_acronym . " " . $class->rombel_number }}</i>
+                                        </h6>
+                                    @endif
                                 @php
                                     $hasil = \App\Models\Schedulles::getSchedullesByToday($classes_id, $teacher_id);
                                 @endphp
@@ -144,7 +148,15 @@
                             <img src="{{ asset('pt-v2/assets/images/logos/no_schedule.jpg') }}" alt="" class="img-fluid card-img-top">
                                 <div class="p-4">
                                 <h4> <a href="#" class="text-dark"><b>Tidak Ada Jadwal</b></a></h4>
-                                <h6  class="mb-4"><i>{{ $class->grade . "-" . $class->major->code . "-" . $class->rombel_number }}</i></h6>
+                                @if ($class->grade == 'X')
+                                    <h6 class="mb-4">
+                                        <i>{{ $class->grade . "-" . $class->major->program_keahlian_acronym . "-" . $class->rombel_number }}</i>
+                                    </h6>
+                                @else
+                                    <h6 class="mb-4">
+                                        <i>{{ $class->grade . "-" . $class->major->konsentrasi_keahlian_acronym . "-" . $class->rombel_number }}</i>
+                                    </h6>
+                                @endif
                                 <p class="text-danger mb-0"><i>Silahkan Hubungi Adminisitrator Untuk Mengetahui Penyebab Tidak Ada Jadwal</i></p>
 
                                 </div>

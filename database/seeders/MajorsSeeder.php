@@ -15,24 +15,34 @@ class MajorsSeeder extends Seeder
     {
         collect([
             [
-                'code' => "TJKT",
-                "name" => "Teknik Komputer dan Jaringan Telekomunikasi"
+                'code' => "TI",
+                "name" => "Teknologi Informasi",
+                "program_keahlian" => "Teknik Jaringan Komputer dan Telekomunikasi",
+                "konsentrasi_keahlian" => "Teknik Komputer Jaringan"
             ],
             [
-                "code" => "TO",
-                "name" => "Teknik Otomotif",
+                "code" => "TMR",
+                "name" => "Teknologi Manufaktur dan Rekayasa",
+                "program_keahlian" => "Teknik Otomotif",
+                "konsentrasi_keahlian" => "Teknik Sepeda Motor"
             ],
             [
-                "code" => 'LK',
-                "name" => 'Layanan Kesehatan'
+                "code" => 'KPS',
+                "name" => 'Kesehatan dan Pekerjaan Sosial',
+                "program_keahlian" => "Layanan Kesehatan",
+                "konsentrasi_keahlian" => "Asisten Keperawatan dan Caregiver"
             ],
             [
-                "code" => 'MPLB',
-                "name" => "Manajemen Perkantoran dan Layanan Bisnis"
+                'code' => "BM1",
+                "name" => "Bisnis dan Manajemen",
+                "program_keahlian" => "Manajemen Perkantoran dan Layanan Bisnis",
+                "konsentrasi_keahlian" => "Manajemen Perkantoran"
             ],
             [
                 "code" => "AKL",
-                "name" => "Akuntansi dan Keuangan Lembaga",
+                "name" => "Bisnis dan Manajemen",
+                "program_keahlian" => "Akutansi dan Keuangan Lembaga",
+                "konsentrasi_keahlian" => "Akutansi Keuangan"
             ],
 
         ])->each(function($jurusan){

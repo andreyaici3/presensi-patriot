@@ -66,11 +66,13 @@
                              <tr>
                                  <td class="table-plus">{{ $nomor++ }}</td>
                                  <td>
-                                     {{ $value->grade . " " .$value->major->code . " " . $value->rombel_number }}
+                                        @if ($value->grade == 'X')
+                                            {{ $value->grade . " " . $value->major->program_keahlian_acronym . " " . $value->rombel_number }}
+                                        @else
+                                            {{ $value->grade . " " . $value->major->konsentrasi_keahlian_acronym . " " . $value->rombel_number }}
+                                        @endif
+
                                  </td>
-
-                                    {{-- {!! QrCode::size(600)->generate($value->id) !!} --}}
-
                                  <td>
                                      <form id="formDelete-{{ $value->id }}"
                                          action="{{ route('manage.class.delete', ['id' => $value->id]) }}"

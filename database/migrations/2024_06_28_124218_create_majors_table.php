@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique()->nullable();
             $table->string('name');
+            $table->string('program_keahlian')->nullable();
+            $table->string('konsentrasi_keahlian')->nullable();
             $table->timestamps();
         });
     }
