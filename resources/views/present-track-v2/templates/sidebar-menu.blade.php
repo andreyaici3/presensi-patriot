@@ -205,12 +205,17 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('manage.schedules') }}"
+                    class="dropdown-toggle no-arrow {{ $menuActive == 'Data Jadwal' ? 'active' : '' }}">
+                    <span class="micon bi bi-person-lines-fill"></span><span class="mtext">Jadwal KBM</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('manage.permission') }}"
                     class="dropdown-toggle no-arrow {{ $menuActive == 'Data Izin' ? 'active' : '' }}">
                     <span class="micon fa fa-shield"></span><span class="mtext">Setujui Izin</span>
                 </a>
             </li>
-
             <li class="dropdown {{ $menuOpen == 'Report Data' ? 'show' : '' }}">
                 <a href="javascript:;" class="dropdown-toggle">
                     <span class="micon bi bi-files"></span
@@ -222,13 +227,6 @@
                     <li><a href="{{ route('manage.report.mingguan') }}" class="{{ $menuActive == 'Laporan Mingguan'  ? 'active' : ''}}">Laporan Mingguan</a></li>
                     <li><a href="{{ route('manage.report.bulanan') }}" class="{{ $menuActive == 'Laporan Bulanan'  ? 'active' : ''}}">Laporan Bulanan</a></li>
                 </ul>
-            </li>
-
-            <li>
-                <a href="{{ route('manage.schedules') }}"
-                    class="dropdown-toggle no-arrow {{ $menuActive == 'Data Jadwal' ? 'active' : '' }}">
-                    <span class="micon bi bi-person-lines-fill"></span><span class="mtext">Jadwal KBM</span>
-                </a>
             </li>
 
         @endif

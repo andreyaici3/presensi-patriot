@@ -38,10 +38,18 @@ Route::middleware('auth')->group(function(){
         Route::get("/dashboard", 'index')->name('dashboard');
     });
 
+    Route::middleware(["user-role:superuser"])->group(function(){
+        Route::controller(TelegramUserController::class)->group(function(){
+            Route::get("/manage/telegram-user", 'index')->name("manage.tg");
+            Route::get("/manage/telegram-user/creates", 'create')->name("manage.tg.create");
+            Route::post("/manage/telegram-user/creates", 'store');
+            Route::get("/manage/telegram-user/edit/{id}", 'edit')->name("manage.tg.edit");
+            Route::put("/manage/telegram-user/update/{id}", 'update')->name("manage.tg.update");
+            Route::delete("/manage/telegram-user/{id}/delete", 'destroy')->name("manage.tg.delete");
+        });
+    });
 
-
-    // Disini Terbaru semua yang sudah di test
-    Route::middleware(["user-role:superuser|kurikulum|admin "])->group(function(){
+    Route::middleware(["user-role:superuser|kurikulum|admin"])->group(function(){
         Route::controller(SubjectsControler::class)->group(function(){
             Route::get("/manage/subject", "index")->name("manage.subject");
             Route::get("/manage/subject/create", "create")->name("manage.subject.create");
@@ -49,6 +57,13 @@ Route::middleware('auth')->group(function(){
             Route::get("/manage/subject/{id}", "edit")->name("manage.subject.edit");
             Route::put("/manage/subject/{id}", "update");
             Route::DELETE("/manage/subject/{id}/delete", "destroy")->name('manage.subject.delete');
+        });
+
+        Route::controller(TeacherLoginController::class)->group(function(){
+            Route::get("/manage/auth-guru", 'index')->name("manage.auth.guru");
+            Route::post("/manage/auth-guru", 'store');
+            Route::put("/manage/auth-guru", 'update');
+            Route::delete("/manage/auth-guru", 'destroy');
         });
 
         Route::controller(ReportAbsensiTeacherController::class)->group(function(){
@@ -62,6 +77,47 @@ Route::middleware('auth')->group(function(){
             Route::get("/manage/schedules", 'index')->name("manage.schedules");
             Route::get("/manage/schedules/create", 'create')->name("manage.schedules.create");
             Route::put("/manage/schedules/saveChanges", 'saveChanges')->name('manage.schedules.saveChanges');
+        });
+
+        Route::controller(GuruV2Controller::class)->group(function(){
+            Route::get("/manage/guru", "index")->name("manage.guru");
+            Route::get("/manage/guru/create", "create")->name("manage.guru.create");
+            Route::post("/manage/guru", "store");
+            Route::get("/manage/guru/{id}", "edit")->name("manage.guru.edit");
+            Route::put("/manage/guru/{id}", "update");
+            Route::DELETE("/manage/guru/{id}/delete", "destroy")->name('manage.guru.delete');
+        });
+
+        Route::controller(ClassController::class)->group(function(){
+            Route::get("/manage/class", "index")->name("manage.class");
+            Route::get("/manage/class/create", "create")->name("manage.class.create");
+            Route::post("/manage/class", "store");
+            Route::get("/manage/class/{id}", "edit")->name("manage.class.edit");
+            Route::get("/manage/class/{id}/generate", "generate")->name("manage.class.generate");
+            Route::put("/manage/class/{id}", "update");
+            Route::DELETE("/manage/class/{id}/delete", "destroy")->name('manage.class.delete');
+        });
+
+        Route::controller(MajorsController::class)->group(function(){
+            Route::get("/manage/major", "index")->name("manage.major");
+            Route::get("/manage/major/create", "create")->name("manage.major.create");
+            Route::post("/manage/major", "store");
+            Route::get("/manage/major/{id}", "edit")->name("manage.major.edit");
+            Route::put("/manage/major/{id}", "update");
+            Route::DELETE("/manage/major/{id}/delete", "destroy")->name('manage.major.delete');
+        });
+
+        Route::controller(DaysController::class)->group(function(){
+            Route::get("/manage/days", "index")->name("manage.days");
+            Route::get("/manage/days/{id}/detail", "detail")->name("manage.days.detail");
+        });
+
+        Route::controller(TimesSlotsController::class)->group(function(){
+            Route::get("/manage/{id_hari}/create", 'create')->name("manage.time.create");
+            Route::get("/manage/{id_hari}/edit", 'edit')->name("manage.time.edit");
+            Route::post("/manage/{id_hari}/create", 'store');
+            Route::put("/manage/{id_hari}/edit", 'update');
+            Route::delete("/manage/{id_hari}/delete/{id_time}", 'destroy')->name("manage.time.delete");
         });
     });
 
@@ -86,73 +142,6 @@ Route::middleware('auth')->group(function(){
             Route::delete("/manage/academic-year/{id}/delete", "destroy")->name("manage.academic.year.delete");
         });
     });
-
-
-
-    // Sampai Disini Terbarunya
-    Route::controller(GuruV2Controller::class)->group(function(){
-        Route::get("/manage/guru", "index")->name("manage.guru");
-        Route::get("/manage/guru/create", "create")->name("manage.guru.create");
-        Route::post("/manage/guru", "store");
-        Route::get("/manage/guru/{id}", "edit")->name("manage.guru.edit");
-        Route::put("/manage/guru/{id}", "update");
-        Route::DELETE("/manage/guru/{id}/delete", "destroy")->name('manage.guru.delete');
-    });
-
-    Route::controller(ClassController::class)->group(function(){
-        Route::get("/manage/class", "index")->name("manage.class");
-        Route::get("/manage/class/create", "create")->name("manage.class.create");
-        Route::post("/manage/class", "store");
-        Route::get("/manage/class/{id}", "edit")->name("manage.class.edit");
-        Route::get("/manage/class/{id}/generate", "generate")->name("manage.class.generate");
-        Route::put("/manage/class/{id}", "update");
-        Route::DELETE("/manage/class/{id}/delete", "destroy")->name('manage.class.delete');
-    });
-
-    Route::controller(MajorsController::class)->group(function(){
-        Route::get("/manage/major", "index")->name("manage.major");
-        Route::get("/manage/major/create", "create")->name("manage.major.create");
-        Route::post("/manage/major", "store");
-        Route::get("/manage/major/{id}", "edit")->name("manage.major.edit");
-        Route::put("/manage/major/{id}", "update");
-        Route::DELETE("/manage/major/{id}/delete", "destroy")->name('manage.major.delete');
-    });
-
-    Route::controller(DaysController::class)->group(function(){
-        Route::get("/manage/days", "index")->name("manage.days");
-        Route::get("/manage/days/{id}/detail", "detail")->name("manage.days.detail");
-    });
-
-    Route::controller(TimesSlotsController::class)->group(function(){
-        Route::get("/manage/{id_hari}/create", 'create')->name("manage.time.create");
-        Route::get("/manage/{id_hari}/edit", 'edit')->name("manage.time.edit");
-        Route::post("/manage/{id_hari}/create", 'store');
-        Route::put("/manage/{id_hari}/edit", 'update');
-        Route::delete("/manage/{id_hari}/delete/{id_time}", 'destroy')->name("manage.time.delete");
-    });
-
-    Route::controller(TelegramUserController::class)->group(function(){
-        Route::get("/manage/telegram-user", 'index')->name("manage.tg");
-        Route::get("/manage/telegram-user/creates", 'create')->name("manage.tg.create");
-        Route::post("/manage/telegram-user/creates", 'store');
-        Route::get("/manage/telegram-user/edit/{id}", 'edit')->name("manage.tg.edit");
-        Route::put("/manage/telegram-user/update/{id}", 'update')->name("manage.tg.update");
-        Route::delete("/manage/telegram-user/{id}/delete", 'destroy')->name("manage.tg.delete");
-    });
-
-    Route::controller(TeacherLoginController::class)->group(function(){
-        Route::get("/manage/auth-guru", 'index')->name("manage.auth.guru");
-        Route::post("/manage/auth-guru", 'store');
-        Route::put("/manage/auth-guru", 'update');
-        Route::delete("/manage/auth-guru", 'destroy');
-    });
-
-    // Yang Baru Ada Disini
-    Route::controller(DashboardController::class)->group(function(){
-        Route::get('/monitor', 'monitor')->name('dashboard.monitor');
-        // Route::get('/', 'index')->name('dashboard');
-    });
-
     Route::post('/logout', [AuthenticationController::class, 'logout'])->name('auth.logout');
 
 });
@@ -167,7 +156,6 @@ Route::middleware('guest')->group(function(){
         Route::get('/registration', 'register')->name('siswa.register');
         Route::post('/registration', 'store')->name('siswa.register.store');
     });
-
 });
 
 Route::controller(HomeController::class)->group(function(){
@@ -175,21 +163,7 @@ Route::controller(HomeController::class)->group(function(){
 });
 
 
-
-
-// Route::view('/', 'dashboard')->name('dashboard');
-
-
-
-
-
-// Route::get('/sample/{id}', [JadwalController::class, 'getJadwalByGuru']);
-
-//Route
-Route::get('/test', [AttendancesController::class, 'attendanceOnTelegram']);
-
-
-//Mulai Mengalihkan Routing ke Middleware
+//Old untuk Staff absensi
 Route::middleware(["auth", "user-role:superuser"])->group(function(){
     Route::controller(DatabasesController::class)->group(function(){
         Route::get("/database", "index")->name("superuser.database");
@@ -223,5 +197,7 @@ Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
         Route::get("/staff/log", "index")->name("wakasek.staff.log");
     });
 });
+
+//staff
 
 

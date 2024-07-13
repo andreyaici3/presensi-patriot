@@ -141,7 +141,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td style="vertical-align: top;">
-                    <img src="{{ asset('/dist/img/yayasan.png') }}" width="100px" height="100px">
+                    <img src="{{ asset('pt-v2/assets/images/logos/yayasan.png') }}" width="100px" height="100px">
                 </td>
                 <td width="100%">
                     <div class="line-satu">
@@ -155,7 +155,7 @@
                     </div>
                 </td>
                 <td style="vertical-align: top;">
-                    <img src="{{ asset('/dist/img/sekolah.png') }}" alt="" width="100px" height="100px">
+                    <img src="{{ asset('pt-v2/assets/images/logos/sekolah.png') }}" alt="" width="100px" height="100px">
                 </td>
             </tr>
         </table>
