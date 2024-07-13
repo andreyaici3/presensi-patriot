@@ -1,10 +1,5 @@
 <?php
 
-use App\Http\Controllers\ApiControllers\ReportPerformaController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\ApiControllers\ApiRequestTest;
 use App\Http\Controllers\ApiControllers\ScrapController;
 use App\Http\Controllers\ApiControllers\v1\staff\ApiStaffController;
 use App\Http\Controllers\PresentTrackV2\AttendancesController;
@@ -13,7 +8,6 @@ use App\Http\Controllers\PresentTrackV2\ReportAbsensiTeacherController;
 use App\Http\Controllers\PresentTrackV2\SchedulesController;
 use App\Http\Controllers\PresentTrackV2\TeacherLoginController;
 use App\Http\Controllers\PresentTrackV2\WebhookController;
-use App\Http\Controllers\TestApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
