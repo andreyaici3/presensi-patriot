@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    protected $connection = 'mysql';
+
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {

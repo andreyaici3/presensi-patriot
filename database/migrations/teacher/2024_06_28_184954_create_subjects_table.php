@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    protected $connection = 'mysql';
     public function up(): void
     {
-        Schema::create('classes', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('grade');
-            $table->foreignId('major_id')->constrained('majors');
-            $table->integer('rombel_number');
+            $table->string('name');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('subjects');
     }
 };

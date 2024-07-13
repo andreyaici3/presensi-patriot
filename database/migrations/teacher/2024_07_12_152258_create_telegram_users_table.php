@@ -6,21 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
+    protected $connection = 'mysql';
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('teacher_logins', function (Blueprint $table) {
+        Schema::create('telegram_users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('teacher_id');
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-            $table->string('password');
-            $table->string('device_token')->nullable();
+            $table->string('telegram_id')->unique();
             $table->timestamps();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('teacher_logins');
+        Schema::dropIfExists('telegram_users');
     }
 };
