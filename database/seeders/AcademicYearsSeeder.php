@@ -15,13 +15,13 @@ class AcademicYearsSeeder extends Seeder
                 "name" => "GENAP",
                 "start_year" => 2023,
                 "end_year" => 2024,
-                "active" => 1,
+                "active" => 0,
             ],
             [
                 "name" => "GANJIL",
                 "start_year" => 2024,
                 "end_year" => 2025,
-                "active" => 0,
+                "active" => 1,
             ],
         ])->each(function($ta){
             AcademicYear::create($ta);

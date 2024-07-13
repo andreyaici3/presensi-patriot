@@ -13,7 +13,7 @@ class ClassSeeder extends Seeder
      */
     public function run(): void
     {
-        //untuk rombel X, XII TJKT
+        //untuk rombel X, XI, XII TJKT
         collect([
             [
                 'major_id' => 1,
@@ -63,6 +63,31 @@ class ClassSeeder extends Seeder
             [
                 'major_id' => 1,
                 'grade' => "XI",
+                "rombel_number" => 5,
+            ],
+            [
+                'major_id' => 1,
+                'grade' => "XII",
+                "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 1,
+                'grade' => "XII",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 1,
+                'grade' => "XII",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 1,
+                'grade' => "XII",
+                "rombel_number" => 4,
+            ],
+            [
+                'major_id' => 1,
+                'grade' => "XII",
                 "rombel_number" => 5,
             ],
         ])->each(function ($kelas) {
@@ -88,6 +113,16 @@ class ClassSeeder extends Seeder
             ],
             [
                 'major_id' => 2,
+                'grade' => "X",
+                "rombel_number" => 4,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "X",
+                "rombel_number" => 5,
+            ],
+            [
+                'major_id' => 2,
                 'grade' => "XI",
                 "rombel_number" => 1,
             ],
@@ -100,6 +135,41 @@ class ClassSeeder extends Seeder
                 'major_id' => 2,
                 'grade' => "XI",
                 "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XI",
+                "rombel_number" => 4,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XI",
+                "rombel_number" => 5,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XII",
+                "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XII",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XII",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XII",
+                "rombel_number" => 4,
+            ],
+            [
+                'major_id' => 2,
+                'grade' => "XII",
+                "rombel_number" => 5,
             ],
         ])->each(function ($kelas) {
             Classes::create($kelas);
@@ -114,8 +184,43 @@ class ClassSeeder extends Seeder
             ],
             [
                 'major_id' => 3,
+                'grade' => "X",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "X",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 3,
                 'grade' => "XI",
                 "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "XI",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "XI",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "XII",
+                "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "XII",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 3,
+                'grade' => "XII",
+                "rombel_number" => 3,
             ],
 
         ])->each(function ($kelas) {
@@ -146,6 +251,11 @@ class ClassSeeder extends Seeder
             ],
             [
                 'major_id' => 4,
+                'grade' => "X",
+                "rombel_number" => 5,
+            ],
+            [
+                'major_id' => 4,
                 'grade' => "XI",
                 "rombel_number" => 1,
             ],
@@ -164,6 +274,36 @@ class ClassSeeder extends Seeder
                 'grade' => "XI",
                 "rombel_number" => 4,
             ],
+            [
+                'major_id' => 4,
+                'grade' => "XI",
+                "rombel_number" => 5,
+            ],
+            [
+                'major_id' => 4,
+                'grade' => "XII",
+                "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 4,
+                'grade' => "XII",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 4,
+                'grade' => "XII",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 4,
+                'grade' => "XII",
+                "rombel_number" => 4,
+            ],
+            [
+                'major_id' => 4,
+                'grade' => "XII",
+                "rombel_number" => 5,
+            ],
         ])->each(function ($kelas) {
             Classes::create($kelas);
         });
@@ -177,10 +317,44 @@ class ClassSeeder extends Seeder
             ],
             [
                 'major_id' => 5,
+                'grade' => "X",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 5,
+                'grade' => "X",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 5,
                 'grade' => "XI",
                 "rombel_number" => 1,
             ],
-
+            [
+                'major_id' => 5,
+                'grade' => "XI",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 5,
+                'grade' => "XI",
+                "rombel_number" => 3,
+            ],
+            [
+                'major_id' => 5,
+                'grade' => "XII",
+                "rombel_number" => 1,
+            ],
+            [
+                'major_id' => 5,
+                'grade' => "XII",
+                "rombel_number" => 2,
+            ],
+            [
+                'major_id' => 5,
+                'grade' => "XII",
+                "rombel_number" => 3,
+            ],
         ])->each(function ($kelas) {
             Classes::create($kelas);
         });
