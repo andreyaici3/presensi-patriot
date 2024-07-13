@@ -43,6 +43,38 @@
              </div>
          </div>
 
+         <div class="card-box pd-20 mb-30">
+            <div class="pd-20">
+                <form action="" method="GET">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Hari</label>
+                                <select name="id_hari" id="" class="form-control">
+                                    <option value="1">Senin</option>
+                                    <option value="2">Selasa</option>
+                                    <option value="3">Rabu</option>
+                                    <option value="4">Kamis</option>
+                                    <option value="5">Jumat</option>
+                                    <option value="6">Sabtu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="text-white">Action</label>
+                                <br>
+                                <button type="submit" name="filter" class="btn btn-primary" value="true" >Filter</button>
+                                <a href="{{ route('manage.schedules') }}" name="reset" class="btn btn-danger">Reset</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+         </div>
+
+
         @foreach ($days as $day)
             <div class="card-box mb-30 pd-20">
                 <div class="pd-20">
@@ -54,13 +86,17 @@
                             <tr>
                                 <th rowspan="2">Waktu</th>
                                 @foreach ($majors as $major)
-                                    <th colspan="{{ $major->classes->count() }}">{{ $major->code }}</th>
+                                    <th colspan="{{ $major->classes->count() }}">{{ $major->name }}</th>
                                 @endforeach
                             </tr>
                             <tr>
                                 @foreach ($majors as $major)
                                     @foreach ($major->classes as $class)
-                                        <th>{{ $class->grade . "-". $major->code . "-". $class->rombel_number }}</th>
+                                        @if ($class->grade == 'X')
+                                            <th>{{ $class->grade . "-" . $class->major->program_keahlian_acronym . "-" . $class->rombel_number }}</th>
+                                        @else
+                                            <th>{{ $class->grade . "-" . $class->major->konsentrasi_keahlian_acronym . "-" . $class->rombel_number }}</th>
+                                        @endif
                                     @endforeach
                                 @endforeach
                             </tr>
@@ -72,7 +108,7 @@
                                     @foreach ($majors as $major)
                                         @foreach ($major->classes as $rombel)
                                             <td>
-                                                <select id="slot-{{ $timeSlot->id }}-class-{{ $rombel->id }}" class="form-control" name="teacher_id[{{ $timeSlot->id }}][{{ $rombel->id }}]">
+                                                <select id="slot-{{ $timeSlot->id }}-class-{{ $rombel->id }}" class="form-control change-schedulles" name="teacher_id[{{ $timeSlot->id }}][{{ $rombel->id }}]">
                                                     <option value="init">KD</option>
                                                     @foreach ($teachers as $teacher)
                                                         @php
@@ -109,7 +145,6 @@
     @section('js')
          <script src="{{ asset('pt-v2/src/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
          <script>
-
              $('document').ready(function() {
                  $('.data-table').DataTable().destroy();
                  $('.data-table').DataTable({
@@ -136,17 +171,14 @@
                      },
                  });
 
-
                 var values = {};
-
-                $('select').each(function() {
+                $('.change-schedulles').each(function() {
                     var selectId = $(this).attr('id');
                     values[selectId] = $(this).val();
                 });
 
-
                 // Event onchange untuk setiap select
-                $('select').on('change', function() {
+                $('.change-schedulles').on('change', function() {
                     var selectId = $(this).attr('id');
                     var currentValue = $(this).val(); // Nilai saat ini
                     var previousValue = values[selectId]; // Nilai sebelumnya
@@ -161,18 +193,14 @@
                         cancelButtonClass: 'btn btn-danger',
                         confirmButtonText: 'Simpan Perubahan'
                     }).then(function (result) {
-
                         if (result.value){
-
                             var url = "{{ route('manage.schedules.saveChanges') }}";
-
                             axios.put(url, {
                                 slot: selectId,
                                 previous: previousValue,
                                 currentValue: currentValue
                             })
                             .then(function (response) {
-
                                 if (response.data == true){
                                     swal(
                                         {
@@ -206,7 +234,6 @@
                                         }
                                     )
                             });
-
                         } else if (result.dismiss){
                             document.getElementById(selectId).value = previousValue;
                             values[selectId] = previousValue;
@@ -221,11 +248,8 @@
                             )
                         }
                     })
-
                 });
              })
-
-
          </script>
      @endsection
  </x-app-layout-v2>

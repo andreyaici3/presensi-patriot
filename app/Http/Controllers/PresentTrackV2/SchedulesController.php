@@ -16,17 +16,15 @@ use Illuminate\Support\Facades\Validator;
 
 class SchedulesController extends BaseController
 {
-    public function index(){
-
+    public function index(Request $request){
         return view('present-track-v2.akademik.jadwal.index', [
-            'days' => Day::get(),
+            'days' => $request->id_hari ? Day::where('id', $request->id_hari)->get() : [],
             'classes' => Classes::get(),
             'majors' => Major::get(),
             'timeSlots' => TimesSlot::get(),
             'schedules' => Schedulles::get(),
             'teachers' => Teacher::orderBy('kode_guru', 'ASC')->get(),
         ]);
-
     }
 
     public function saveChanges(Request $request){

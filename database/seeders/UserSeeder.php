@@ -33,9 +33,9 @@ class UserSeeder extends Seeder
                 'name' => "H. Andi Yulia Riadi, M.I.Kom",
                 'email' => "andi.yeer97@gmail.com",
                 'email_verified_at' => now(),
-                'password' => Hash::make('staff1*ok*'),
+                'password' => Hash::make('kurikulumok*'),
                 'remember_token' => Str::random(10),
-                'role' => 'staff',
+                'role' => 'kurikulum',
             ],
 
         ])->each(function($user){

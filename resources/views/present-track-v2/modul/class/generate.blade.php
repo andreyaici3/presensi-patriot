@@ -27,10 +27,17 @@
             <br>
             <div class="container-wm" id="container-wm">
                 <img src="{{ asset('pt-v2/assets/images/backgrounds/qr_template.png') }}" alt="Main Image">
-
-                <!-- Gambar watermark -->
                 <img class="watermark" src="{{ asset('storage/qrcodes/qrcode.png') }}" alt="Watermark">
-                <h1 class="title-wm">({{ $data->grade . "-" . $data->major->code . "-" .$data->rombel_number }})</h1>
+                <h1 class="title-wm">
+                    @php
+                        if ($data->grade == 'X'){
+                            $ks = $data->grade . "-" . $data->major->program_keahlian_acronym . "-" . $data->rombel_number;
+                        } else {
+                            $ks = $data->grade . "-" . $data->major->konsentrasi_keahlian_acronym . "-" . $data->rombel_number;
+                        }
+                    @endphp
+                    ({{ $ks }})
+                </h1>
                 <h2 class="code-wm">For Iphone User Please Input: {{ base64_encode($data->id) }}</h2>
             </div>
 

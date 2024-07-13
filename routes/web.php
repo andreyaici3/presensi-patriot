@@ -39,6 +39,57 @@ Route::middleware('auth')->group(function(){
     });
 
 
+
+    // Disini Terbaru semua yang sudah di test
+    Route::middleware(["user-role:superuser|kurikulum|admin "])->group(function(){
+        Route::controller(SubjectsControler::class)->group(function(){
+            Route::get("/manage/subject", "index")->name("manage.subject");
+            Route::get("/manage/subject/create", "create")->name("manage.subject.create");
+            Route::post("/manage/subject", "store");
+            Route::get("/manage/subject/{id}", "edit")->name("manage.subject.edit");
+            Route::put("/manage/subject/{id}", "update");
+            Route::DELETE("/manage/subject/{id}/delete", "destroy")->name('manage.subject.delete');
+        });
+
+        Route::controller(ReportAbsensiTeacherController::class)->group(function(){
+            Route::get('/manage/reportAbsenGuru', 'index')->name("manage.report.absenGuru");
+            Route::get("/manage/reportHarian", 'reportHarian')->name("manage.report.harian");
+            Route::get("/manage/reportMinggan", 'reportMinggan')->name("manage.report.mingguan");
+            Route::get("/manage/reportBulanan", 'reportBulanan')->name("manage.report.bulanan");
+        });
+
+        Route::controller(SchedulesController::class)->group(function(){
+            Route::get("/manage/schedules", 'index')->name("manage.schedules");
+            Route::get("/manage/schedules/create", 'create')->name("manage.schedules.create");
+            Route::put("/manage/schedules/saveChanges", 'saveChanges')->name('manage.schedules.saveChanges');
+        });
+    });
+
+    Route::middleware(["user-role:superuser|kurikulum"])->group(function(){
+        Route::controller(PermissionController::class)->group(function(){
+            Route::get("/manage/permission", 'index')->name("manage.permission");
+            Route::put("/manage/permission/{id}/accept", 'accept')->name("manage.permission.accept");
+            Route::delete("/manage/permission/{id}/destroy", 'destroy')->name("manage.permission.reject");
+        });
+
+        Route::controller(AttendancesController::class)->group(function(){
+            Route::get("/attendance/todayIsFree", 'fullPresent')->name("attendance.free");
+        });
+
+        Route::controller(AcademicYearController::class)->group(function(){
+            Route::get("/manage/academic-year", "index")->name("manage.academic.year");
+            Route::get("/manage/academic-year/creates", "create")->name("manage.academic.year.create");
+            Route::get("/manage/academic-year/{id}", "edit")->name("manage.academic.year.edit");
+            Route::put("/manage/academic-year/{id}", "update");
+            Route::post("/manage/academic-year", "store");
+            Route::post("/manage/academic-year/{id}/switch", "switchActive")->name("manage.academic.year.switch");
+            Route::delete("/manage/academic-year/{id}/delete", "destroy")->name("manage.academic.year.delete");
+        });
+    });
+
+
+
+    // Sampai Disini Terbarunya
     Route::controller(GuruV2Controller::class)->group(function(){
         Route::get("/manage/guru", "index")->name("manage.guru");
         Route::get("/manage/guru/create", "create")->name("manage.guru.create");
@@ -67,15 +118,6 @@ Route::middleware('auth')->group(function(){
         Route::DELETE("/manage/major/{id}/delete", "destroy")->name('manage.major.delete');
     });
 
-    Route::controller(SubjectsControler::class)->group(function(){
-        Route::get("/manage/subject", "index")->name("manage.subject");
-        Route::get("/manage/subject/create", "create")->name("manage.subject.create");
-        Route::post("/manage/subject", "store");
-        Route::get("/manage/subject/{id}", "edit")->name("manage.subject.edit");
-        Route::put("/manage/subject/{id}", "update");
-        Route::DELETE("/manage/subject/{id}/delete", "destroy")->name('manage.subject.delete');
-    });
-
     Route::controller(DaysController::class)->group(function(){
         Route::get("/manage/days", "index")->name("manage.days");
         Route::get("/manage/days/{id}/detail", "detail")->name("manage.days.detail");
@@ -98,46 +140,11 @@ Route::middleware('auth')->group(function(){
         Route::delete("/manage/telegram-user/{id}/delete", 'destroy')->name("manage.tg.delete");
     });
 
-    Route::controller(AcademicYearController::class)->group(function(){
-        Route::get("/manage/academic-year", "index")->name("manage.academic.year");
-        Route::get("/manage/academic-year/creates", "create")->name("manage.academic.year.create");
-        Route::get("/manage/academic-year/{id}", "edit")->name("manage.academic.year.edit");
-        Route::put("/manage/academic-year/{id}", "update");
-        Route::post("/manage/academic-year", "store");
-        Route::post("/manage/academic-year/{id}/switch", "switchActive")->name("manage.academic.year.switch");
-        Route::delete("/manage/academic-year/{id}/delete", "destroy")->name("manage.academic.year.delete");
-    });
-
-    Route::controller(SchedulesController::class)->group(function(){
-        Route::get("/manage/schedules", 'index')->name("manage.schedules");
-        Route::get("/manage/schedules/create", 'create')->name("manage.schedules.create");
-        Route::put("/manage/schedules/saveChanges", 'saveChanges')->name('manage.schedules.saveChanges');
-    });
-
-    Route::controller(AttendancesController::class)->group(function(){
-        Route::get("/attendance/{id_kelas}/{kode_guru}", "attendance")->name('attendance');
-        Route::get("/attendance/todayIsFree", 'fullPresent')->name("attendance.free");
-    });
-
-    Route::controller(ReportAbsensiTeacherController::class)->group(function(){
-        Route::get('/manage/reportAbsenGuru', 'index')->name("manage.report.absenGuru");
-        Route::get("/manage/reportHarian", 'reportHarian')->name("manage.report.harian");
-        Route::get("/manage/reportMinggan", 'reportMinggan')->name("manage.report.mingguan");
-        Route::get("/manage/reportBulanan", 'reportBulanan')->name("manage.report.bulanan");
-    });
-
     Route::controller(TeacherLoginController::class)->group(function(){
         Route::get("/manage/auth-guru", 'index')->name("manage.auth.guru");
         Route::post("/manage/auth-guru", 'store');
         Route::put("/manage/auth-guru", 'update');
         Route::delete("/manage/auth-guru", 'destroy');
-    });
-
-
-    Route::controller(PermissionController::class)->group(function(){
-        Route::get("/manage/permission", 'index')->name("manage.permission");
-        Route::put("/manage/permission/{id}/accept", 'accept')->name("manage.permission.accept");
-        Route::delete("/manage/permission/{id}/destroy", 'destroy')->name("manage.permission.reject");
     });
 
     // Yang Baru Ada Disini
