@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | PTC Kampung</title>
+    <title>Login | Present Track</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('pt-v2/assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('pt-v2/assets/css/styles.min.css') }}" />
 </head>
