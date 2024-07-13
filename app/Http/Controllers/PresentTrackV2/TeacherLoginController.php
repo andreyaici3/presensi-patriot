@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\PresentTrackV2;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use App\Models\TeacherLogin;
 use Carbon\Carbon;

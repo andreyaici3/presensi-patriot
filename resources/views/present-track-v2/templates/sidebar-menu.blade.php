@@ -37,7 +37,7 @@
                 </a>
                 <ul class="submenu" style="{{ $menuOpen == 'Master Data' ? 'display:block;' : 'display:none;' }}">
                     <li><a href="{{ route('manage.guru') }}" class="{{ $menuActive == 'Data Guru'  ? 'active' : ''}}" >Data Guru</a></li>
-                    <li><a href="javascript:;">Data Staff</a></li>
+                    <li><a href="{{ route('manage.staff') }}" class="{{ $menuActive == 'Data Staff'  ? 'active' : ''}}">Data Staff</a></li>
                     <li><a href="javascript:;">Data Siswa</a></li>
                     <li><a href="{{ route('manage.major') }}" class="{{ $menuActive == 'Data Major'  ? 'active' : ''}}" >Data Jurusan</a></li>
                     <li><a href="{{ route('manage.class') }}" class="{{ $menuActive == 'Data Kelas'  ? 'active' : ''}}">Data Kelas</a></li>
@@ -90,6 +90,13 @@
                     <span class="micon bi bi-key-fill"></span><span class="mtext">Akun Guru</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('manage.auth.staff') }}"
+                    class="dropdown-toggle no-arrow {{ $menuActive == 'Data Akun Staff' ? 'active' : '' }}">
+                    <span class="micon bi bi-key-fill"></span><span class="mtext">Akun Staff</span>
+                </a>
+            </li>
         @endif
 
         @if(Auth::user()->role == "admin")
@@ -104,6 +111,7 @@
                 </a>
                 <ul class="submenu" style="{{ $menuOpen == 'Master Data' ? 'display:block;' : 'display:none;' }}">
                     <li><a href="{{ route('manage.guru') }}" class="{{ $menuActive == 'Data Guru'  ? 'active' : ''}}" >Data Guru</a></li>
+                    <li><a href="{{ route('manage.staff') }}" class="{{ $menuActive == 'Data Staff'  ? 'active' : ''}}">Data Staff</a></li>
                     <li><a href="{{ route('manage.major') }}" class="{{ $menuActive == 'Data Major'  ? 'active' : ''}}" >Data Jurusan</a></li>
                     <li><a href="{{ route('manage.class') }}" class="{{ $menuActive == 'Data Kelas'  ? 'active' : ''}}">Data Kelas</a></li>
                 </ul>
@@ -155,6 +163,13 @@
                 <a href="{{ route('manage.auth.guru') }}"
                     class="dropdown-toggle no-arrow {{ $menuActive == 'Data Akun Guru' ? 'active' : '' }}">
                     <span class="micon bi bi-key-fill"></span><span class="mtext">Akun Guru</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('manage.auth.staff') }}"
+                    class="dropdown-toggle no-arrow {{ $menuActive == 'Data Akun Staff' ? 'active' : '' }}">
+                    <span class="micon bi bi-key-fill"></span><span class="mtext">Akun Staff</span>
                 </a>
             </li>
         @endif

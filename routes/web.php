@@ -1,13 +1,8 @@
 <?php
 
-use App\Http\Controllers\AbsenController;
-use App\Http\Controllers\AndroidController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HariController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\MasterJadwalController;
+use App\Http\Controllers\PresentStaff\StaffController;
+use App\Http\Controllers\PresentStaff\StaffLoginController;
 use App\Http\Controllers\PresentTrackV2\AcademicYearController;
 use App\Http\Controllers\PresentTrackV2\AttendancesController;
 use App\Http\Controllers\PresentTrackV2\ClassController;
@@ -23,14 +18,9 @@ use App\Http\Controllers\PresentTrackV2\SubjectsControler;
 use App\Http\Controllers\PresentTrackV2\TeacherLoginController;
 use App\Http\Controllers\PresentTrackV2\TelegramUserController;
 use App\Http\Controllers\Superuser\OperatorController;
-use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\SiswaController\AuthSiswaController;
 use App\Http\Controllers\Superuser\DatabasesController;
 use App\Http\Controllers\PresentTrackV2\TimesSlotsController;
-use App\Http\Controllers\TelegramController;
-use App\Http\Controllers\Wakasek\LogStaffController;
-use App\Http\Controllers\Wakasek\StaffController;
-use App\Models\TeacherLogin;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function(){
@@ -50,6 +40,16 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::middleware(["user-role:superuser|kurikulum|admin"])->group(function(){
+
+        Route::controller(StaffController::class)->group(function(){
+            Route::get("/manage/staff", 'index')->name("manage.staff");
+            Route::get("/manage/staff/create", 'create')->name("manage.staff.create");
+            Route::post("/manage/staff", 'store');
+            Route::get("/manage/staff/{id}", 'edit')->name("manage.staff.edit");
+            Route::put("/manage/staff/{id}", 'update');
+            Route::delete("/manage/staff/{id}", 'destroy');
+        });
+
         Route::controller(SubjectsControler::class)->group(function(){
             Route::get("/manage/subject", "index")->name("manage.subject");
             Route::get("/manage/subject/create", "create")->name("manage.subject.create");
@@ -64,6 +64,13 @@ Route::middleware('auth')->group(function(){
             Route::post("/manage/auth-guru", 'store');
             Route::put("/manage/auth-guru", 'update');
             Route::delete("/manage/auth-guru", 'destroy');
+        });
+
+        Route::controller(StaffLoginController::class)->group(function(){
+            Route::get("/manage/auth-staff", 'index')->name("manage.auth.staff");
+            Route::post("/manage/auth-staff", 'store');
+            Route::put("/manage/auth-staff", 'update');
+            Route::delete("/manage/auth-staff", 'destroy');
         });
 
         Route::controller(ReportAbsensiTeacherController::class)->group(function(){
@@ -178,26 +185,6 @@ Route::middleware(["auth", "user-role:superuser"])->group(function(){
         Route::delete('/operator/{id}', 'destroy')->name('superuser.operator.delete');
     });
 });
-
-Route::middleware(["auth", "user-role:superuser|wakasek"])->group(function(){
-    Route::controller(StaffController::class)->group(function(){
-        Route::get("/staff", "index")->name("wakasek.staff");
-        Route::get("/staff/create", "create")->name("wakasek.staff.create");
-        Route::post("/staff", "store");
-        Route::get("/staff/{id_staff}/edit", "edit")->name("wakasek.staff.edit");
-        Route::put("/staff/{id_staff}", "update")->name("wakasek.staff.update");
-        Route::delete("/staff/{id_staff}", "destroy");
-
-        Route::get("/staff/akun", "akun")->name("wakasek.staff.akun");
-        Route::delete("/staff/{id_akun}/delete", "destroyAkun")->name("wakasek.staff.akun.delete");
-        Route::post("/staff/akun/create", "createAkun")->name("wakasek.staff.akun.create");
-    });
-
-    Route::controller(LogStaffController::class)->group(function(){
-        Route::get("/staff/log", "index")->name("wakasek.staff.log");
-    });
-});
-
 //staff
 
 
