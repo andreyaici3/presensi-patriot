@@ -2,18 +2,15 @@
 
 namespace App\Models\StaffModel;
 
+use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
-class StaffLogin extends Model
+class StaffAttendance extends Model
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory;
 
     protected $connection = '';
-    protected $fillable = ['staff_id', 'password', 'device_token'];
-
 
     public function __construct(array $attributes = [])
     {
@@ -21,13 +18,17 @@ class StaffLogin extends Model
         $this->connection = env('DB_STAFF_CONNECTION');
     }
 
-    public function setPasswordAttribute($value)
+    protected $fillable = ['staff_id', 'academic_year_id', 'date', 'clock_in', 'clock_out', 'present', 'notes'];
+
+    public function academicYear()
     {
-        $this->attributes['password'] = Hash::make($value);
+        return $this->belongsTo(AcademicYear::class);
     }
 
     public function staff()
     {
         return $this->belongsTo(Staff::class);
     }
+
+
 }

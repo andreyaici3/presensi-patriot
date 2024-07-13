@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\PresentStaff\ReportAbsensiStaffController;
+use App\Http\Controllers\PresentStaff\StaffAttendancesController;
 use App\Http\Controllers\PresentStaff\StaffController;
 use App\Http\Controllers\PresentStaff\StaffLoginController;
 use App\Http\Controllers\PresentTrackV2\AcademicYearController;
@@ -79,6 +81,14 @@ Route::middleware('auth')->group(function(){
             Route::get("/manage/reportMinggan", 'reportMinggan')->name("manage.report.mingguan");
             Route::get("/manage/reportBulanan", 'reportBulanan')->name("manage.report.bulanan");
         });
+
+        Route::controller(ReportAbsensiStaffController::class)->group(function(){
+            Route::get('/manage/reportAbsenStaff', 'index')->name("manage.report.absenStaff");
+            // Route::get("/manage/reportHarian", 'reportHarian')->name("manage.report.harian");
+            // Route::get("/manage/reportMinggan", 'reportMinggan')->name("manage.report.mingguan");
+            // Route::get("/manage/reportBulanan", 'reportBulanan')->name("manage.report.bulanan");
+        });
+
 
         Route::controller(SchedulesController::class)->group(function(){
             Route::get("/manage/schedules", 'index')->name("manage.schedules");
@@ -186,5 +196,8 @@ Route::middleware(["auth", "user-role:superuser"])->group(function(){
     });
 });
 //staff
+
+
+Route::get("/test", [StaffAttendancesController::class, 'attendanceOutBySystem']);
 
 

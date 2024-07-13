@@ -1,10 +1,10 @@
-<x-app-layout-v2 menuOpen="Report Data" title="Log Absensi" menuActive="Laporan Absen" >
+<x-app-layout-v2 menuOpen="Report Data Staff" title="Log Absensi Staff" menuActive="Laporan Absen Staff" >
     <div class="min-height-200px">
         <div class="page-header">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4>LOG ABSENSI</h4>
+                        <h4>LOG ABSENSI STAFF</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -48,13 +48,18 @@
                  <table class="data-table table stripe hover nowrap">
                      <thead>
                          <tr>
-                             <th class="table-plus datatable-nosort">No</th>
-                             <th>Kode Guru</th>
-                             <th>Nama Guru</th>
-                             <th>Waktu Absen</th>
-                             <th>Status</th>
-                             <th>Kelas</th>
-                             <th class="datatable-nosort">Aksi</th>
+                             <th rowspan="2" class="table-plus datatable-nosort">No</th>
+                             <th rowspan="2">NIP</th>
+                             <th rowspan="2">Nama Staff</th>
+                             <th colspan="3">Waktu Absen</th>
+                             <th rowspan="2">Status</th>
+                             <th rowspan="2">Lama Kerja</th>
+                             <th rowspan="2" class="datatable-nosort">Aksi</th>
+                         </tr>
+                         <tr>
+                            <th>Tanggal</th>
+                            <th>Waktu Masuk</th>
+                            <th>Waktu Keluar</th>
                          </tr>
                      </thead>
                      <tbody>
@@ -64,14 +69,44 @@
                          @foreach ($report as $key => $value)
                              <tr>
                                  <td class="table-plus">{{ $nomor++ }}</td>
-                                 <td>{{ $value->teacher->kode_guru }}</td>
-                                 <td>{{ $value->teacher->first_name . " " . $value->teacher->last_name}} </td>
-                                 <td>{{ Carbon\Carbon::parse($value->attendance_time)->format('d-m-Y H:i:s') }} </td>
+                                 <td>{{ $value->staff->nip }}</td>
+                                 <td>{{ $value->staff->name }}</td>
+                                 <td>{{ Carbon\Carbon::parse($value->date)->format('d-m-Y') }}</td>
                                  <td>
-                                    {{ $value->status }}
-                                </td>
+                                    @if(Auth::user()->role == "superuser")
+                                        <input type="time" name="clock_in[{{ $value->id }}]" id="clock_in" class="form-control" value="{{ $value->clock_in }}">
+                                    @else
+                                        {{ $value->clock_in }}
+                                    @endif
+                                 </td>
                                  <td>
-                                    {{ $value->classes->grade . "-". $value->classes->major->code ."-" . $value->classes->rombel_number }}
+
+                                    @if(Auth::user()->role == "superuser")
+                                        <input type="time" name="clock_out[{{ $value->id }}]" id="clock_out" class="form-control" value="{{ $value->clock_out }}">
+                                    @else
+                                        {{ $value->clock_in }}
+                                    @endif
+                                 </td>
+                                 <td>
+                                    @if($value->present)
+                                        Hadir
+                                    @else
+                                        Tidak Hadir
+                                    @endif
+                                 </td>
+                                 <td>
+                                    @if ($value->clock_out != null)
+                                        @php
+                                            $clockIn = Carbon\Carbon::parse($value->clock_in);
+                                            $clockOut = Carbon\Carbon::parse($value->clock_out);
+                                            $diff = $clockOut->diff($clockIn);
+                                            $hours = $diff->h; // Jam
+                                            $minutes = $diff->i; // Menit
+                                        @endphp
+                                        {{ "$hours Jam $minutes Menit $diff->s Detik" }}
+                                    @else
+                                        Absen Belum Lengkap
+                                    @endif
                                  </td>
                                  <td>
                                     @if (Auth::user()->role == "superuser")
@@ -122,7 +157,6 @@
              })
 
              function confirmDelete(id){
-
                  swal({
                      title: 'Konfirmasi Hapus',
                      text: "Apakah kamu yakin akan mengahpus data.?",

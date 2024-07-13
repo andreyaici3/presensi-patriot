@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\ApiControllers\ScrapController;
 use App\Http\Controllers\ApiControllers\v1\staff\ApiStaffController;
+use App\Http\Controllers\PresentStaff\StaffAttendancesController;
+use App\Http\Controllers\PresentStaff\StaffLoginController;
 use App\Http\Controllers\PresentTrackV2\AttendancesController;
 use App\Http\Controllers\PresentTrackV2\PermissionController;
 use App\Http\Controllers\PresentTrackV2\ReportAbsensiTeacherController;
 use App\Http\Controllers\PresentTrackV2\SchedulesController;
 use App\Http\Controllers\PresentTrackV2\TeacherLoginController;
 use App\Http\Controllers\PresentTrackV2\WebhookController;
+use App\Models\StaffModel\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,22 +24,10 @@ Route::controller(ScrapController::class)->group(function(){
 });
 
 
-//V1
-//staff
-Route::group(['prefix'=>'v1'],function(){
-    Route::post('/staff/login', [ApiStaffController::class, "login"]);
 
-    Route::middleware(['auth:sanctum', 'abilities:absen'])->group(function(){
-       Route::controller(ApiStaffController::class)->group(function(){
-        Route::post("/staff/absen/{type}", "absen");
-       });
-    });
-
-});
-
-
-//V2 untuk Guru
 Route::prefix('v2')->group(function () {
+    Route::get("/attendanceOutBySystem", [StaffAttendancesController::class, "attendanceOutBySystem"]);
+    //Teacher Track
     Route::controller(TeacherLoginController::class)->group(function(){
         Route::post("/login", "login");
     });
@@ -64,5 +55,12 @@ Route::prefix('v2')->group(function () {
             Route::post("/attendance/manual", 'create');
         });
     });
+
+    //staff track
+    Route::controller(StaffLoginController::class)->group(function(){
+        Route::post('/login/staff', 'login');
+    });
+
+
 });
 
