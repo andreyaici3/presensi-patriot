@@ -3,6 +3,7 @@
 namespace App\Models\StaffModel;
 
 use App\Models\AcademicYear;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +30,5 @@ class StaffAttendance extends Model
     {
         return $this->belongsTo(Staff::class);
     }
-
 
 }

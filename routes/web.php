@@ -84,9 +84,9 @@ Route::middleware('auth')->group(function(){
 
         Route::controller(ReportAbsensiStaffController::class)->group(function(){
             Route::get('/manage/reportAbsenStaff', 'index')->name("manage.report.absenStaff");
-            // Route::get("/manage/reportHarian", 'reportHarian')->name("manage.report.harian");
-            // Route::get("/manage/reportMinggan", 'reportMinggan')->name("manage.report.mingguan");
-            // Route::get("/manage/reportBulanan", 'reportBulanan')->name("manage.report.bulanan");
+            Route::get("/manage/reportHarianStaff", 'reportHarian')->name("manage.report.harianStaff");
+            Route::get("/manage/reportMingguanStaff", 'reportMingguan')->name("manage.report.mingguanStaff");
+            Route::get("/manage/reportBulananStaff", 'reportBulanan')->name("manage.report.bulananStaff");
         });
 
 

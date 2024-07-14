@@ -64,9 +64,9 @@
                 </a>
                 <ul class="submenu" style="{{ $menuOpen == 'Report Data Staff' ? 'display:block;' : 'display:none;' }}">
                     <li><a href="{{ route('manage.report.absenStaff') }}" class="{{ $menuActive == 'Laporan Absen Staff'  ? 'active' : ''}}">LOG Absen</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Harian Staff'  ? 'active' : ''}}">Laporan Harian</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Mingguan Staff'  ? 'active' : ''}}">Laporan Mingguan</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Bulanan Staff'  ? 'active' : ''}}">Laporan Bulanan</a></li>
+                    <li><a href="{{ route('manage.report.harianStaff') }}" class="{{ $menuActive == 'Laporan Harian Staff'  ? 'active' : ''}}">Laporan Harian</a></li>
+                    <li><a href="{{ route('manage.report.mingguanStaff') }}" class="{{ $menuActive == 'Laporan Mingguan Staff'  ? 'active' : ''}}">Laporan Mingguan</a></li>
+                    <li><a href="{{ route('manage.report.bulananStaff') }}" class="{{ $menuActive == 'Laporan Bulanan Staff'  ? 'active' : ''}}">Laporan Bulanan</a></li>
                 </ul>
             </li>
 
@@ -151,9 +151,9 @@
                 </a>
                 <ul class="submenu" style="{{ $menuOpen == 'Report Data Staff' ? 'display:block;' : 'display:none;' }}">
                     <li><a href="{{ route('manage.report.absenStaff') }}" class="{{ $menuActive == 'Laporan Absen Staff'  ? 'active' : ''}}">LOG Absen</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Harian Staff'  ? 'active' : ''}}">Laporan Harian</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Mingguan Staff'  ? 'active' : ''}}">Laporan Mingguan</a></li>
-                    <li><a href="" class="{{ $menuActive == 'Laporan Bulanan Staff'  ? 'active' : ''}}">Laporan Bulanan</a></li>
+                    <li><a href="{{ route('manage.report.harianStaff') }}" class="{{ $menuActive == 'Laporan Harian Staff'  ? 'active' : ''}}">Laporan Harian</a></li>
+                    <li><a href="{{ route('manage.report.mingguanStaff') }}" class="{{ $menuActive == 'Laporan Mingguan Staff'  ? 'active' : ''}}">Laporan Mingguan</a></li>
+                    <li><a href="{{ route('manage.report.bulananStaff') }}" class="{{ $menuActive == 'Laporan Bulanan Staff'  ? 'active' : ''}}">Laporan Bulanan</a></li>
                 </ul>
             </li>
 
@@ -266,6 +266,20 @@
                     <li><a href="{{ route('manage.report.harian') }}" class="{{ $menuActive == 'Laporan Harian'  ? 'active' : ''}}">Laporan Harian</a></li>
                     <li><a href="{{ route('manage.report.mingguan') }}" class="{{ $menuActive == 'Laporan Mingguan'  ? 'active' : ''}}">Laporan Mingguan</a></li>
                     <li><a href="{{ route('manage.report.bulanan') }}" class="{{ $menuActive == 'Laporan Bulanan'  ? 'active' : ''}}">Laporan Bulanan</a></li>
+                </ul>
+            </li>
+
+
+            <li class="dropdown {{ $menuOpen == 'Report Data Staff' ? 'show' : '' }}">
+                <a href="javascript:;" class="dropdown-toggle">
+                    <span class="micon bi bi-files"></span
+                    ><span class="mtext">Laporan Staff</span>
+                </a>
+                <ul class="submenu" style="{{ $menuOpen == 'Report Data Staff' ? 'display:block;' : 'display:none;' }}">
+                    <li><a href="{{ route('manage.report.absenStaff') }}" class="{{ $menuActive == 'Laporan Absen Staff'  ? 'active' : ''}}">LOG Absen</a></li>
+                    <li><a href="{{ route('manage.report.harianStaff') }}" class="{{ $menuActive == 'Laporan Harian Staff'  ? 'active' : ''}}">Laporan Harian</a></li>
+                    <li><a href="{{ route('manage.report.mingguanStaff') }}" class="{{ $menuActive == 'Laporan Mingguan Staff'  ? 'active' : ''}}">Laporan Mingguan</a></li>
+                    <li><a href="{{ route('manage.report.bulananStaff') }}" class="{{ $menuActive == 'Laporan Bulanan Staff'  ? 'active' : ''}}">Laporan Bulanan</a></li>
                 </ul>
             </li>
 

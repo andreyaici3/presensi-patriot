@@ -19,7 +19,6 @@ class ReportAbsensiTeacherController extends BaseController
     }
 
     public function reportHarian(Request $request){
-
         if ($request->export == true){
             $date = Carbon::parse($request->tanggal);
             $dateToday = $date->toDateString();
