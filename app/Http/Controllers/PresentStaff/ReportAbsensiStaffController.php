@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PresentStaff;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicYear;
 use App\Models\StaffModel\Staff;
@@ -9,7 +10,7 @@ use App\Models\StaffModel\StaffAttendance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ReportAbsensiStaffController extends Controller
+class ReportAbsensiStaffController extends BaseController
 {
     public function index(){
         return view("present-staff.report.index", [
@@ -136,5 +137,65 @@ class ReportAbsensiStaffController extends Controller
                 'startDate' =>  (isset($startOfMonth)) ? $startOfMonth->format('m/d/Y') : date('m/d/YYYY') ,
                 'endDate' =>  (isset($endOfMonth)) ? $endOfMonth->format('m/d/Y') : date('m/d/YYYY')
             ]);
+    }
+
+    public function destroy($id){
+        try {
+            StaffAttendance::find($id)->delete();
+            return redirect()->to(route("manage.report.absenStaff"))->with("sukses", "Data Berhasil Dihapus");
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->to(route("manage.report.absenStaff"))->with("gagal", "Data Gagal Dihapus");
+        }
+    }
+
+    public function update($id){
+        try {
+            $data = StaffAttendance::find($id);
+            $str = $data->notes . " & Absen Keluar By Dev";
+            $update = [
+                'notes' => $str,
+                'clock_out' => '14:00:00'
+            ];
+            $data->update($update);
+            return redirect()->to(route("manage.report.absenStaff"))->with("sukses", "Data Berhasil di Ubah");
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->to(route("manage.report.absenStaff"))->with("gagal", "Data Gagal di Ubah");
+        }
+    }
+
+    public function updateClockOut(Request $request){
+        try {
+            $data = StaffAttendance::find($request->slot);
+            $str = $data->notes . " & Absen Keluar By Dev Telah Di Edit";
+            if (strtotime($request->currentValue) <= strtotime($data->clock_in)) {
+                return $this->sendError("Gagal", 400);
+            }
+            $update = [
+                'notes' => $str,
+                'clock_out' => $request->currentValue
+            ];
+            $data->update($update);
+            return $this->sendResponse([], "Sukses");
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->to(route("manage.report.absenStaff"))->with("gagal", "Data Gagal di Ubah");
+        }
+    }
+
+    public function updateClockIn(Request $request){
+        try {
+            $data = StaffAttendance::find($request->slot);
+            $str = $data->notes . " & Absen Masuk By Dev Telah Di Edit";
+            if (strtotime($request->currentValue) >= strtotime($data->clock_out)) {
+                return $this->sendError("Gagal", 400);
+            }
+            $update = [
+                'notes' => $str,
+                'clock_in' => $request->currentValue
+            ];
+            $data->update($update);
+            return $this->sendResponse([], "Sukses");
+        } catch (\Illuminate\Database\QueryException $th) {
+            return redirect()->to(route("manage.report.absenStaff"))->with("gagal", "Data Gagal di Ubah");
+        }
     }
 }

@@ -84,6 +84,10 @@ Route::middleware('auth')->group(function(){
 
         Route::controller(ReportAbsensiStaffController::class)->group(function(){
             Route::get('/manage/reportAbsenStaff', 'index')->name("manage.report.absenStaff");
+            Route::delete('/manage/log/{id}/delete', 'destroy')->name("staff.log.delete");
+            Route::PUT('/manage/log/{id}/update', 'update')->name("staff.log.update");
+            Route::PUT('/manage/log/updateClockOut', 'updateClockOut')->name("staff.log.updateClockOut");
+            Route::PUT('/manage/log/updateClockIn', 'updateClockIn')->name("staff.log.updateClockIn");
             Route::get("/manage/reportHarianStaff", 'reportHarian')->name("manage.report.harianStaff");
             Route::get("/manage/reportMingguanStaff", 'reportMingguan')->name("manage.report.mingguanStaff");
             Route::get("/manage/reportBulananStaff", 'reportBulanan')->name("manage.report.bulananStaff");

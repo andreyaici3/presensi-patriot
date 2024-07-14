@@ -74,7 +74,7 @@
                                  <td>{{ Carbon\Carbon::parse($value->date)->format('d-m-Y') }}</td>
                                  <td>
                                     @if(Auth::user()->role == "superuser")
-                                        <input type="time" name="clock_in[{{ $value->id }}]" id="clock_in" class="form-control" value="{{ $value->clock_in }}">
+                                        <input type="time" name="clock_in[{{ $value->id }}]" id="{{ $value->id }}" class="form-control clock_in" value="{{ $value->clock_in }}">
                                     @else
                                         {{ $value->clock_in }}
                                     @endif
@@ -82,7 +82,7 @@
                                  <td>
 
                                     @if(Auth::user()->role == "superuser")
-                                        <input type="time" name="clock_out[{{ $value->id }}]" id="clock_out" class="form-control" value="{{ $value->clock_out }}">
+                                        <input type="time" name="clock_out[{{ $value->id }}]" id="{{ $value->id }}" class="form-control clock_out" value="{{ $value->clock_out }}">
                                     @else
                                         {{ $value->clock_in }}
                                     @endif
@@ -110,10 +110,20 @@
                                  </td>
                                  <td>
                                     @if (Auth::user()->role == "superuser")
-                                        <a href="" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
-                                        <a href="#" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="icon-copy dw dw-delete-3"></i></a>
+                                        <form id="formDelete-{{ $value->id }}" action="{{ route('staff.log.delete', ['id' => $value->id]) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                        @if ($value->clock_out == null)
+                                            <form id="formUpdate-{{ $value->id }}" action="{{ route('staff.log.update', ['id' => $value->id]) }}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                            </form>
+                                            <a href="#" onclick="return confirmUpdate('{{ $value->id }}')" data-color="#265ed7" style="color: rgb(38, 94, 215);"><i class="icon-copy dw dw-edit2"></i></a>
+                                        @endif
+                                        <a href="#" onclick="return confirmDelete('{{ $value->id }}')" data-color="#e95959" style="color: rgb(233, 89, 89);"><i class="icon-copy dw dw-delete-3"></i></a>
                                     @else
-                                        <a href="" class="text-danger"><i>Don't Have Access</i></a>
+                                        <a href="#" class="text-danger"><i>Don't Have Access</i></a>
                                     @endif
                                  </td>
                              </tr>
@@ -126,7 +136,9 @@
     </div>
 
 
-
+    @section('head')
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    @endsection
     @section('js')
          <script src="{{ asset('pt-v2/src/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
          <script>
@@ -154,6 +166,181 @@
                          }
                      },
                  });
+
+                 var values = {};
+                $('.clock_out').each(function() {
+                    var selectId = $(this).attr('id');
+                    values[selectId] = $(this).val();
+                });
+
+                // Event onchange untuk setiap select
+                $('.clock_out').on('change', function() {
+                    var selectId = $(this).attr('id');
+                    var currentValue = $(this).val(); // Nilai saat ini
+                    var previousValue = values[selectId]; // Nilai sebelumnya
+                    values[selectId] = currentValue;
+
+                    swal({
+                        title: 'Konfirmasi Edit',
+                        text: "Apakah Kamu Akan Mengubah Data Tersebut",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        confirmButtonText: 'Simpan Perubahan'
+                    }).then(function (result) {
+                        if (result.value){
+                            var url = "{{ route('staff.log.updateClockOut') }}";
+                            axios.put(url, {
+                                slot: selectId,
+                                previous: previousValue,
+                                currentValue: currentValue
+                            })
+                            .then(function (response) {
+
+                                if (response['status'] == 200){
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'success',
+                                            title: 'Perubahan berhasil Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                } else {
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'error',
+                                            title: 'Perubahan Gagal Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                }
+                            })
+                            .catch(function (error) {
+                                if (error.response && error.response.status === 400) {
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'error',
+                                            title: 'Perubahan Gagal Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                    document.getElementById(selectId).value = previousValue;
+                                    values[selectId] = previousValue;
+                                } else {
+                                    console.error('Error:', error); // Cetak error lain ke konsol
+                                }
+
+                            });
+                        } else if (result.dismiss){
+                            document.getElementById(selectId).value = previousValue;
+                            values[selectId] = previousValue;
+                            swal(
+                                {
+                                    position: 'top-end',
+                                    type: 'error',
+                                    title: 'Perubahan Gagal Disimpan',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }
+                            )
+                        }
+                    })
+                });
+
+
+                var valuesIn = {};
+                $('.clock_in').each(function() {
+                    var selectedIdIn = $(this).attr('id');
+                    valuesIn[selectedIdIn] = $(this).val();
+                });
+
+                // Event onchange untuk setiap select
+                $('.clock_in').on('change', function() {
+                    var selectedIdIn = $(this).attr('id');
+                    var currentValueIn = $(this).val(); // Nilai saat ini
+                    var previousValueIn = valuesIn[selectedIdIn]; // Nilai sebelumnya
+                    valuesIn[selectedIdIn] = currentValueIn;
+
+                    swal({
+                        title: 'Konfirmasi Edit',
+                        text: "Apakah Kamu Akan Mengubah Data Tersebut",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        confirmButtonText: 'Simpan Perubahan'
+                    }).then(function (result) {
+                        if (result.value){
+                            var url = "{{ route('staff.log.updateClockIn') }}";
+                            axios.put(url, {
+                                slot: selectedIdIn,
+                                previous: previousValueIn,
+                                currentValue: currentValueIn
+                            })
+                            .then(function (response) {
+
+                                if (response['status'] == 200){
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'success',
+                                            title: 'Perubahan berhasil Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                } else {
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'error',
+                                            title: 'Perubahan Gagal Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                }
+                            })
+                            .catch(function (error) {
+                                if (error.response && error.response.status === 400) {
+                                    swal(
+                                        {
+                                            position: 'top-end',
+                                            type: 'error',
+                                            title: 'Perubahan Gagal Disimpan',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }
+                                    )
+                                    document.getElementById(selectedIdIn).value = previousValueIn;
+                                    valuesIn[selectedIdIn] = previousValueIn;
+                                } else {
+                                    console.error('Error:', error); // Cetak error lain ke konsol
+                                }
+
+                            });
+                        } else if (result.dismiss){
+                            document.getElementById(selectedIdIn).value = previousValueIn;
+                            valuesIn[selectedIdIn] = previousValueIn;
+                            swal(
+                                {
+                                    position: 'top-end',
+                                    type: 'error',
+                                    title: 'Perubahan Gagal Disimpan',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }
+                            )
+                        }
+                    })
+                });
              })
 
              function confirmDelete(id){
@@ -171,6 +358,25 @@
                      }
                  })
              }
+
+             function confirmUpdate(id){
+                 swal({
+                     title: 'Konfirmasi Update Jam Keluar Manual',
+                     text: "Apakah kamu yakin akan Mengupdate jam manual.?",
+                     type: 'warning',
+                     showCancelButton: true,
+                     confirmButtonClass: 'btn btn-success',
+                     cancelButtonClass: 'btn btn-danger',
+                     confirmButtonText: 'Yes, Lanjutkan!'
+                 }).then(function (result) {
+                     if (result['value']){
+                         $("#formUpdate-" + id).submit();
+                     }
+                 })
+             }
+
+
+
          </script>
      @endsection
  </x-app-layout-v2>
