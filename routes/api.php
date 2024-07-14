@@ -54,6 +54,10 @@ Route::prefix('v2')->group(function () {
         Route::controller(PermissionController::class)->group(function(){
             Route::post("/attendance/manual", 'create');
         });
+
+        Route::controller(StaffAttendancesController::class)->group(function(){
+            Route::post("/staff/attendance/assign", "filter")->name("api.auth.staff");
+        });
     });
 
     //staff track
