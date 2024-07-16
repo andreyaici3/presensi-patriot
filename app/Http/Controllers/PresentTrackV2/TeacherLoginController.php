@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Validator;
 
 class TeacherLoginController extends BaseController
 {
-    public function index(){
+    public function index(Request $request){
+        if ($request->export == true)
+            return view('present-track-v2.authentication.guru.export', [
+                'guru' => Teacher::whereHas('login')->orderBy('kode_guru', 'ASC')->get(),
+            ]);
+
         return view('present-track-v2.authentication.guru.index', [
             'guru' => Teacher::orderBy('kode_guru', 'ASC')->get(),
         ]);
