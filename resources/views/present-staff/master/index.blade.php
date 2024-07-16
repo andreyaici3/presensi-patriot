@@ -47,6 +47,8 @@
             <div class="pd-20">
                 <h4 class="text-blue h4">Daftar Nama Staff</h4>
                 <a href="{{ route('manage.staff.create') }}" class="btn btn-primary">Tambah</a>
+                <a href="{{ route('manage.staff.generate', ['id' => 0]) }}" class="btn btn-success">Barcode Masuk</a>
+                <a href="{{ route('manage.staff.generate', ['id' => -1]) }}" class="btn btn-success">Barcode Keluar</a>
             </div>
             <div class="pb-20">
                 <table class="data-table table stripe hover nowrap">

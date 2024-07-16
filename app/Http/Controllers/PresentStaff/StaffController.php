@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AbsenStaff\StaffRequest;
 use App\Models\StaffModel\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class StaffController extends Controller
 {
@@ -49,6 +51,22 @@ class StaffController extends Controller
             return redirect()->to(route('manage.staff'))->with("sukses", "Data Staff Berhasil Di Hapus");
         } catch (\Illuminate\Database\QueryException $th) {
             return redirect()->to(route('manage.staff'))->with("gagal", "Data Staff Gagal Dihapus");
+        }
+    }
+
+    public function generate($id){
+        if ($id == 0){
+            $qrCode = QrCode::size(600)->format('png')->generate($id);
+            Storage::disk('public')->put('qrcodes/qrcode.png', $qrCode);
+            return view('present-staff.master.generate', [
+                'title' => "Absen Masuk Staff",
+            ]);
+        } else if ($id == -1){
+            $qrCode = QrCode::size(600)->format('png')->generate($id);
+            Storage::disk('public')->put('qrcodes/qrcode.png', $qrCode);
+            return view('present-staff.master.generate', [
+                'title' => "Absen Keluar Staff",
+            ]);
         }
     }
 }

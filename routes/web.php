@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function(){
             Route::get("/manage/staff/{id}", 'edit')->name("manage.staff.edit");
             Route::put("/manage/staff/{id}", 'update');
             Route::delete("/manage/staff/{id}", 'destroy');
+            Route::get("/generate/staff/{id}", 'generate')->name("manage.staff.generate");
         });
 
         Route::controller(SubjectsControler::class)->group(function(){
