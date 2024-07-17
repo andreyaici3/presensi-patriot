@@ -14,6 +14,29 @@ use Illuminate\Support\Facades\Validator;
 
 class StaffAttendancesController extends BaseController
 {
+
+    public function check(Request $request){
+        $validator = Validator::make($request->all(), [
+            'staff_id' => 'required',
+        ]);
+
+        if ($validator->fails())
+            return $this->sendError("Request Tidak Lengkap", 401);
+
+        $staff = Staff::find($request->staff_id);
+
+        if (!$staff)
+            return $this->sendError("Staff Tidak Terdaftar", 404);
+
+        $idStaff = $staff->id;
+
+        $data = StaffAttendance::where([
+            ['staff_id', '=', $idStaff],
+        ]);
+        $data = $data->whereDate('date', now());
+
+        return $this->sendResponse($data->get()->first(), "Ambil Data Sukses");
+    }
     public function filter(Request $request){
         $validator = Validator::make($request->all(), [
             'staff_id' => 'required',

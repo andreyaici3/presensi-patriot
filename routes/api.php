@@ -57,6 +57,7 @@ Route::prefix('v2')->group(function () {
 
         Route::controller(StaffAttendancesController::class)->group(function(){
             Route::post("/staff/attendance/assign", "filter")->name("api.auth.staff");
+            Route::post("/staff/attendance/check", 'check')->name("api.auth.staff");
         });
     });
 
