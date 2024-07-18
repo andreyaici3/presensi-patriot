@@ -203,6 +203,6 @@ Route::middleware(["auth", "user-role:superuser"])->group(function(){
 //staff
 
 
-Route::get("/test", [StaffAttendancesController::class, 'test']);
+// Route::get("/test", [StaffAttendancesController::class, 'test']);
 
 

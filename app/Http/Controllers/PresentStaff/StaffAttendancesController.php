@@ -193,7 +193,4 @@ $caption .= "\nSelamat Beristirahat\n\n";
         $firebaseService->sendNotification($token, $title, $body);
     }
 
-    public function test(){
-        $this->sendNotifApps("fS69CL7IRRWhRpX83NwOFq:APA91bExVRhbf3N3JCwYJ0st2Y28r3Cz16Xr0t346I6VTmfEM5IkYZz_K9bCs3xhUeGI0J8nhLbpetxh32b58BzYp7k8Cafi8dF6atIthQRFWjPx8ZjePhA-CDXkczrbRbxrN7RytSwr", "TItle", "Body");
-    }
 }
