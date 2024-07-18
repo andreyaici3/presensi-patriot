@@ -7,6 +7,7 @@ use App\Http\Controllers\TelegramController;
 use App\Models\AcademicYear;
 use App\Models\StaffModel\Staff;
 use App\Models\StaffModel\StaffAttendance;
+use App\Services\FirebaseNotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -149,7 +150,11 @@ class StaffAttendancesController extends BaseController
             $str .= "⏰️ <b>Waktu Keluar: </b>14:00:00 (By System)" . "\n";
             $str .= "🚀 <b>Catatan: </b>" . $value->notes . " & Absen Keluar By System \n";
             $str .= "\n";
-
+            //data staff
+            $token = $value->staff->login->device_token;
+            $title = "ABSEN OTOMATIS";
+            $content = "Sistem baru saja melakukan eksekusi absen kamu untuk absen keluar otomatis";
+            $this->sendNotifApps($token, $title, $content);
         }
 
         if ($attendanceToday->count() > 0){
@@ -179,5 +184,16 @@ $caption .= "\nSelamat Beristirahat\n\n";
 
         $tg = new TelegramController();
         $tg->sendMessage(env('TELEGRAM_CHANNEL_ID'), $caption);
+    }
+
+    public function sendNotifApps($token, $title, $body){
+        $firebaseService = new FirebaseNotificationService();
+
+        // Kirim notifikasi ke token perangkat tertentu
+        $firebaseService->sendNotification($token, $title, $body);
+    }
+
+    public function test(){
+        $this->sendNotifApps("fS69CL7IRRWhRpX83NwOFq:APA91bExVRhbf3N3JCwYJ0st2Y28r3Cz16Xr0t346I6VTmfEM5IkYZz_K9bCs3xhUeGI0J8nhLbpetxh32b58BzYp7k8Cafi8dF6atIthQRFWjPx8ZjePhA-CDXkczrbRbxrN7RytSwr", "TItle", "Body");
     }
 }

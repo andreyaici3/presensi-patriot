@@ -75,7 +75,8 @@ class StaffLoginController extends BaseController
             return $this->sendError("Username / Password Salah!!", 401);
 
         if ($staffLogin->device_token != null)
-            return $this->sendError("Akun Terkunci Hubungi Administrator", 401);
+            if($staffLogin->device_token != $request->XMAC)
+                return $this->sendError("Akun Terkunci Hubungi Administrator", 401);
 
         Carbon::setLocale('id');
         $currentDateTime = Carbon::now();
