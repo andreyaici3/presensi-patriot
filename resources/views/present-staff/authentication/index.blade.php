@@ -45,8 +45,8 @@
 
          <div class="card-box mb-30 pd-20">
              <div class="pd-20">
-                 <h4 class="text-blue h4">Daftar Akun Staff</h4>
-                 <a href="{{ route('manage.guru.create') }}" class="btn btn-primary">Tambah</a>
+                 <h4 class="text-blue h4">Export Data</h4>
+                 <a href="{{ route('manage.auth.staff') }}?export=true" class="btn btn-primary">Export</a>
              </div>
              <div class="pb-20">
                  <table class="data-table table stripe hover nowrap">

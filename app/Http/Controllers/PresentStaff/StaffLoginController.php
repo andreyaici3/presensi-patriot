@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class StaffLoginController extends BaseController
 {
-    public function index(){
+    public function index(Request $request){
+        if ($request->export == true)
+            return view('present-staff.authentication.export', [
+                'staff' => Staff::whereHas('login')->orderBy('name', 'ASC')->get(),
+            ]);
+
         return view('present-staff.authentication.index', [
             'staffs' => Staff::get(),
         ]);
