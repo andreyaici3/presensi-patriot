@@ -85,6 +85,27 @@ return [
             'migrations' => 'migration_staff',
         ],
 
+        'db_students' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL_STUDENTS'),
+            'host' => env('DB_HOST_STUDENTS', '127.0.0.1'),
+            'port' => env('DB_PORT_STUDENTS', '3306'),
+            'database' => env('DB_DATABASE_STUDENTS', 'forge'),
+            'username' => env('DB_USERNAME_STUDENTS', 'forge'),
+            'password' => env('DB_PASSWORD_STUDENTS', ''),
+            'unix_socket' => env('DB_SOCKET_STUDENTS', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'migrations' => 'migration_staff',
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

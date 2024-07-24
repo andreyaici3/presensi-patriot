@@ -38,7 +38,7 @@
                 <ul class="submenu" style="{{ $menuOpen == 'Master Data' ? 'display:block;' : 'display:none;' }}">
                     <li><a href="{{ route('manage.guru') }}" class="{{ $menuActive == 'Data Guru'  ? 'active' : ''}}" >Data Guru</a></li>
                     <li><a href="{{ route('manage.staff') }}" class="{{ $menuActive == 'Data Staff'  ? 'active' : ''}}">Data Staff</a></li>
-                    <li><a href="javascript:;">Data Siswa</a></li>
+                    <li><a href="{{ route('manage.student') }}" class="{{ $menuActive == 'Data Siswa'  ? 'active' : ''}}">Data Siswa</a></li>
                     <li><a href="{{ route('manage.major') }}" class="{{ $menuActive == 'Data Major'  ? 'active' : ''}}" >Data Jurusan</a></li>
                     <li><a href="{{ route('manage.class') }}" class="{{ $menuActive == 'Data Kelas'  ? 'active' : ''}}">Data Kelas</a></li>
                 </ul>

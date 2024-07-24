@@ -23,6 +23,7 @@ use App\Http\Controllers\Superuser\OperatorController;
 use App\Http\Controllers\SiswaController\AuthSiswaController;
 use App\Http\Controllers\Superuser\DatabasesController;
 use App\Http\Controllers\PresentTrackV2\TimesSlotsController;
+use App\Http\Controllers\StudentTrack\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function(){
@@ -38,6 +39,10 @@ Route::middleware('auth')->group(function(){
             Route::get("/manage/telegram-user/edit/{id}", 'edit')->name("manage.tg.edit");
             Route::put("/manage/telegram-user/update/{id}", 'update')->name("manage.tg.update");
             Route::delete("/manage/telegram-user/{id}/delete", 'destroy')->name("manage.tg.delete");
+        });
+
+        Route::controller(StudentController::class)->group(function(){
+            Route::get("/manage/student", 'index')->name("manage.student");
         });
     });
 
