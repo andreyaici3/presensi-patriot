@@ -84,7 +84,7 @@
                                     @if(Auth::user()->role == "superuser")
                                         <input type="time" name="clock_out[{{ $value->id }}]" id="{{ $value->id }}" class="form-control clock_out" value="{{ $value->clock_out }}">
                                     @else
-                                        {{ $value->clock_in }}
+                                        {{ $value->clock_out }}
                                     @endif
                                  </td>
                                  <td>

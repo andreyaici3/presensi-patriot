@@ -31,7 +31,6 @@
                      </div>
                  @endif
 
-
                  @if (Session::has('gagal'))
                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
                          <b>Gagal!!</b> {{ session('gagal') }}
@@ -68,7 +67,6 @@
                                 <a href="{{ route('manage.schedules') }}" name="reset" class="btn btn-danger">Reset</a>
                             </div>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -103,7 +101,6 @@
                         </thead>
                         <tbody>
                             {!! $schedules !!}
-
                         </tbody>
                     </table>
                 </div>
