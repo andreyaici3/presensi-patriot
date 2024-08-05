@@ -17,20 +17,62 @@ use Illuminate\Support\Facades\Validator;
 class SchedulesController extends BaseController
 {
     public function index(Request $request){
+        $days = $request->id_hari ? Day::where('id', $request->id_hari)->get() : [];
+        $majors = Major::get();
+        $teachers = Teacher::orderBy('kode_guru', 'ASC')->get();
+        if ($days != []){
+            $schedulles = $this->buildHtml($days[0], $majors, $teachers);
+        } else {
+            $schedulles = "";
+        }
         return view('present-track-v2.akademik.jadwal.index', [
-            'days' => $request->id_hari ? Day::where('id', $request->id_hari)->get() : [],
-            'classes' => Classes::get(),
-            'majors' => Major::get(),
-            'timeSlots' => TimesSlot::get(),
-            'schedules' => Schedulles::get(),
-            'teachers' => Teacher::orderBy('kode_guru', 'ASC')->get(),
+            'days' => $days,
+            'majors' => $majors,
+            'schedules' => $schedulles,
         ]);
+    }
+
+    public function buildHtml($day, $majors, $teachers){
+        $str = "";
+        $scheduleMap = [];
+        $schedules = Schedulles::whereIn('day_time_slot_id', $day->timeSlots->pluck('id'))
+                            ->get();
+        foreach ($schedules as $schedule) {
+            $scheduleMap[$schedule->day_time_slot_id][$schedule->class_id] = $schedule->teacher_id;
+        }
+
+        foreach ($day->timeSlots as $timeSlot) {
+            $str .= "<tr>";
+            $str .= "<td>$timeSlot->start_time - $timeSlot->end_time (Jam Ke: $timeSlot->jam_ke)</td>";
+            foreach ($majors as $major) {
+                foreach ($major->classes as $rombel) {
+                    $str .= "<td>";
+                    $str .= "<select id='slot-$timeSlot->id-class-$rombel->id' class='form-control change-schedulles' name='teacher_id[$timeSlot->id][$rombel->id]'>";
+                    $str .= "<option value='init'>KD</option>";
+
+                    foreach ($teachers as $teacher) {
+                        $isSelected = isset($scheduleMap[$timeSlot->id][$rombel->id]) && $scheduleMap[$timeSlot->id][$rombel->id] == $teacher->id;
+                        $selectedAttribute = $isSelected ? 'selected' : '';
+                        $str .= "<option $selectedAttribute value='$teacher->id'>$teacher->kode_guru</option>";
+                    }
+
+                    $str .= "</select>";
+                    $str .= "</td>";
+                }
+            }
+            $str .= "</tr>";
+        }
+
+        return $str;
+
+
     }
 
     public function saveChanges(Request $request){
         if($request->slot != null && $request->currentValue != null && $request->previous != null){
             //ini adalah ketika init menjadi previous nya brarti create jadwal baru
             $exp = explode("-", $request->slot);
+
             if($request->previous === "init"){
                 try {
                     Schedulles::create([

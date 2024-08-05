@@ -102,35 +102,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($day->timeSlots as $timeSlot)
-                                <tr>
-                                    <td>{{ $timeSlot->start_time }} - {{ $timeSlot->end_time }} (Jam Ke: {{ $timeSlot->jam_ke }})</td>
-                                    @foreach ($majors as $major)
-                                        @foreach ($major->classes as $rombel)
-                                            <td>
-                                                <select id="slot-{{ $timeSlot->id }}-class-{{ $rombel->id }}" class="form-control change-schedulles" name="teacher_id[{{ $timeSlot->id }}][{{ $rombel->id }}]">
-                                                    <option value="init">KD</option>
-                                                    @foreach ($teachers as $teacher)
-                                                        @php
-                                                            $isSelected = false;
-
-                                                            $schedule = $schedules->where('class_id', $rombel->id)
-                                                                                    ->where('day_time_slot_id', $timeSlot->id)
-                                                                                    ->where('teacher_id', $teacher->id)
-                                                                                    ->first();
-                                                            if ($schedule){
-                                                                $isSelected = true;
-                                                            }
-
-                                                        @endphp
-                                                        <option {{ $isSelected ? 'selected' : '' }} value="{{ $teacher->id }}">{{ $teacher->kode_guru }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                        @endforeach
-                                    @endforeach
-                                </tr>
-                            @endforeach
+                            {!! $schedules !!}
 
                         </tbody>
                     </table>
@@ -201,6 +173,7 @@
                                 currentValue: currentValue
                             })
                             .then(function (response) {
+                                console.log(response);
                                 if (response.data == true){
                                     swal(
                                         {
@@ -224,6 +197,7 @@
                                 }
                             })
                             .catch(function (error) {
+                                console.log(error);
                                 swal(
                                         {
                                             position: 'top-end',
